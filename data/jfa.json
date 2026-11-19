@@ -1,17 +1,17 @@
 {
-  "checkedAt": "2026-11-19T10:43:15Z",
+  "checkedAt": "2026-11-19T13:35:03Z",
   "feeds": {
     "schedule": {
       "status": "unavailable",
       "checkedAt": null
     },
     "callups": {
-      "status": "unavailable",
-      "checkedAt": null
+      "status": "ok",
+      "checkedAt": "2026-11-19T13:35:03Z"
     },
     "results": {
       "status": "ok",
-      "checkedAt": "2026-11-19T10:43:15Z"
+      "checkedAt": "2026-11-19T13:35:03Z"
     }
   },
   "fixtures": [
@@ -276,5 +276,33 @@
       }
     }
   ],
-  "callups": []
+  "callups": [
+    {
+      "id": "jfa-news-00037030",
+      "date": "2026-11-14",
+      "title": "SAMURAI BLUE(日本代表)選手離脱 MIZUHO BLUE CHALLENGE THE KALLANG FOOTBALL SERIES SINGAPORE パラグアイ代表戦(11.17 シンガポールナショナルスタジアム)",
+      "source": {
+        "label": "JFA 招集発表",
+        "url": "https://www.jfa.jp/samuraiblue/news/00037030/"
+      }
+    },
+    {
+      "id": "jfa-news-00036982",
+      "date": "2026-11-05",
+      "title": "SAMURAI BLUE、11月遠征2連戦に南野選手、町田選手が復帰、福田選手が初招集",
+      "source": {
+        "label": "JFA 招集発表",
+        "url": "https://www.jfa.jp/samuraiblue/news/00036982/"
+      }
+    },
+    {
+      "id": "jfa-news-00036974",
+      "date": "2026-11-04",
+      "title": "SAMURAI BLUE(日本代表)メンバー・スケジュール MIZUHO BLUE CHALLENGE THE KALLANG FOOTBALL SERIES SINGAPORE ブラジル代表戦(11.14)・パラグアイ代表戦(11.17)",
+      "source": {
+        "label": "JFA 招集発表",
+        "url": "https://www.jfa.jp/samuraiblue/news/00036974/"
+      }
+    }
+  ]
 }
