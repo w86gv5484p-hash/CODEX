@@ -1,0 +1,429 @@
+{
+  "checkedAt": null,
+  "rosterDate": "2026-06-15",
+  "rosterSource": {
+    "label": "OpenFootballの2026年W杯登録資料",
+    "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5344"
+  },
+  "officialRosterSource": {
+    "label": "FIFA公式の2026年W杯登録リスト（PDF）",
+    "url": "https://fdp.fifa.org/assetspublic/ce281/pdf/SquadLists-English.pdf"
+  },
+  "players": [
+    {
+      "id": "zion-suzuki",
+      "name": "鈴木 彩艶",
+      "latin": "Zion Suzuki",
+      "position": "GK",
+      "club": "パルマ",
+      "clubLatin": "Parma",
+      "league": "セリエA",
+      "number": 1,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5348-L5354"
+      },
+      "reports": []
+    },
+    {
+      "id": "yukinari-sugawara",
+      "name": "菅原 由勢",
+      "latin": "Yukinari Sugawara",
+      "position": "DF",
+      "club": "ヴェルダー・ブレーメン",
+      "clubLatin": "SV Werder Bremen",
+      "league": "ブンデスリーガ",
+      "number": 2,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5358-L5364"
+      },
+      "reports": []
+    },
+    {
+      "id": "shogo-taniguchi",
+      "name": "谷口 彰悟",
+      "latin": "Shogo Taniguchi",
+      "position": "DF",
+      "club": "シント＝トロイデン",
+      "clubLatin": "Sint-Truiden VV",
+      "league": "ベルギー・プロリーグ",
+      "number": 3,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5368-L5374"
+      },
+      "reports": []
+    },
+    {
+      "id": "ko-itakura",
+      "name": "板倉 滉",
+      "latin": "Ko Itakura",
+      "position": "DF",
+      "club": "アヤックス",
+      "clubLatin": "AFC Ajax",
+      "league": "エールディヴィジ",
+      "number": 4,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5378-L5384"
+      },
+      "reports": []
+    },
+    {
+      "id": "yuto-nagatomo",
+      "name": "長友 佑都",
+      "latin": "Yuto Nagatomo",
+      "position": "DF",
+      "club": "FC東京",
+      "clubLatin": "FC Tokyo",
+      "league": "J1",
+      "number": 5,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5388-L5394"
+      },
+      "reports": []
+    },
+    {
+      "id": "shuto-machino",
+      "name": "町野 修斗",
+      "latin": "Shuto Machino",
+      "position": "FW",
+      "club": "ボルシア・メンヒェングラートバッハ",
+      "clubLatin": "Borussia Mönchengladbach",
+      "league": "ブンデスリーガ",
+      "number": 6,
+      "callup": "2026年W杯 追加招集",
+      "source": {
+        "label": "OpenFootballの2026年W杯ブラジル戦記録",
+        "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup-full.json#L4958-L4969"
+      },
+      "reports": []
+    },
+    {
+      "id": "ao-tanaka",
+      "name": "田中 碧",
+      "latin": "Ao Tanaka",
+      "position": "MF",
+      "club": "リーズ・ユナイテッド",
+      "clubLatin": "Leeds United FC",
+      "league": "プレミアリーグ",
+      "number": 7,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5408-L5414"
+      },
+      "reports": []
+    },
+    {
+      "id": "takefusa-kubo",
+      "name": "久保 建英",
+      "latin": "Takefusa Kubo",
+      "position": "MF",
+      "club": "レアル・ソシエダ",
+      "clubLatin": "Real Sociedad",
+      "league": "ラ・リーガ",
+      "number": 8,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5418-L5424"
+      },
+      "reports": []
+    },
+    {
+      "id": "keisuke-goto",
+      "name": "後藤 啓介",
+      "latin": "Keisuke Goto",
+      "position": "FW",
+      "club": "シント＝トロイデン",
+      "clubLatin": "Sint-Truiden VV",
+      "league": "ベルギー・プロリーグ",
+      "number": 9,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5428-L5434"
+      },
+      "reports": []
+    },
+    {
+      "id": "ritsu-doan",
+      "name": "堂安 律",
+      "latin": "Ritsu Doan",
+      "position": "MF",
+      "club": "アイントラハト・フランクフルト",
+      "clubLatin": "Eintracht Frankfurt",
+      "league": "ブンデスリーガ",
+      "number": 10,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5438-L5444"
+      },
+      "reports": []
+    },
+    {
+      "id": "daizen-maeda",
+      "name": "前田 大然",
+      "latin": "Daizen Maeda",
+      "position": "MF",
+      "club": "セルティック",
+      "clubLatin": "Celtic FC",
+      "league": "スコティッシュ・プレミアシップ",
+      "number": 11,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5448-L5454"
+      },
+      "reports": []
+    },
+    {
+      "id": "keisuke-osako",
+      "name": "大迫 敬介",
+      "latin": "Keisuke Osako",
+      "position": "GK",
+      "club": "サンフレッチェ広島",
+      "clubLatin": "Sanfrecce Hiroshima",
+      "league": "J1",
+      "number": 12,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5458-L5464"
+      },
+      "reports": []
+    },
+    {
+      "id": "keito-nakamura",
+      "name": "中村 敬斗",
+      "latin": "Keito Nakamura",
+      "position": "MF",
+      "club": "スタッド・ランス",
+      "clubLatin": "Stade Reims",
+      "number": 13,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5468-L5474"
+      },
+      "reports": []
+    },
+    {
+      "id": "junya-ito",
+      "name": "伊東 純也",
+      "latin": "Junya Ito",
+      "position": "MF",
+      "club": "KRCゲンク",
+      "clubLatin": "KRC Genk",
+      "league": "ベルギー・プロリーグ",
+      "number": 14,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5478-L5484"
+      },
+      "reports": []
+    },
+    {
+      "id": "daichi-kamada",
+      "name": "鎌田 大地",
+      "latin": "Daichi Kamada",
+      "position": "MF",
+      "club": "クリスタル・パレス",
+      "clubLatin": "Crystal Palace FC",
+      "league": "プレミアリーグ",
+      "number": 15,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5488-L5494"
+      },
+      "reports": []
+    },
+    {
+      "id": "tsuyoshi-watanabe",
+      "name": "渡辺 剛",
+      "latin": "Tsuyoshi Watanabe",
+      "position": "DF",
+      "club": "フェイエノールト",
+      "clubLatin": "Feyenoord Rotterdam",
+      "league": "エールディヴィジ",
+      "number": 16,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5498-L5504"
+      },
+      "reports": []
+    },
+    {
+      "id": "yuito-suzuki",
+      "name": "鈴木 唯人",
+      "latin": "Yuito Suzuki",
+      "position": "MF",
+      "club": "SCフライブルク",
+      "clubLatin": "SC Freiburg",
+      "league": "ブンデスリーガ",
+      "number": 17,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5508-L5514"
+      },
+      "reports": []
+    },
+    {
+      "id": "ayase-ueda",
+      "name": "上田 綺世",
+      "latin": "Ayase Ueda",
+      "position": "FW",
+      "club": "フェイエノールト",
+      "clubLatin": "Feyenoord Rotterdam",
+      "league": "エールディヴィジ",
+      "number": 18,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5518-L5524"
+      },
+      "reports": []
+    },
+    {
+      "id": "koki-ogawa",
+      "name": "小川 航基",
+      "latin": "Koki Ogawa",
+      "position": "FW",
+      "club": "NECナイメヘン",
+      "clubLatin": "NEC Nijmegen",
+      "league": "エールディヴィジ",
+      "number": 19,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5528-L5534"
+      },
+      "reports": []
+    },
+    {
+      "id": "ayumu-seko",
+      "name": "瀬古 歩夢",
+      "latin": "Ayumu Seko",
+      "position": "DF",
+      "club": "ル・アーヴル",
+      "clubLatin": "Le Havre AC",
+      "league": "リーグ・アン",
+      "number": 20,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5538-L5544"
+      },
+      "reports": []
+    },
+    {
+      "id": "hiroki-ito",
+      "name": "伊藤 洋輝",
+      "latin": "Hiroki Ito",
+      "position": "DF",
+      "club": "バイエルン・ミュンヘン",
+      "clubLatin": "FC Bayern München",
+      "league": "ブンデスリーガ",
+      "number": 21,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5548-L5554"
+      },
+      "reports": []
+    },
+    {
+      "id": "takehiro-tomiyasu",
+      "name": "冨安 健洋",
+      "latin": "Takehiro Tomiyasu",
+      "position": "DF",
+      "club": "アヤックス",
+      "clubLatin": "AFC Ajax",
+      "league": "エールディヴィジ",
+      "number": 22,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5558-L5564"
+      },
+      "reports": []
+    },
+    {
+      "id": "tomoki-hayakawa",
+      "name": "早川 友基",
+      "latin": "Tomoki Hayakawa",
+      "position": "GK",
+      "club": "鹿島アントラーズ",
+      "clubLatin": "Kashima Antlers",
+      "league": "J1",
+      "number": 23,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5568-L5574"
+      },
+      "reports": []
+    },
+    {
+      "id": "kaishu-sano",
+      "name": "佐野 海舟",
+      "latin": "Kaishu Sano",
+      "position": "MF",
+      "club": "マインツ05",
+      "clubLatin": "1. FSV Mainz 05",
+      "league": "ブンデスリーガ",
+      "number": 24,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5578-L5584"
+      },
+      "reports": []
+    },
+    {
+      "id": "junnosuke-suzuki",
+      "name": "鈴木 淳之介",
+      "latin": "Junnosuke Suzuki",
+      "position": "DF",
+      "club": "FCコペンハーゲン",
+      "clubLatin": "FC København",
+      "league": "デンマーク・スーペルリーガ",
+      "number": 25,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5588-L5594"
+      },
+      "reports": []
+    },
+    {
+      "id": "kento-shiogai",
+      "name": "塩貝 健人",
+      "latin": "Kento Shiogai",
+      "position": "FW",
+      "club": "VfLヴォルフスブルク",
+      "clubLatin": "VfL Wolfsburg",
+      "league": "ブンデスリーガ",
+      "number": 26,
+      "callup": "2026年W杯 登録時",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5598-L5604"
+      },
+      "reports": []
+    }
+  ]
+}
