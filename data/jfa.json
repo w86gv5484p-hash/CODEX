@@ -1,0 +1,280 @@
+{
+  "checkedAt": "2026-11-19T10:43:15Z",
+  "feeds": {
+    "schedule": {
+      "status": "unavailable",
+      "checkedAt": null
+    },
+    "callups": {
+      "status": "unavailable",
+      "checkedAt": null
+    },
+    "results": {
+      "status": "ok",
+      "checkedAt": "2026-11-19T10:43:15Z"
+    }
+  },
+  "fixtures": [
+    {
+      "id": "result-2025-06-05-australia",
+      "date": "2025-06-05",
+      "opponent": "オーストラリア",
+      "competition": "FIFAワールドカップ予選",
+      "venue": "Perth / Australia",
+      "status": "completed",
+      "score": "0–1",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2025-06-10-indonesia",
+      "date": "2025-06-10",
+      "opponent": "インドネシア",
+      "competition": "FIFAワールドカップ予選",
+      "venue": "Suita / Japan",
+      "status": "completed",
+      "score": "6–0",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2025-09-06-mexico",
+      "date": "2025-09-06",
+      "opponent": "メキシコ",
+      "competition": "国際親善試合",
+      "venue": "Oakland / United States",
+      "status": "completed",
+      "score": "0–0",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2025-09-09-united-states",
+      "date": "2025-09-09",
+      "opponent": "アメリカ",
+      "competition": "国際親善試合",
+      "venue": "Columbus / United States",
+      "status": "completed",
+      "score": "0–2",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2025-10-10-paraguay",
+      "date": "2025-10-10",
+      "opponent": "パラグアイ",
+      "competition": "キリンカップ",
+      "venue": "Osaka / Japan",
+      "status": "completed",
+      "score": "2–2",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2025-10-14-brazil",
+      "date": "2025-10-14",
+      "opponent": "ブラジル",
+      "competition": "キリンカップ",
+      "venue": "Tokyo / Japan",
+      "status": "completed",
+      "score": "3–2",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2025-11-14-ghana",
+      "date": "2025-11-14",
+      "opponent": "ガーナ",
+      "competition": "キリンカップ",
+      "venue": "Toyota / Japan",
+      "status": "completed",
+      "score": "2–0",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2025-11-18-bolivia",
+      "date": "2025-11-18",
+      "opponent": "ボリビア",
+      "competition": "キリンカップ",
+      "venue": "Tokyo / Japan",
+      "status": "completed",
+      "score": "3–0",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2026-03-28-scotland",
+      "date": "2026-03-28",
+      "opponent": "スコットランド",
+      "competition": "国際親善試合",
+      "venue": "Glasgow / Scotland",
+      "status": "completed",
+      "score": "1–0",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2026-03-31-england",
+      "date": "2026-03-31",
+      "opponent": "イングランド",
+      "competition": "国際親善試合",
+      "venue": "London / England",
+      "status": "completed",
+      "score": "1–0",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2026-05-31-iceland",
+      "date": "2026-05-31",
+      "opponent": "アイスランド",
+      "competition": "国際親善試合",
+      "venue": "Tokyo / Japan",
+      "status": "completed",
+      "score": "1–0",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2026-06-14-netherlands",
+      "date": "2026-06-14",
+      "opponent": "オランダ",
+      "competition": "FIFAワールドカップ",
+      "venue": "Arlington / United States",
+      "status": "completed",
+      "score": "2–2",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2026-06-20-tunisia",
+      "date": "2026-06-20",
+      "opponent": "チュニジア",
+      "competition": "FIFAワールドカップ",
+      "venue": "Guadalupe / Mexico",
+      "status": "completed",
+      "score": "4–0",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2026-06-25-sweden",
+      "date": "2026-06-25",
+      "opponent": "スウェーデン",
+      "competition": "FIFAワールドカップ",
+      "venue": "Arlington / United States",
+      "status": "completed",
+      "score": "1–1",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2026-06-29-brazil",
+      "date": "2026-06-29",
+      "opponent": "ブラジル",
+      "competition": "FIFAワールドカップ",
+      "venue": "Houston / United States",
+      "status": "completed",
+      "score": "1–2",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2026-09-28-venezuela",
+      "date": "2026-09-28",
+      "opponent": "ベネズエラ",
+      "competition": "国際親善試合",
+      "venue": "Hiroshima / Japan",
+      "status": "completed",
+      "score": "2–1",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2026-10-01-ecuador",
+      "date": "2026-10-01",
+      "opponent": "エクアドル",
+      "competition": "キリンカップ",
+      "venue": "Yokohama / Japan",
+      "status": "completed",
+      "score": "0–0",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2026-10-05-new-zealand",
+      "date": "2026-10-05",
+      "opponent": "ニュージーランド",
+      "competition": "キリンカップ",
+      "venue": "Tokyo / Japan",
+      "status": "completed",
+      "score": "2–1",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2026-11-14-brazil",
+      "date": "2026-11-14",
+      "opponent": "ブラジル",
+      "competition": "The Kallang Football Series",
+      "venue": "Kallang / Singapore",
+      "status": "completed",
+      "score": "3–2",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    },
+    {
+      "id": "result-2026-11-17-paraguay",
+      "date": "2026-11-17",
+      "opponent": "パラグアイ",
+      "competition": "The Kallang Football Series",
+      "venue": "Kallang / Singapore",
+      "status": "completed",
+      "score": "1–2",
+      "source": {
+        "label": "International football results（公開データ）",
+        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
+      }
+    }
+  ],
+  "callups": []
+}
