@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-19T13:35:03Z",
+  "checkedAt": "2026-11-20T01:26:59Z",
   "feeds": {
     "schedule": {
       "status": "unavailable",
@@ -7,11 +7,11 @@
     },
     "callups": {
       "status": "ok",
-      "checkedAt": "2026-11-19T13:35:03Z"
+      "checkedAt": "2026-11-20T01:26:59Z"
     },
     "results": {
       "status": "ok",
-      "checkedAt": "2026-11-19T13:35:03Z"
+      "checkedAt": "2026-11-20T01:26:59Z"
     }
   },
   "fixtures": [
