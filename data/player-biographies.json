@@ -1,0 +1,1122 @@
+{
+  "checkedAt": "2026-11-22T03:57:19+00:00",
+  "players": [
+    {
+      "id": "zion-suzuki",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5348-L5355"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "JFA 選手プロフィール",
+          "url": "https://www.jfa.jp/samuraiblue/member/suzuki_zion.html"
+        },
+        {
+          "label": "アストン・ヴィラ公式 選手プロフィール",
+          "url": "https://www.avfc.co.uk/teams/mens/zionsuzuki"
+        },
+        {
+          "label": "イタリアの選手紹介アーカイブ",
+          "url": "https://github.com/marcooly-bit/football-site/blob/e80ff7ccf4844e6b56f88240a577c248216ddafd/zion-suzuki.html#L623-L663"
+        },
+        {
+          "label": "国際試合結果データ 2022年E-1選手権",
+          "url": "https://github.com/martj42/international_results/blob/master/results.csv#L45484-L45489"
+        },
+        {
+          "label": "A代表大会の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "2002-08-21",
+      "birthplace": "アメリカ合衆国生まれ、埼玉県さいたま市育ち",
+      "development": "浦和レッズの育成組織を経て、浦和レッズでプロとして出場した。",
+      "debutDate": "2022-07-19",
+      "debutDetails": "東アジアE-1サッカー選手権の香港戦に出場した。",
+      "honours": [
+        "東アジアE-1サッカー選手権 優勝（日本代表、2022年）",
+        "FIFAワールドカップ2026（日本はラウンド32）・4試合出場",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・5試合出場"
+      ]
+    },
+    {
+      "id": "yukinari-sugawara",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5358-L5365"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L46392"
+        },
+        {
+          "label": "2026年W杯日本代表の出場記録",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup-full.json"
+        },
+        {
+          "label": "A代表の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "2000-06-28",
+      "birthplace": "愛知県豊川市",
+      "honours": [
+        "2026年W杯の全4試合に出場。日本はラウンド32進出。",
+        "FIFAワールドカップ2026（日本はラウンド32）・4試合出場",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・2試合出場"
+      ],
+      "firstRecordedDate": "2020-10-09",
+      "firstRecordedOpponent": "Cameroon"
+    },
+    {
+      "id": "shogo-taniguchi",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5368-L5375"
+        },
+        {
+          "label": "A代表の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1991-07-15",
+      "firstRecordedDate": "2021-06-07",
+      "firstRecordedOpponent": "Tajikistan",
+      "honours": [
+        "FIFAワールドカップ2026（日本はラウンド32）・3試合出場",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・2試合出場",
+        "FIFAワールドカップ2022（日本はベスト16）・2試合出場"
+      ]
+    },
+    {
+      "id": "ko-itakura",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5378-L5385"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L43365"
+        },
+        {
+          "label": "JFA 選手プロフィール",
+          "url": "https://www.jfa.jp/samuraiblue/member/itakura_kou.html"
+        },
+        {
+          "label": "A代表デビュー試合ID（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_national_performances/player_national_performances.csv#L44986"
+        },
+        {
+          "label": "ウルグアイ戦の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "2026年W杯の出場記録（OpenFootball）",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup-full.json"
+        },
+        {
+          "label": "2022年W杯選手記録（Fjelstul）",
+          "url": "https://github.com/jfjelstul/worldcup/blob/master/data-csv/players.csv#L4329"
+        },
+        {
+          "label": "東京2020出場選手の保存記録",
+          "url": "https://github.com/kaoutharElbakouri/2021-Olympics-in-Tokyo-Data/blob/440e5fe352775f557f7fb9045f4bd4329bc7478c/Athletes.csv#L4286"
+        },
+        {
+          "label": "東京2020 男子サッカー試合結果（RSSSF）",
+          "url": "https://www.rsssf.org/tableso/ol2020f.html"
+        },
+        {
+          "label": "所属歴（Wikidata由来の記録）",
+          "url": "https://github.com/lyuyang1014/pro-career-data/blob/9728f91478119d16af73257b48f249950b8b1b8e/data/cc0/stars.json"
+        },
+        {
+          "label": "2021–22 ドイツ2部 最終成績（RSSSF）",
+          "url": "https://www.rsssf.org/tablesd/duit2022.html"
+        }
+      ],
+      "birthDate": "1997-01-27",
+      "birthplace": "神奈川県横浜市",
+      "debutDate": "2019-06-20",
+      "debutDetails": "コパ・アメリカのウルグアイ戦に先発し、90分間プレーした。",
+      "honours": [
+        "FIFAワールドカップ2026 ラウンド32（日本代表）",
+        "FIFAワールドカップ2022 ベスト16（日本代表）",
+        "東京2020オリンピック 男子サッカー4位（日本代表）",
+        "2. ブンデスリーガ優勝（シャルケ、2021–22）"
+      ]
+    },
+    {
+      "id": "yuto-nagatomo",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5388-L5395"
+        },
+        {
+          "label": "A代表の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1986-09-12",
+      "firstRecordedDate": "2008-06-02",
+      "firstRecordedOpponent": "Oman",
+      "honours": [
+        "FIFAワールドカップ2026（日本はラウンド32）・1試合出場",
+        "FIFAワールドカップ2022（日本はベスト16）・4試合出場",
+        "AFCアジアカップ2019（日本は準優勝）・6試合出場"
+      ]
+    },
+    {
+      "id": "shuto-machino",
+      "sources": [
+        {
+          "label": "選手の生年月日（BLUE LIST保存記録）",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/shuto-machino.html"
+        },
+        {
+          "label": "A代表の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1999-09-30",
+      "firstRecordedDate": "2022-09-23",
+      "firstRecordedOpponent": "United States",
+      "honours": [
+        "FIFAワールドカップ2026（日本はラウンド32）・1試合出場"
+      ]
+    },
+    {
+      "id": "ao-tanaka",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5408-L5415"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "BLUE LIST 選手ページの保存資料",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/ao-tanaka.html"
+        },
+        {
+          "label": "Jリーグの川崎F選手名鑑の保存資料",
+          "url": "https://github.com/Yoshifumi14/jleague-scraping/blob/c4109d574a6bdc6577b4c2d762e6a1df5ff18a36/kawasaki/players.csv#L22"
+        },
+        {
+          "label": "11footy 代表戦の出場・大会記録",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1998-09-10",
+      "birthplace": "神奈川県川崎市",
+      "development": "2021年に川崎フロンターレでホームグロウン登録",
+      "honours": [
+        "FIFAワールドカップ2022 ベスト16（日本代表）",
+        "FIFAワールドカップ2026 ベスト32（日本代表）",
+        "FIFAワールドカップ2026（日本はラウンド32）・3試合出場",
+        "FIFAワールドカップ2022（日本はベスト16）・3試合出場"
+      ],
+      "firstRecordedDate": "2021-10-12",
+      "firstRecordedOpponent": "Australia"
+    },
+    {
+      "id": "takefusa-kubo",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5418-L5425"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "日本A代表の試合・選手記録（Blue List）",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/takefusa-kubo.html"
+        },
+        {
+          "label": "Transfermarkt由来の選手プロフィール公開データ",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L46401"
+        },
+        {
+          "label": "2026年W杯ラウンド32の記録（OpenFootball）",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup.json#L904-L912"
+        },
+        {
+          "label": "2019年6月9日のA代表出場記録（11footy）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "2001-06-04",
+      "birthplace": "神奈川県川崎市",
+      "debutDetails": "国際親善試合 エルサルバドル戦",
+      "honours": [
+        "2026年FIFAワールドカップに大会登録。日本はラウンド32進出。",
+        "FIFAワールドカップ2026（日本はラウンド32）・1試合出場",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・5試合出場",
+        "FIFAワールドカップ2022（日本はベスト16）・2試合出場",
+        "コパ・アメリカ2019（日本はグループステージ）・3試合出場"
+      ],
+      "debutDate": "2019-06-09"
+    },
+    {
+      "id": "keisuke-goto",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5428-L5435"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "日本A代表の試合・選手記録（Blue List）",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/keisuke-goto.html"
+        },
+        {
+          "label": "Transfermarkt由来の選手プロフィール公開データ",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L84717"
+        },
+        {
+          "label": "2026年W杯ラウンド32の記録（OpenFootball）",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup.json#L904-L912"
+        },
+        {
+          "label": "A代表大会の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "2005-06-03",
+      "birthplace": "静岡県浜松市",
+      "debutDate": "2025-11-14",
+      "debutDetails": "キリンチャレンジカップ2025・ガーナ戦",
+      "honours": [
+        "2026年FIFAワールドカップに大会登録。日本はラウンド32進出。",
+        "FIFAワールドカップ2026（日本はラウンド32）・1試合出場"
+      ]
+    },
+    {
+      "id": "ritsu-doan",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5438-L5445"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "BLUE LIST 選手ページの保存資料",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/ritsu-doan.html"
+        },
+        {
+          "label": "11footy 代表戦の出場・大会記録",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1998-06-16",
+      "birthplace": "兵庫県尼崎市",
+      "debutDate": "2018-09-11",
+      "debutDetails": "国際親善試合、コスタリカ戦に先発",
+      "honours": [
+        "AFCアジアカップ2019 準優勝（日本代表）",
+        "FIFAワールドカップ2022 ベスト16（日本代表）",
+        "FIFAワールドカップ2026 ベスト32（日本代表）",
+        "FIFAワールドカップ2026（日本はラウンド32）・4試合出場",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・5試合出場",
+        "FIFAワールドカップ2022（日本はベスト16）・4試合出場",
+        "AFCアジアカップ2019（日本は準優勝）・6試合出場"
+      ]
+    },
+    {
+      "id": "daizen-maeda",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5448-L5455"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "BLUE LIST 選手ページの保存資料",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/daizen-maeda.html"
+        },
+        {
+          "label": "11footy 代表戦の出場・大会記録",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1997-10-20",
+      "birthplace": "大阪府南河内郡太子町",
+      "debutDate": "2019-06-17",
+      "debutDetails": "コパ・アメリカ、チリ戦に先発（現地日付）",
+      "honours": [
+        "FIFAワールドカップ2022 ベスト16（日本代表）",
+        "FIFAワールドカップ2026 ベスト32（日本代表）",
+        "FIFAワールドカップ2026（日本はラウンド32）・3試合出場",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・3試合出場",
+        "FIFAワールドカップ2022（日本はベスト16）・3試合出場",
+        "コパ・アメリカ2019（日本はグループステージ）・2試合出場"
+      ]
+    },
+    {
+      "id": "keisuke-osako",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5458-L5465"
+        },
+        {
+          "label": "A代表の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1999-07-28",
+      "firstRecordedDate": "2019-06-17",
+      "firstRecordedOpponent": "Chile",
+      "honours": [
+        "コパ・アメリカ2019（日本はグループステージ）・1試合出場"
+      ]
+    },
+    {
+      "id": "keito-nakamura",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5468-L5475"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "BLUE LIST 選手ページの保存資料",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/keito-nakamura.html"
+        },
+        {
+          "label": "11footy 代表戦の出場・大会記録",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "2000-07-28",
+      "birthplace": "千葉県我孫子市",
+      "debutDate": "2023-03-24",
+      "debutDetails": "キリンチャレンジカップ、ウルグアイ戦に途中出場",
+      "honours": [
+        "FIFAワールドカップ2026 ベスト32（日本代表）",
+        "FIFAワールドカップ2026（日本はラウンド32）・4試合出場",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・3試合出場"
+      ]
+    },
+    {
+      "id": "junya-ito",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5478-L5485"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L34293"
+        },
+        {
+          "label": "A代表の初出場試合ID（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_national_performances/player_national_performances.csv#L43949"
+        },
+        {
+          "label": "2022年W杯クロアチア戦（StatsBombの試合記録）",
+          "url": "https://github.com/statsbomb/open-data/blob/4b73468fc5b0f1950f9f66fada70ad3a4f9327cb/data/events/3869219.json"
+        },
+        {
+          "label": "2026年W杯チュニジア戦の得点記録",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup-full.json#L2219-L2243"
+        },
+        {
+          "label": "2026年W杯日本代表の出場記録",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup-full.json"
+        },
+        {
+          "label": "A代表の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1993-03-09",
+      "birthplace": "神奈川県横須賀市",
+      "honours": [
+        "2022年W杯ではラウンド16のクロアチア戦に先発。",
+        "2026年W杯の全4試合に出場し、チュニジア戦で1得点。",
+        "FIFAワールドカップ2026（日本はラウンド32）・4試合出場",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・3試合出場",
+        "FIFAワールドカップ2022（日本はベスト16）・4試合出場",
+        "AFCアジアカップ2019（日本は準優勝）・5試合出場"
+      ],
+      "firstRecordedDate": "2018-09-11",
+      "firstRecordedOpponent": "Costa Rica"
+    },
+    {
+      "id": "daichi-kamada",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5488-L5495"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L43408"
+        },
+        {
+          "label": "A代表の初出場試合ID（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_national_performances/player_national_performances.csv#L45056"
+        },
+        {
+          "label": "2022年W杯クロアチア戦（StatsBombの試合記録）",
+          "url": "https://github.com/statsbomb/open-data/blob/4b73468fc5b0f1950f9f66fada70ad3a4f9327cb/data/events/3869219.json"
+        },
+        {
+          "label": "2026年W杯日本代表の出場・得点記録",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup-full.json"
+        },
+        {
+          "label": "A代表の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1996-08-05",
+      "birthplace": "愛媛県伊予市",
+      "honours": [
+        "2022年W杯ではラウンド16のクロアチア戦に先発。",
+        "2026年W杯の全4試合に先発し、オランダ戦とチュニジア戦で計2得点。",
+        "FIFAワールドカップ2026（日本はラウンド32）・4試合出場",
+        "FIFAワールドカップ2022（日本はベスト16）・4試合出場"
+      ],
+      "firstRecordedDate": "2019-03-22",
+      "firstRecordedOpponent": "Colombia"
+    },
+    {
+      "id": "tsuyoshi-watanabe",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5498-L5505"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L61565"
+        },
+        {
+          "label": "JFA 選手プロフィール",
+          "url": "https://www.jfa.jp/samuraiblue/member/watanabe_tsuyoshi.html"
+        },
+        {
+          "label": "2026年W杯の出場記録（OpenFootball）",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup-full.json"
+        },
+        {
+          "label": "アジアカップの出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1997-02-05",
+      "birthplace": "埼玉県",
+      "honours": [
+        "FIFAワールドカップ2026 ラウンド32（日本代表）",
+        "AFCアジアカップ2023 ベスト8（日本代表、2024年開催）",
+        "FIFAワールドカップ2026（日本はラウンド32）・2試合出場",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・1試合出場"
+      ],
+      "firstRecordedDate": "2023-11-16",
+      "firstRecordedOpponent": "Myanmar"
+    },
+    {
+      "id": "yuito-suzuki",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5508-L5515"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "日本A代表の試合・選手記録（Blue List）",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/yuito-suzuki.html"
+        },
+        {
+          "label": "Transfermarkt由来の選手プロフィール公開データ",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L73558"
+        },
+        {
+          "label": "2024年6月6日 ミャンマー戦の出場記録",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/matches/2024-06-06-myanmar.html"
+        },
+        {
+          "label": "2026年W杯ラウンド32の記録（OpenFootball）",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup.json#L904-L912"
+        },
+        {
+          "label": "A代表大会の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "2001-10-25",
+      "birthplace": "神奈川県三浦市",
+      "debutDetails": "ワールドカップアジア2次予選・ミャンマー戦に途中出場（2023年以降の収録資料で最初の出場）",
+      "debutDate": "2024-06-06",
+      "honours": [
+        "2026年FIFAワールドカップに大会登録。日本はラウンド32進出。",
+        "FIFAワールドカップ2026（日本はラウンド32）・1試合出場"
+      ]
+    },
+    {
+      "id": "ayase-ueda",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5518-L5525"
+        },
+        {
+          "label": "A代表の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1998-08-28",
+      "firstRecordedDate": "2019-06-17",
+      "firstRecordedOpponent": "Chile",
+      "honours": [
+        "FIFAワールドカップ2026（日本はラウンド32）・4試合出場",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・5試合出場",
+        "FIFAワールドカップ2022（日本はベスト16）・1試合出場",
+        "コパ・アメリカ2019（日本はグループステージ）・3試合出場"
+      ]
+    },
+    {
+      "id": "koki-ogawa",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5528-L5535"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "BLUE LIST 選手ページの保存資料",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/koki-ogawa.html"
+        },
+        {
+          "label": "11footy 代表戦の出場・大会記録",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1997-08-08",
+      "birthplace": "神奈川県横浜市",
+      "honours": [
+        "FIFAワールドカップ2026 ベスト32（日本代表）",
+        "FIFAワールドカップ2026（日本はラウンド32）・2試合出場"
+      ],
+      "firstRecordedDate": "2024-03-21",
+      "firstRecordedOpponent": "North Korea"
+    },
+    {
+      "id": "ayumu-seko",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5538-L5545"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L46390"
+        },
+        {
+          "label": "A代表の初出場試合ID（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_national_performances/player_national_performances.csv#L51770"
+        },
+        {
+          "label": "2026年W杯スウェーデン戦の出場記録",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup-full.json#L2369-L2397"
+        },
+        {
+          "label": "A代表の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "2000-06-07",
+      "birthplace": "大阪府大阪市",
+      "honours": [
+        "2026年W杯グループステージのスウェーデン戦に先発。",
+        "FIFAワールドカップ2026（日本はラウンド32）・2試合出場"
+      ],
+      "firstRecordedDate": "2023-03-24",
+      "firstRecordedOpponent": "Uruguay"
+    },
+    {
+      "id": "hiroki-ito",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5548-L5555"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L43084"
+        },
+        {
+          "label": "JFA 選手プロフィール",
+          "url": "https://www.jfa.jp/samuraiblue/member/ito_hiroki.html"
+        },
+        {
+          "label": "A代表デビュー試合ID（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_national_performances/player_national_performances.csv#L44651"
+        },
+        {
+          "label": "代表戦の出場記録とブンデスリーガ最終成績（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "2026年W杯の出場記録（OpenFootball）",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup-full.json"
+        }
+      ],
+      "birthDate": "1999-05-12",
+      "birthplace": "静岡県浜松市",
+      "debutDate": "2022-06-02",
+      "debutDetails": "キリンチャレンジカップのパラグアイ戦に先発し、90分間プレーした。",
+      "honours": [
+        "FIFAワールドカップ2026 ラウンド32（日本代表）",
+        "ブンデスリーガ優勝（バイエルン・ミュンヘン、2024–25・2025–26）",
+        "AFCアジアカップ2023 ベスト8（日本代表、2024年開催）",
+        "FIFAワールドカップ2022 ベスト16（日本代表）",
+        "FIFAワールドカップ2026（日本はラウンド32）・4試合出場",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・3試合出場",
+        "FIFAワールドカップ2022（日本はベスト16）・1試合出場"
+      ]
+    },
+    {
+      "id": "takehiro-tomiyasu",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5558-L5565"
+        },
+        {
+          "label": "A代表の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1998-11-05",
+      "firstRecordedDate": "2018-10-12",
+      "firstRecordedOpponent": "Panama",
+      "honours": [
+        "FIFAワールドカップ2026（日本はラウンド32）・3試合出場",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・4試合出場",
+        "FIFAワールドカップ2022（日本はベスト16）・3試合出場",
+        "コパ・アメリカ2019（日本はグループステージ）・3試合出場",
+        "AFCアジアカップ2019（日本は準優勝）・6試合出場"
+      ]
+    },
+    {
+      "id": "tomoki-hayakawa",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5568-L5575"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "JFA 選手プロフィール",
+          "url": "https://www.jfa.jp/samuraiblue/member/hayakawa_tomoki.html"
+        },
+        {
+          "label": "BLUE LIST 代表出場記録",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/tomoki-hayakawa.html"
+        },
+        {
+          "label": "BLUE LIST E-1中国戦",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/matches/2025-07-12-china.html"
+        }
+      ],
+      "birthDate": "1999-03-03",
+      "birthplace": "神奈川県",
+      "highSchool": "桐蔭学園高等学校",
+      "development": "桐蔭学園高校から明治大学を経て鹿島アントラーズへ。",
+      "debutDate": "2025-07-12",
+      "debutDetails": "東アジアE-1サッカー選手権の中国戦に先発し、90分間プレーした。",
+      "honours": [
+        "東アジアE-1サッカー選手権 優勝（日本代表、2025年）"
+      ]
+    },
+    {
+      "id": "kaishu-sano",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5578-L5585"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "日本A代表の試合・選手記録（Blue List）",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/kaishu-sano.html"
+        },
+        {
+          "label": "Transfermarkt由来の選手プロフィール公開データ",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L67565"
+        },
+        {
+          "label": "2026年W杯ラウンド32の記録（OpenFootball）",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup.json#L904-L912"
+        },
+        {
+          "label": "A代表大会の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "2000-12-30",
+      "birthplace": "岡山県津山市",
+      "debutDate": "2023-11-16",
+      "debutDetails": "ワールドカップアジア2次予選・ミャンマー戦",
+      "honours": [
+        "2026年FIFAワールドカップに大会登録。日本はラウンド32進出。",
+        "FIFAワールドカップ2026（日本はラウンド32）・3試合出場",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・2試合出場"
+      ]
+    },
+    {
+      "id": "junnosuke-suzuki",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5588-L5595"
+        },
+        {
+          "label": "A代表デビュー（BlueList出場記録）",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/junnosuke-suzuki.html"
+        },
+        {
+          "label": "2026年W杯チュニジア戦の出場記録",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup-full.json#L2280-L2294"
+        },
+        {
+          "label": "2026年W杯ブラジル戦の出場記録",
+          "url": "https://github.com/openfootball/worldcup.json/blob/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup-full.json#L4957-L4970"
+        },
+        {
+          "label": "A代表大会の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "2003-07-12",
+      "debutDate": "2025-06-10",
+      "debutDetails": "W杯アジア最終予選のインドネシア戦。",
+      "honours": [
+        "2026年W杯ではチュニジア戦とラウンド32のブラジル戦に途中出場。",
+        "FIFAワールドカップ2026（日本はラウンド32）・2試合出場"
+      ]
+    },
+    {
+      "id": "kento-shiogai",
+      "sources": [
+        {
+          "label": "OpenFootballの2026年W杯登録資料",
+          "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5598-L5605"
+        },
+        {
+          "label": "A代表デビュー（BLUE LIST保存記録）",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/kento-shiogai.html"
+        },
+        {
+          "label": "A代表大会の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "2005-03-26",
+      "debutDate": "2026-03-28",
+      "debutDetails": "スコットランド戦",
+      "honours": [
+        "FIFAワールドカップ2026（日本はラウンド32）・1試合出場"
+      ]
+    },
+    {
+      "id": "leo-brian-kokubo",
+      "sources": [
+        {
+          "label": "BLUE LIST ベネズエラ戦",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/matches/2026-09-28-venezuela.html"
+        },
+        {
+          "label": "Football JP 選手プロフィール",
+          "url": "https://github.com/totnet31/football-jp/blob/54aeabd0b0bd01321428528e1f9432de8b238708/players/leo-kokubo/index.html"
+        },
+        {
+          "label": "JFA AFC U23アジアカップ2024",
+          "url": "https://www.jfa.jp/national_team/u23_2024/afc_u23_asiancup_2024/"
+        }
+      ],
+      "birthDate": "2001-01-23",
+      "birthplace": "千葉県",
+      "development": "柏レイソルU-18からベンフィカの下部組織に移り、ベンフィカBを経てシントトロイデンへ。",
+      "debutDate": "2026-09-28",
+      "debutDetails": "ベネズエラとの国際親善試合に先発し、前半45分間プレーした。",
+      "honours": [
+        "AFC U23アジアカップ 優勝（U-23日本代表、2024年）"
+      ]
+    },
+    {
+      "id": "koki-machida",
+      "sources": [
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "生年月日（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L47250"
+        },
+        {
+          "label": "Football JP 選手プロフィール・出身地",
+          "url": "https://github.com/totnet31/football-jp/blob/54aeabd0b0bd01321428528e1f9432de8b238708/players/koki-machida/index.html#L539-L547"
+        },
+        {
+          "label": "JFA 選手プロフィール",
+          "url": "https://www.jfa.jp/samuraiblue/member/machida_koki.html"
+        },
+        {
+          "label": "BLUE LIST A代表デビュー記録",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/hiroki-machida.html"
+        },
+        {
+          "label": "トルコ戦・アジアカップの出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "2023–24 ベルギーカップ決勝の得点記録（RSSSF）",
+          "url": "https://www.rsssf.org/tablesb/belg2024.html"
+        },
+        {
+          "label": "2024–25 ベルギー1部 最終成績（RSSSF）",
+          "url": "https://www.rsssf.org/tablesb/belg2025.html"
+        },
+        {
+          "label": "東京2020出場選手の保存記録",
+          "url": "https://github.com/kaoutharElbakouri/2021-Olympics-in-Tokyo-Data/blob/440e5fe352775f557f7fb9045f4bd4329bc7478c/Athletes.csv#L5823"
+        },
+        {
+          "label": "東京2020 男子サッカー試合結果（RSSSF）",
+          "url": "https://www.rsssf.org/tableso/ol2020f.html"
+        }
+      ],
+      "birthDate": "1997-08-25",
+      "birthplace": "茨城県つくば市",
+      "debutDate": "2023-09-12",
+      "debutDetails": "トルコとの国際親善試合に先発し、79分間プレーした。",
+      "honours": [
+        "ベルギー1部リーグ優勝（ユニオン・サン＝ジロワーズ、2024–25）",
+        "ベルギーカップ優勝・決勝で決勝点（ユニオン・サン＝ジロワーズ、2023–24）",
+        "AFCアジアカップ2023 ベスト8（日本代表、2024年開催）",
+        "東京2020オリンピック 男子サッカー4位（日本代表）",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・2試合出場"
+      ]
+    },
+    {
+      "id": "shuto-nakano",
+      "sources": [
+        {
+          "label": "2026年11月のA代表招集発表の保存記録",
+          "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_national_squad.json"
+        },
+        {
+          "label": "選手の生年月日（BLUE LIST保存記録）",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/yuto-nakano.html"
+        }
+      ],
+      "birthDate": "2000-06-27",
+      "debutDate": "2026-09-28",
+      "debutDetails": "ベネズエラ戦"
+    },
+    {
+      "id": "takumi-minamino",
+      "sources": [
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L22727"
+        },
+        {
+          "label": "A代表の初出場試合ID（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_national_performances/player_national_performances.csv#L15109"
+        },
+        {
+          "label": "2022年W杯クロアチア戦（StatsBombの試合記録）",
+          "url": "https://github.com/statsbomb/open-data/blob/4b73468fc5b0f1950f9f66fada70ad3a4f9327cb/data/events/3869219.json"
+        },
+        {
+          "label": "A代表の出場記録（11footy、2026年11月10日版）",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1995-01-16",
+      "birthplace": "大阪府泉佐野市",
+      "honours": [
+        "2022年W杯のラウンド16、クロアチア戦に86分から出場。",
+        "AFCアジアカップ2023（2024年開催、日本はベスト8）・5試合出場",
+        "FIFAワールドカップ2022（日本はベスト16）・3試合出場",
+        "AFCアジアカップ2019（日本は準優勝）・6試合出場"
+      ],
+      "firstRecordedDate": "2015-11-17",
+      "firstRecordedOpponent": "Cambodia"
+    },
+    {
+      "id": "tatsuhiro-sakamoto",
+      "sources": [
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "BLUE LIST 選手ページの保存資料",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/tatsuhiro-sakamoto.html"
+        },
+        {
+          "label": "11footy 代表戦の出場・大会記録",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1996-10-22",
+      "birthplace": "東京都",
+      "debutDate": "2021-06-07",
+      "debutDetails": "W杯アジア予選、タジキスタン戦に途中出場"
+    },
+    {
+      "id": "yuki-soma",
+      "sources": [
+        {
+          "label": "BLUE LIST 選手ページの保存資料",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/yuki-soma.html"
+        },
+        {
+          "label": "11footy 代表戦の出場・大会記録",
+          "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        }
+      ],
+      "birthDate": "1997-02-25",
+      "honours": [
+        "FIFAワールドカップ2022 ベスト16（日本代表）",
+        "FIFAワールドカップ2022（日本はベスト16）・1試合出場"
+      ],
+      "firstRecordedDate": "2022-09-27",
+      "firstRecordedOpponent": "Ecuador"
+    },
+    {
+      "id": "kuryu-matsuki",
+      "sources": [
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "日本A代表の試合・選手記録（Blue List）",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/kuryu-matsuki.html"
+        },
+        {
+          "label": "Transfermarkt由来の選手プロフィール公開データ",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L87949"
+        }
+      ],
+      "birthDate": "2003-04-30",
+      "birthplace": "北海道室蘭市",
+      "debutDate": "2026-09-24",
+      "debutDetails": "ウルグアイ戦でA代表初出場・初得点"
+    },
+    {
+      "id": "kodai-sano",
+      "sources": [
+        {
+          "label": "生年月日・出身地（Transfermarkt保存記録）",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv"
+        },
+        {
+          "label": "日本A代表の試合・選手記録（Blue List）",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/kodai-sano.html"
+        },
+        {
+          "label": "Transfermarkt由来の選手プロフィール公開データ",
+          "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L83883"
+        }
+      ],
+      "birthDate": "2003-09-25",
+      "birthplace": "岡山県津山市",
+      "debutDate": "2025-06-10",
+      "debutDetails": "ワールドカップアジア最終予選・インドネシア戦"
+    },
+    {
+      "id": "shio-fukuda",
+      "sources": [
+        {
+          "label": "日本A代表の試合・選手記録（Blue List）",
+          "url": "https://github.com/xikoutaiguang-droid/bluelist-site/blob/3b8ded55450a914c3577b15d04d8491ba25cc1d6/players/shio-fukuda.html"
+        },
+        {
+          "label": "パラグアイ戦の初出場・初得点記録",
+          "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_national_followups.json#L833-L860"
+        }
+      ],
+      "birthDate": "2004-04-08",
+      "debutDate": "2026-11-17",
+      "debutDetails": "パラグアイ戦でA代表初出場・初得点"
+    }
+  ]
+}

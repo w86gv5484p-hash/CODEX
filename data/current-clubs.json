@@ -1,0 +1,385 @@
+{
+  "checkedAt": "2026-11-19T13:20:35+00:00",
+  "reports": [
+    {
+      "playerId": "daichi-kamada",
+      "date": "2026-11-19",
+      "type": "club",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "クリスタル・パレスでリーグ戦877分出場、1得点、3アシスト。11月19日時点のFPL集計。",
+      "club": "クリスタル・パレス",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "archive": {
+        "label": "11月19日のFPL保存記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_availability.json#L27-L33"
+      },
+      "playerName": "鎌田大地",
+      "scope": "season",
+      "minutes": 877,
+      "goals": 1,
+      "assists": 3
+    },
+    {
+      "playerId": "ao-tanaka",
+      "date": "2026-11-19",
+      "type": "club",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "リーズ・ユナイテッドでリーグ戦633分出場、0得点、2アシスト。11月19日時点のFPL集計。",
+      "club": "リーズ・ユナイテッド",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "archive": {
+        "label": "11月19日のFPL保存記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_availability.json#L38-L44"
+      },
+      "playerName": "田中碧",
+      "scope": "season",
+      "minutes": 633,
+      "goals": 0,
+      "assists": 2
+    },
+    {
+      "playerId": "tatsuhiro-sakamoto",
+      "date": "2026-11-19",
+      "type": "club",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "コベントリー・シティでリーグ戦398分出場、1得点、0アシスト。11月19日時点のFPL集計。",
+      "club": "コベントリー・シティ",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "archive": {
+        "label": "11月19日のFPL保存記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_availability.json#L49-L55"
+      },
+      "playerName": "坂元達裕",
+      "scope": "season",
+      "minutes": 398,
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "playerId": "daizen-maeda",
+      "date": "2026-11-19",
+      "type": "club",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "イプスウィッチ・タウンでリーグ戦510分出場、1得点、0アシスト。11月19日時点のFPL集計。",
+      "club": "イプスウィッチ・タウン",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "archive": {
+        "label": "11月19日のFPL保存記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_availability.json#L60-L66"
+      },
+      "playerName": "前田大然",
+      "scope": "season",
+      "minutes": 510,
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "playerId": "hidemasa-morita",
+      "date": "2026-11-19",
+      "type": "club",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "ハル・シティでリーグ戦106分出場、0得点、0アシスト。11月19日時点のFPL集計。",
+      "club": "ハル・シティ",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "archive": {
+        "label": "11月19日のFPL保存記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_availability.json#L71-L77"
+      },
+      "playerName": "守田英正",
+      "scope": "season",
+      "minutes": 106,
+      "goals": 0,
+      "assists": 0
+    },
+    {
+      "playerId": "takehiro-tomiyasu",
+      "date": "2026-11-19",
+      "type": "club",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "クリスタル・パレスでリーグ戦189分出場、0得点、0アシスト。11月19日時点のFPL集計。",
+      "club": "クリスタル・パレス",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "archive": {
+        "label": "11月19日のFPL保存記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_availability.json#L82-L88"
+      },
+      "playerName": "冨安健洋",
+      "scope": "season",
+      "minutes": 189,
+      "goals": 0,
+      "assists": 0
+    },
+    {
+      "playerId": "zion-suzuki",
+      "date": "2026-11-19",
+      "type": "club",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "アストン・ヴィラでリーグ戦810分出場、0得点、0アシスト。11月19日時点のFPL集計。",
+      "club": "アストン・ヴィラ",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "archive": {
+        "label": "11月19日のFPL保存記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_availability.json#L93-L99"
+      },
+      "playerName": "鈴木彩艶",
+      "scope": "season",
+      "minutes": 810,
+      "goals": 0,
+      "assists": 0
+    },
+    {
+      "playerId": "kento-shiogai",
+      "date": "2026-11-07",
+      "type": "club",
+      "title": "ヘルタ戦でリーグ初ゴール",
+      "summary": "後半から出場し47分に得点。今季リーグ戦の出場10試合目でした。チームは1対2で敗戦。",
+      "club": "ヴォルフスブルク",
+      "league": "ドイツ2部",
+      "source": {
+        "label": "ブンデスリーガ公式試合記事",
+        "url": "https://www.bundesliga.com/de/2bundesliga/news/hertha-bsc-vfl-wolfsburg-spieltag-11-spielbericht-highlights-39931"
+      },
+      "archive": {
+        "label": "11月15日の試合報道の記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_national_followups.json#L50-L74"
+      },
+      "goals": 1
+    },
+    {
+      "playerId": "kento-shiogai",
+      "date": "2026-10-28",
+      "type": "club",
+      "title": "フライブルク戦で2得点",
+      "summary": "ドイツ杯2回戦で8分と43分に得点。ヴォルフスブルクは2対3で敗戦。",
+      "club": "ヴォルフスブルク",
+      "league": "DFBポカール",
+      "source": {
+        "label": "Bulinewsの試合報道",
+        "url": "https://bulinews.com/dfb-pokal-supersub-goto-saves-the-day-for-freiburg-send-wolfsburg-packing"
+      },
+      "archive": {
+        "label": "11月15日の試合報道の記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_national_followups.json#L75-L107"
+      },
+      "goals": 2
+    },
+    {
+      "playerId": "keisuke-goto",
+      "date": "2026-10-28",
+      "type": "club",
+      "title": "ヴォルフスブルク戦で2得点",
+      "summary": "ドイツ杯2回戦で途中出場で2得点。SCフライブルクは3対2で勝利。",
+      "club": "SCフライブルク",
+      "league": "DFBポカール",
+      "source": {
+        "label": "Bulinewsの試合報道",
+        "url": "https://bulinews.com/dfb-pokal-supersub-goto-saves-the-day-for-freiburg-send-wolfsburg-packing"
+      },
+      "archive": {
+        "label": "11月15日の試合報道の記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_national_followups.json#L75-L107"
+      },
+      "goals": 2
+    },
+    {
+      "playerId": "ayase-ueda",
+      "date": "2026-10-13",
+      "type": "club",
+      "title": "アーセナル戦に出場",
+      "summary": "リールで欧州CLに出場し、負傷のため78分に交代。リール加入直後の公式戦4試合では3得点。",
+      "club": "LOSCリール",
+      "league": "UEFAチャンピオンズリーグ",
+      "source": {
+        "label": "ESPN 試合記録",
+        "url": "https://www.espn.com/soccer/match/_/gameId/401915417"
+      },
+      "archive": {
+        "label": "11月15日の試合報道の記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_national_followups.json#L179-L235"
+      }
+    },
+    {
+      "playerId": "tatsuhiro-sakamoto",
+      "date": "2026-10-13",
+      "type": "club",
+      "title": "ニューカッスル戦で29分出場",
+      "summary": "コベントリー・シティで29分出場、0得点、0アシストとFPLに記録。",
+      "club": "コベントリー・シティ",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "archive": {
+        "label": "10月15日のFPL保存記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_jp_week.json"
+      },
+      "minutes": 29,
+      "goals": 0,
+      "assists": 0
+    },
+    {
+      "playerId": "daichi-kamada",
+      "date": "2026-10-11",
+      "type": "club",
+      "title": "ノッティンガム・フォレスト戦で1得点",
+      "summary": "クリスタル・パレスで89分出場、1得点、0アシストとFPLに記録。",
+      "club": "クリスタル・パレス",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "archive": {
+        "label": "FPLの試合別保存記録",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/blob/d7b05b51d137bfefef4b692386d18c610975b9b9/data/2026-27/gws/merged_gw.csv#L3311"
+      },
+      "minutes": 89,
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "playerId": "ao-tanaka",
+      "date": "2026-10-10",
+      "type": "club",
+      "title": "アーセナル戦で70分出場",
+      "summary": "リーズ・ユナイテッドで70分出場、0得点、0アシストとFPLに記録。",
+      "club": "リーズ・ユナイテッド",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "archive": {
+        "label": "FPLの試合別保存記録",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/blob/d7b05b51d137bfefef4b692386d18c610975b9b9/data/2026-27/gws/merged_gw.csv#L3412"
+      },
+      "minutes": 70,
+      "goals": 0,
+      "assists": 0
+    },
+    {
+      "playerId": "daizen-maeda",
+      "date": "2026-10-10",
+      "type": "club",
+      "title": "フラム戦で80分出場",
+      "summary": "イプスウィッチ・タウンで80分出場、0得点、0アシストとFPLに記録。",
+      "club": "イプスウィッチ・タウン",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "archive": {
+        "label": "FPLの試合別保存記録",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/blob/d7b05b51d137bfefef4b692386d18c610975b9b9/data/2026-27/gws/merged_gw.csv#L3697"
+      },
+      "minutes": 80,
+      "goals": 0,
+      "assists": 0
+    },
+    {
+      "playerId": "takehiro-tomiyasu",
+      "date": "2026-09-20",
+      "type": "club",
+      "title": "リーズ戦に出場",
+      "summary": "クリスタル・パレスで出場し、前半にふくらはぎを痛めて交代しました。",
+      "club": "クリスタル・パレス",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "ESPN 試合記録",
+        "url": "https://www.espn.com/soccer/match/_/gameId/401879273"
+      },
+      "archive": {
+        "label": "11月16日の試合報道の記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_national_followups.json#L405-L431"
+      }
+    },
+    {
+      "playerId": "ao-tanaka",
+      "date": "2026-09-15",
+      "type": "club",
+      "title": "ニューカッスル戦で1アシスト",
+      "summary": "リーズ・ユナイテッドで71分出場、0得点、1アシストとFPLに記録。",
+      "club": "リーズ・ユナイテッド",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "archive": {
+        "label": "FPLの試合別保存記録",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/blob/d7b05b51d137bfefef4b692386d18c610975b9b9/data/2026-27/gws/merged_gw.csv#L2022"
+      },
+      "minutes": 71,
+      "goals": 0,
+      "assists": 1
+    },
+    {
+      "playerId": "daichi-kamada",
+      "date": "2026-09-12",
+      "type": "club",
+      "title": "イプスウィッチ戦で2アシスト",
+      "summary": "クリスタル・パレスで83分出場、0得点、2アシストとFPLに記録。",
+      "club": "クリスタル・パレス",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "archive": {
+        "label": "FPLの試合別保存記録",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/blob/d7b05b51d137bfefef4b692386d18c610975b9b9/data/2026-27/gws/merged_gw.csv#L2097"
+      },
+      "minutes": 83,
+      "goals": 0,
+      "assists": 2
+    },
+    {
+      "playerId": "ayase-ueda",
+      "date": "2026-09-03",
+      "type": "club",
+      "title": "トゥールーズ戦でデビューし決勝点",
+      "summary": "リーグ第3節に途中出場。73分に決勝点を決めました。",
+      "club": "LOSCリール",
+      "league": "リーグ・アン",
+      "source": {
+        "label": "ESPN 試合記録",
+        "url": "https://www.espn.com/soccer/match/_/gameId/401876468"
+      },
+      "archive": {
+        "label": "11月15日の試合報道の記録",
+        "url": "https://github.com/issakatou2-bit/sports-notify-mvp/blob/f956522507b7a7516bd87f95dde8c253eba2b14c/data/soccer_national_followups.json#L179-L203"
+      },
+      "goals": 1
+    }
+  ]
+}

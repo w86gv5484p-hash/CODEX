@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Import recent club appearances and injury designations from API-FOOTBALL."""
 
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 import json
 import os
 from pathlib import Path
@@ -12,13 +12,12 @@ import unicodedata
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
-from zoneinfo import ZoneInfo
 
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE_URL = "https://v3.football.api-sports.io"
 SOURCE = {"label": "API-FOOTBALL", "url": "https://www.api-football.com/"}
-JST = ZoneInfo("Asia/Tokyo")
+JST = timezone(timedelta(hours=9), "JST")
 TEAM_ALIASES = {
     "brighton hove albion": "Brighton",
     "borussia monchengladbach": "Borussia Mönchengladbach",
@@ -241,7 +240,8 @@ def main():
         budget = int(os.environ.get("API_FOOTBALL_REQUEST_BUDGET") or "90")
         if budget < 1:
             raise FeedError("API_FOOTBALL_REQUEST_BUDGET must be a positive integer.")
-        curated = json.loads((ROOT / "data/players.json").read_text(encoding="utf-8"))["players"]
+        squad_path = ROOT / "data/current-squad.json"
+        curated = json.loads(squad_path.read_text(encoding="utf-8")).get("players", []) if squad_path.exists() else []
         if not curated:
             raise FeedError("The curated squad is empty. Club data was preserved.")
         path = ROOT / "data/clubs.json"

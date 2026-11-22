@@ -15,7 +15,6 @@ import sys
 import unicodedata
 from urllib.parse import urljoin, urlsplit
 from urllib.request import Request, urlopen
-from zoneinfo import ZoneInfo
 
 JFA = "https://www.jfa.jp"
 SCHEDULE = f"{JFA}/samuraiblue/schedule_result/"
@@ -358,7 +357,7 @@ def main():
     args = parser.parse_args()
     previous = json.loads(args.output.read_text(encoding="utf-8")) if args.output.exists() else {}
     now = datetime.now(timezone.utc)
-    today = now.astimezone(ZoneInfo("Asia/Tokyo")).date()
+    today = now.astimezone(timezone(timedelta(hours=9), "JST")).date()
     checked = now.isoformat(timespec="seconds").replace("+00:00", "Z")
     prior_feeds = previous.get("feeds", {})
     with ThreadPoolExecutor(max_workers=3) as executor:

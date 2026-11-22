@@ -1,0 +1,280 @@
+{
+  "checkedAt": "2026-11-19T12:56:26+00:00",
+  "profiles": [
+    {
+      "id": "zion-suzuki",
+      "birthDate": "2002-08-21",
+      "club": "パルマ",
+      "clubLatin": "Parma",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5348-L5355"
+      }
+    },
+    {
+      "id": "yukinari-sugawara",
+      "birthDate": "2000-06-28",
+      "club": "ヴェルダー・ブレーメン",
+      "clubLatin": "SV Werder Bremen",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5358-L5365"
+      }
+    },
+    {
+      "id": "shogo-taniguchi",
+      "birthDate": "1991-07-15",
+      "club": "シント＝トロイデン",
+      "clubLatin": "Sint-Truiden VV",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5368-L5375"
+      }
+    },
+    {
+      "id": "ko-itakura",
+      "birthDate": "1997-01-27",
+      "club": "アヤックス",
+      "clubLatin": "AFC Ajax",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5378-L5385"
+      }
+    },
+    {
+      "id": "yuto-nagatomo",
+      "birthDate": "1986-09-12",
+      "club": "FC東京",
+      "clubLatin": "FC Tokyo",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5388-L5395"
+      }
+    },
+    {
+      "id": "ao-tanaka",
+      "birthDate": "1998-09-10",
+      "club": "リーズ・ユナイテッド",
+      "clubLatin": "Leeds United FC",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5408-L5415"
+      }
+    },
+    {
+      "id": "takefusa-kubo",
+      "birthDate": "2001-06-04",
+      "club": "レアル・ソシエダ",
+      "clubLatin": "Real Sociedad",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5418-L5425"
+      }
+    },
+    {
+      "id": "keisuke-goto",
+      "birthDate": "2005-06-03",
+      "club": "シント＝トロイデン",
+      "clubLatin": "Sint-Truiden VV",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5428-L5435"
+      }
+    },
+    {
+      "id": "ritsu-doan",
+      "birthDate": "1998-06-16",
+      "club": "アイントラハト・フランクフルト",
+      "clubLatin": "Eintracht Frankfurt",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5438-L5445"
+      }
+    },
+    {
+      "id": "daizen-maeda",
+      "birthDate": "1997-10-20",
+      "club": "セルティック",
+      "clubLatin": "Celtic FC",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5448-L5455"
+      }
+    },
+    {
+      "id": "keisuke-osako",
+      "birthDate": "1999-07-28",
+      "club": "サンフレッチェ広島",
+      "clubLatin": "Sanfrecce Hiroshima",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5458-L5465"
+      }
+    },
+    {
+      "id": "keito-nakamura",
+      "birthDate": "2000-07-28",
+      "club": "スタッド・ランス",
+      "clubLatin": "Stade Reims",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5468-L5475"
+      }
+    },
+    {
+      "id": "junya-ito",
+      "birthDate": "1993-03-09",
+      "club": "KRCゲンク",
+      "clubLatin": "KRC Genk",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5478-L5485"
+      }
+    },
+    {
+      "id": "daichi-kamada",
+      "birthDate": "1996-08-05",
+      "club": "クリスタル・パレス",
+      "clubLatin": "Crystal Palace FC",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5488-L5495"
+      }
+    },
+    {
+      "id": "tsuyoshi-watanabe",
+      "birthDate": "1997-02-05",
+      "club": "フェイエノールト",
+      "clubLatin": "Feyenoord Rotterdam",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5498-L5505"
+      }
+    },
+    {
+      "id": "yuito-suzuki",
+      "birthDate": "2001-10-25",
+      "club": "SCフライブルク",
+      "clubLatin": "SC Freiburg",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5508-L5515"
+      }
+    },
+    {
+      "id": "ayase-ueda",
+      "birthDate": "1998-08-28",
+      "club": "フェイエノールト",
+      "clubLatin": "Feyenoord Rotterdam",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5518-L5525"
+      }
+    },
+    {
+      "id": "koki-ogawa",
+      "birthDate": "1997-08-08",
+      "club": "NECナイメヘン",
+      "clubLatin": "NEC Nijmegen",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5528-L5535"
+      }
+    },
+    {
+      "id": "ayumu-seko",
+      "birthDate": "2000-06-07",
+      "club": "ル・アーヴル",
+      "clubLatin": "Le Havre AC",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5538-L5545"
+      }
+    },
+    {
+      "id": "hiroki-ito",
+      "birthDate": "1999-05-12",
+      "club": "バイエルン・ミュンヘン",
+      "clubLatin": "FC Bayern München",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5548-L5555"
+      }
+    },
+    {
+      "id": "takehiro-tomiyasu",
+      "birthDate": "1998-11-05",
+      "club": "アヤックス",
+      "clubLatin": "AFC Ajax",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5558-L5565"
+      }
+    },
+    {
+      "id": "tomoki-hayakawa",
+      "birthDate": "1999-03-03",
+      "club": "鹿島アントラーズ",
+      "clubLatin": "Kashima Antlers",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5568-L5575"
+      }
+    },
+    {
+      "id": "kaishu-sano",
+      "birthDate": "2000-12-30",
+      "club": "マインツ05",
+      "clubLatin": "1. FSV Mainz 05",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5578-L5585"
+      }
+    },
+    {
+      "id": "junnosuke-suzuki",
+      "birthDate": "2003-07-12",
+      "club": "FCコペンハーゲン",
+      "clubLatin": "FC København",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5588-L5595"
+      }
+    },
+    {
+      "id": "kento-shiogai",
+      "birthDate": "2005-03-26",
+      "club": "VfLヴォルフスブルク",
+      "clubLatin": "VfL Wolfsburg",
+      "asOf": "2026-06-15",
+      "source": {
+        "label": "OpenFootballの2026年W杯登録資料",
+        "url": "https://github.com/openfootball/worldcup.json/blob/aa68096aa2a7aa93540e48fe9dfbce14b3dfe548/2026/worldcup.squads.json#L5598-L5605"
+      }
+    }
+  ]
+}

@@ -2,10 +2,13 @@ const main = document.querySelector("#main");
 const dialog = document.querySelector("#detail-dialog");
 const dialogContent = document.querySelector("#dialog-content");
 const statusButton = document.querySelector("#data-status");
+let localUpdateMessage = "";
+let localUpdateRunning = false;
 
 const sources = {
   jfa: { label: "JFA 男子日本代表", url: "https://www.jfa.jp/samuraiblue/" },
   schedule: { label: "JFA 試合日程・結果", url: "https://www.jfa.jp/samuraiblue/schedule_result/" },
+  fifa: { label: "FIFA 公式ランキング", url: "https://inside.fifa.com/fifa-world-ranking/men" },
 };
 
 const sections = new Set(["overview", "matches", "players", "clubs", "health"]);
@@ -56,11 +59,16 @@ const dateLabel = value => /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(
 const shortDate = value => /^\d{4}-\d{2}-\d{2}$/.test(value) ? value.replaceAll("-", ".") : "日付未定";
 const byLatest = (a, b) => String(b.date ?? "").localeCompare(String(a.date ?? ""));
 const blank = { fixtures: [], callups: [], players: [], checkedAt: null };
-const feedFiles = { jfa: "jfa", roster: "players", clubs: "clubs" };
-let feeds = { jfa: blank, roster: blank, clubs: blank };
+const feedFiles = {
+  jfa: "jfa", roster: "players", clubs: "clubs", ranking: "ranking", lineups: "lineups", profiles: "profiles",
+  portraits: "portraits", squad: "current-squad", clubReports: "current-clubs", healthReports: "current-health", fpl: "fpl",
+  biographies: "player-biographies",
+};
+const feeds = Object.fromEntries(Object.keys(feedFiles).map(key => [key, blank]));
 let failedFeeds = new Set();
 let shownPage = "";
 let reportFilter = "all";
+let rosterSelection = "current";
 
 function externalLink(source) {
   if (!source?.url || !/^https:\/\//i.test(source.url)) return "";
@@ -85,10 +93,11 @@ function tag(type, label = typeNames[type]) {
 
 function route() {
   if (location.hash === "#main") return [shownPage || "overview", ""];
-  const [tab, id = ""] = location.hash.slice(1).split("/");
-  let decoded = "";
-  try { decoded = decodeURIComponent(id); } catch { /* A malformed link can still open its tab. */ }
-  return [sections.has(tab) ? tab : "overview", decoded];
+  const [tab, id = "", participant = ""] = location.hash.slice(1).split("/");
+  const decoded = value => {
+    try { return decodeURIComponent(value); } catch { return ""; }
+  };
+  return [sections.has(tab) ? tab : "overview", decoded(id), decoded(participant)];
 }
 
 function fixtures() {
@@ -107,30 +116,142 @@ function callups() {
 
 function playerReports(player) {
   const tracked = feeds.clubs.players?.find(item => item.id === player.id);
-  const reports = [...(player.reports ?? []), ...(tracked?.reports ?? [])];
+  const liveFpl = feeds.fpl.reports ?? [];
+  const researched = [...(feeds.clubReports.reports ?? []), ...(feeds.healthReports.reports ?? [])]
+    .filter(report => report.playerId === player.id && !liveFpl.some(live => live.playerId === report.playerId && live.date >= report.date
+      && (report.scope === "season" && live.scope === "season"
+        || report.type === "injury" && report.source?.label.startsWith("Fantasy Premier League") && live.type === "injury")));
+  researched.push(...liveFpl.filter(report => report.playerId === player.id));
+  const reports = [...(player.reports ?? []), ...(tracked?.reports ?? []), ...researched];
   return [...new Map(reports.map(report => [`${report.date}:${report.type}:${report.title}`, report])).values()].sort(byLatest);
 }
 
-function players() {
-  const roster = feeds.roster.players ?? [];
-  const latest = callups().find(callup => callup.players?.length);
-  if (!latest || latest.date < (feeds.roster.rosterDate ?? "")) return roster;
-  const nameKey = value => String(value ?? "").normalize("NFKC").replace(/\s/g, "");
-  const squad = latest.players.map(player => {
-    const existing = roster.find(item => item.id === player.id || nameKey(item.name) === nameKey(player.name));
-    return { ...existing, ...player, id: existing?.id ?? player.id, callup: latest.title, source: player.source ?? latest.source };
+function portraitFor(player) {
+  const portrait = feeds.portraits.portraits?.find(item => item.id === player.id);
+  if (portrait?.verification?.method !== "commons-single-person-v1") return null;
+  const path = portrait?.path ?? "";
+  if (/^assets\/portraits\/[a-z0-9-]+\.(?:jpg|jpeg|png|webp)$/i.test(path)
+    || /^data:image\/(?:jpeg|png|webp);base64,[\w+/=]+$/.test(path)) return portrait;
+  return null;
+}
+
+function portraitMarkup(player, portrait, lazy = false) {
+  return `<span class="portrait-frame">
+    ${portrait ? `<img src="${esc(portrait.path)}" alt="${lazy ? "" : esc(player.name + "の写真")}" ${lazy ? 'loading="lazy"' : ""}>` : ""}
+    <span class="portrait-placeholder" aria-hidden="true">${icon("people", 21)}</span>
+  </span>`;
+}
+
+function currentSquad() {
+  const saved = feeds.squad;
+  const confirmed = callups().find(item => item.players?.length && item.date >= (feeds.roster.rosterDate ?? ""));
+  if (confirmed && (!saved.publishedAt || confirmed.date > saved.publishedAt)) {
+    return { ...confirmed, publishedAt: confirmed.date, coach: confirmed.coach ?? saved.coach };
+  }
+  return saved;
+}
+
+function squadPlayers() {
+  const squad = currentSquad();
+  const { upcoming, recent } = fixtures();
+  const matches = [...upcoming, ...recent];
+  return (squad.players ?? []).map(player => {
+    const withdrawal = squad.withdrawals?.find(item => item.playerId === player.id);
+    const match = withdrawal && matches.find(item => item.id === withdrawal.matchId);
+    const matchLabel = match ? local(match.opponent) + "戦" : withdrawal?.matchDate ? shortDate(withdrawal.matchDate) + "の試合" : "対象試合";
+    return { ...player, callup: player.callup || squad.title, source: player.source ?? squad.source, clubAsOf: squad.publishedAt,
+      status: withdrawal ? `${matchLabel}のみ不参加（${withdrawal.reason}）` : player.status, statusSource: withdrawal?.source };
   });
-  return [...squad, ...roster.filter(player => !squad.some(member => member.id === player.id))];
+}
+
+function players() {
+  const playersById = new Map((feeds.roster.players ?? []).map(player => [player.id, player]));
+  for (const player of squadPlayers()) playersById.set(player.id, player);
+  for (const player of feeds.clubReports.players ?? []) {
+    const existing = playersById.get(player.id);
+    if (!existing || (player.clubAsOf && player.clubAsOf >= (currentSquad().publishedAt ?? ""))) {
+      playersById.set(player.id, { ...existing, ...player, source: existing?.source ?? player.source });
+    }
+  }
+  const reportedClubs = [...(feeds.clubReports.reports ?? []), ...(feeds.fpl.reports ?? [])].sort(byLatest);
+  for (const report of reportedClubs) {
+    if (report.type !== "club" || !report.club) continue;
+    const existing = playersById.get(report.playerId);
+    if (existing?.clubAsOf && existing.clubAsOf > report.date) continue;
+    if (!existing && !report.playerName) continue;
+    playersById.set(report.playerId, {
+      id: report.playerId, name: report.playerName, ...existing, club: report.club, league: report.league,
+      clubAsOf: report.date, clubSource: report.archive ?? report.source,
+    });
+  }
+  return [...playersById.values()];
+}
+
+function displayedRoster() {
+  return rosterSelection === "archive" ? feeds.roster.players ?? [] : squadPlayers();
 }
 
 function allReports() {
-  return players().flatMap(player => playerReports(player).map(report => ({
+  const known = players();
+  const reports = known.flatMap(player => playerReports(player).map(report => ({
     ...report, playerId: player.id, playerName: player.name,
-  }))).sort(byLatest);
+  })));
+  const knownIds = new Set(known.map(player => player.id));
+  return [...reports, ...[...(feeds.clubReports.reports ?? []), ...(feeds.healthReports.reports ?? []), ...(feeds.fpl.reports ?? [])]
+    .filter(report => !knownIds.has(report.playerId))].sort(byLatest);
 }
 
 function matchId(match) {
   return encodeURIComponent(match.id);
+}
+
+function findLineup(match) {
+  return feeds.lineups.lineups?.find(lineup => lineup.matchId === match.id
+    || (lineup.date === match.date && local(lineup.opponent) === local(match.opponent)));
+}
+
+function lineupPitch(match, lineup) {
+  const lines = [...new Set(lineup.players.map(player => player.line))].sort((a, b) => b - a);
+  return `<div class="match-lineup">
+    <div class="lineup-title"><h3>先発フォーメーション</h3><strong>${esc(lineup.formation)}</strong></div>
+    <div class="lineup-pitch" aria-label="先発選手。ゴールキーパーを下に表示">
+      ${lines.map(line => `<div class="lineup-row">
+        ${lineup.players.filter(player => player.line === line).sort((a, b) => a.slot - b.slot).map(player => `
+          <a class="lineup-player" href="#matches/${matchId(match)}/${encodeURIComponent(player.id)}" aria-label="${esc(player.name)}の選手詳細">
+            <span class="shirt-number" aria-hidden="true">${esc(player.number ?? (line === 0 ? "GK" : "•"))}</span>
+            <span>${esc(player.name)}</span>
+          </a>`).join("")}
+      </div>`).join("")}
+    </div>
+    <p class="lineup-source">${externalLink(lineup.source)}</p>
+  </div>`;
+}
+
+function rankingPanel() {
+  const { rank, previousRank, points, publishedAt, source, archived } = feeds.ranking;
+  const valid = Number.isInteger(rank) && rank > 0;
+  const change = valid && Number.isInteger(previousRank) ? previousRank - rank : null;
+  const changeText = change === null ? "" : change === 0 ? "前回と同じ" : `前回比 ${change > 0 ? "↑" : "↓"} ${Math.abs(change)}位`;
+  return `<section class="panel ranking-panel" aria-labelledby="fifa-rank-title">
+    <h2 class="panel-kicker" id="fifa-rank-title">${icon("chart", 16)} FIFA 男子世界ランキング</h2>
+    ${valid ? `<div class="ranking-value"><strong>${rank}<span>位</span></strong>
+      ${changeText ? `<span class="ranking-change ${change > 0 ? "rank-up" : change < 0 ? "rank-down" : ""}">${changeText}</span>` : ""}</div>
+      <p>${esc(publishedAt ? dateLabel(publishedAt) + " 発表" : "発表日未確認")}${Number.isFinite(points) ? ` · ${new Intl.NumberFormat("ja-JP", { maximumFractionDigits: 2 }).format(points)} pt` : ""}</p>
+      ${archived ? '<p>保存された発表時点の順位です。</p>' : ""}`
+      : "<p class=\"ranking-missing\">順位を確認できていません。</p>"}
+    ${externalLink(source ?? sources.fifa)}
+  </section>`;
+}
+
+function coachPanel() {
+  const { coach, previousCoach } = currentSquad();
+  if (!coach?.name && !previousCoach?.name) return "";
+  return `<section class="panel coach-panel" aria-labelledby="coach-title">
+    <h2 class="panel-kicker" id="coach-title">${icon("people", 16)} 代表監督</h2>
+    ${[coach, previousCoach].filter(person => person?.name).map(person => `
+      <div class="coach-row"><div><span>${esc(person.role ?? "監督")}</span><strong>${esc(person.name)}</strong></div>
+        <p>${person.lastMatchDate ? `最終指揮 ${dateLabel(person.lastMatchDate)} ` : person.asOf ? `${dateLabel(person.asOf)}報道 ` : ""}${externalLink(person.source)}</p></div>`).join("")}
+  </section>`;
 }
 
 function matchForm(score) {
@@ -209,6 +330,8 @@ function formChart(matches) {
 
 function overview() {
   const { upcoming, recent } = fixtures();
+  const lineupMatch = recent.find(match => findLineup(match));
+  const squad = currentSquad();
   const [latestCallup] = callups();
   const reports = allReports();
   const club = reports.find(item => item.type === "club");
@@ -226,20 +349,31 @@ function overview() {
       </div>
       <span class="image-credit">AI生成イメージ</span>
     </section>
-    ${featureMatch(upcoming[0] || recent[0])}
+    <div class="hero-side">${featureMatch(upcoming[0] || recent[0])}${rankingPanel()}</div>
   </div>
   <div class="dashboard-grid">
     <section>
       ${sectionHeading("代表の最新情報")}
       <div class="story-grid">
-        ${story("callup", "players", latestCallup?.title, latestCallup?.date, "日本代表の招集・登録メンバー")}
+        ${story("callup", "players", squad.title || latestCallup?.title, squad.publishedAt || latestCallup?.date, "日本代表の招集・登録メンバー")}
         ${story("club", "clubs", club ? club.playerName + "｜" + club.title : "", club?.date, "所属クラブでの活動")}
         ${story("health", "health", medical ? medical.playerName + "｜" + medical.title : "", medical?.date, "選手の負傷・復帰見込み")}
       </div>
     </section>
-    <section>${sectionHeading("直近の成績", "matches", "全日程")}${formChart(recent)}</section>
+    <div class="stack">
+      <section>${sectionHeading("直近の成績", "matches", "全日程")}${formChart(recent)}</section>
+      ${coachPanel()}
+    </div>
   </div>
-  ${recent.length ? `<section class="recent-section">${sectionHeading("試合結果", "matches", "一覧を見る")}${matchList(recent.slice(0, 3))}</section>` : ""}`;
+  <div class="dashboard-grid">
+    <section>${sectionHeading("試合結果", "matches", "一覧を見る")}${recent.length ? matchList(recent.slice(0, 3)) : emptyState("表示できる結果はありません。", sources.schedule)}</section>
+    <section>${sectionHeading("フォーメーション")}
+      ${lineupMatch ? `<div class="panel featured-lineup">
+        <a class="panel-link" href="#matches/${matchId(lineupMatch)}">${shortDate(lineupMatch.date)} vs ${esc(local(lineupMatch.opponent))}${icon("arrow", 15)}</a>
+        ${lineupPitch(lineupMatch, findLineup(lineupMatch))}
+      </div>` : emptyState("出典で確認できた先発布陣を掲載します。", sources.jfa)}
+    </section>
+  </div>`;
 }
 
 function matchesPage() {
@@ -257,14 +391,17 @@ function matchesPage() {
 function playerCards(query = "", position = "all") {
   const simplify = value => String(value ?? "").normalize("NFKC").toLocaleLowerCase("ja").replace(/\s/g, "");
   const key = simplify(query);
-  const visible = players().filter(player => (position === "all" || player.position === position)
+  const roster = displayedRoster();
+  const visible = roster.filter(player => (position === "all" || player.position === position || player.position?.split("/").includes(position))
     && [player.name, player.latin, player.club].some(field => simplify(field).includes(key)));
-  if (!visible.length) return emptyState(players().length ? "条件に一致する選手がいません。" : "表示できる選手情報を取得できていません。", players().length ? undefined : sources.jfa);
+  if (!visible.length) return emptyState(roster.length ? "条件に一致する選手がいません。" : "この一覧で確認できる選手情報はありません。", roster.length ? undefined : sources.jfa);
   return `<div class="player-grid">${visible.map(player => `
     <a class="panel player-card" href="#players/${encodeURIComponent(player.id)}">
-      ${tag("callup", player.position || "選手")}${Number.isInteger(player.number) ? `<span class="player-number" aria-label="登録番号 ${player.number}">#${player.number}</span>` : ""}<strong>${esc(player.name)}</strong>
+      ${tag("callup", player.position || "選手")}${Number.isInteger(player.number) ? `<span class="player-number" aria-label="登録番号 ${player.number}">#${player.number}</span>` : ""}
+      <div class="player-card-identity">${portraitMarkup(player, portraitFor(player), true)}<div><strong>${esc(player.name)}</strong>
       ${player.latin ? `<small>${esc(player.latin)}</small>` : ""}
       <small>${esc(player.club || "所属情報未確認")}</small>
+      ${player.status ? `<small>${esc(player.status)}</small>` : ""}</div></div>
     </a>`).join("")}</div>`;
 }
 
@@ -275,38 +412,46 @@ function reportsMarkup(reports) {
       <h3>${esc(report.playerName ? report.playerName + "｜" + report.title : report.title)}</h3>
       ${report.summary ? `<p>${esc(report.summary)}</p>` : ""}
       ${externalLink(report.source)}
+      ${externalLink(report.archive)}
+      ${report.source?.archiveUrl ? externalLink({ label: "照合資料", url: report.source.archiveUrl }) : ""}
     </article>`).join("")}</div>`;
 }
 
 function playersPage() {
   const bulletins = callups();
   const roster = feeds.roster;
+  const squad = currentSquad();
+  const archive = rosterSelection === "archive";
   return `${viewHeading("代表選手", "招集発表と登録メンバーを確認できます。選手を開くと、所属クラブや活動の出典を表示します。")}
   <div class="view-columns roster-layout">
     <section class="roster-members">
-      ${sectionHeading("登録メンバー")}
-      ${roster.rosterDate ? `<p class="roster-note">${dateLabel(roster.rosterDate)} 時点の大会登録情報を含みます。${externalLink(roster.officialRosterSource || roster.rosterSource)}</p>` : ""}
+      ${sectionHeading(archive ? "過去の大会登録メンバー" : "確認できた直近の招集")}
+      ${archive && roster.rosterDate ? `<p class="roster-note">${dateLabel(roster.rosterDate)} 時点。${externalLink(roster.officialRosterSource || roster.rosterSource)}</p>` : ""}
+      ${!archive && squad.publishedAt ? `<p class="roster-note">${esc(squad.title)} · ${dateLabel(squad.publishedAt)}発表 ${squadPlayers().length}人。${externalLink(squad.officialSource ?? squad.source)} ${squad.officialSource ? externalLink(squad.source) : ""}</p>` : ""}
       <div class="controls">
+        <select id="roster-filter" aria-label="招集一覧を選択"><option value="current" ${!archive ? "selected" : ""}>直近の招集</option><option value="archive" ${archive ? "selected" : ""}>2026年W杯の登録</option></select>
         <input type="search" id="player-search" aria-label="選手名またはクラブ名で検索" placeholder="選手名・クラブ名を検索">
-        <select id="position-filter" aria-label="ポジションで絞り込む"><option value="all">全ポジション</option>${Object.entries(positionNames).map(([position, name]) => `<option value="${position}">${position} · ${name}</option>`).join("")}</select>
+        <select id="position-filter" aria-label="ポジションで絞り込む"><option value="all">全ポジション</option>${Object.entries(positionNames).map(([position, name]) => `<option value="${position}">${position} · ${name}</option>`).join("")}${!archive ? '<option value="MF/FW">MF/FW（JFA発表の区分）</option>' : ""}</select>
       </div>
       <div id="player-results" aria-live="polite">${playerCards()}</div>
     </section>
     <div class="stack">
+      ${coachPanel()}
       <section class="roster-bulletins">${sectionHeading("招集発表")}${bulletins.length ? reportsMarkup(bulletins.map(item => ({ ...item, type: "callup" }))) : emptyState("最新の招集発表はアプリで未確認です。", sources.jfa)}</section>
-      ${players().length ? `<section class="roster-pitch">${sectionHeading("ポジション別の人数")}${positionPitch()}</section>` : ""}
+      ${displayedRoster().length ? `<section class="roster-pitch">${sectionHeading("ポジション別の人数")}${positionPitch()}</section>` : ""}
     </div>
   </div>`;
 }
 
 function positionPitch() {
-  const roster = players();
+  const roster = displayedRoster();
+  const positions = [...new Set(roster.map(player => player.position))].filter(Boolean);
   return `<div class="panel pitch-panel">
     <p>選ぶと登録メンバーを絞り込めます。</p>
     <div class="pitch">
-      ${["FW", "MF", "DF", "GK"].map(position => {
+      ${["FW", "MF", "MF/FW", "DF", "GK"].filter(position => positions.includes(position)).map(position => {
         const count = roster.filter(player => player.position === position).length;
-        return `<button class="pitch-position" data-position="${position}" aria-pressed="false" aria-label="${positionNames[position]} ${count}人"><span>${position}</span><strong>${count}</strong></button>`;
+        return `<button class="pitch-position" data-position="${position}" aria-pressed="false" aria-label="${positionNames[position] ?? position} ${count}人"><span>${position}</span><strong>${count}</strong></button>`;
       }).join("")}
     </div>
   </div>`;
@@ -316,7 +461,7 @@ function clubsPage() {
   const reports = allReports().filter(report => report.type === "club");
   return `${viewHeading("クラブでの活動", "代表登録選手の所属クラブでの出場記録を、確認できたものから掲載します。")}
     <div class="view-columns">
-      <section>${sectionHeading("出場レポート")}${reports.length ? reportsMarkup(reports) : emptyState("掲載できるクラブ活動の報告はありません。")}</section>
+      <section>${sectionHeading("出場・成績レポート")}${reports.length ? reportsMarkup(reports) : emptyState("出典付きの出場記録を取得できていません。")}</section>
       <section>${sectionHeading("選手別の情報")}<div class="panel empty"><p>所属クラブや活動履歴は選手詳細で確認できます。</p><p><a class="source-link" href="#players">代表選手を探す ${icon("arrow", 14)}</a></p></div></section>
     </div>`;
 }
@@ -332,6 +477,7 @@ function healthPage() {
     <div class="controls"><select id="health-filter" aria-label="報告の種類で絞り込む">
       <option value="all">すべての報告</option><option value="injury">負傷</option><option value="return">復帰・見込み</option>
     </select></div>
+    <p class="roster-note">日付は発表または確認の日付です。復帰見込みは予定で、実戦復帰を確認できた場合は別に表示します。</p>
     <div id="health-results" aria-live="polite">${healthResults()}</div>`;
 }
 
@@ -349,38 +495,89 @@ function showDialog(content) {
   if (!dialog.open) dialog.showModal();
 }
 
-function showDetails(page, id) {
+function biographySection(player, profile) {
+  const biography = feeds.biographies.players?.find(item => item.id === player.id);
+  const birthDate = biography?.birthDate ?? profile?.birthDate;
+  const debut = biography?.debutDate ? dateLabel(biography.debutDate) : biography?.debutStatus;
+  const facts = [
+    ["生年月日", birthDate ? dateLabel(birthDate) : ""],
+    ["出身地", biography?.birthplace],
+    ["出身高校", biography?.highSchool],
+    ["A代表デビュー", debut, biography?.debutDetails],
+  ];
+  if (!debut && biography?.firstRecordedDate) {
+    facts.push(["照合できた最初のA代表出場", dateLabel(biography.firstRecordedDate),
+      biography.firstRecordedOpponent ? local(biography.firstRecordedOpponent) + "戦" : ""]);
+  }
+  if (biography?.development) facts.push(["育成年代の所属", biography.development]);
+  if (Number.isFinite(profile?.heightCm)) facts.push(["身長", profile.heightCm + " cm"]);
+  if (Number.isInteger(profile?.caps)) facts.push(["A代表出場", profile.caps + " 試合"]);
+  if (Number.isInteger(profile?.goals)) facts.push(["A代表得点", profile.goals + " 得点"]);
+  const citations = [...new Map([...(biography?.sources ?? []), profile?.source].filter(Boolean).map(source => [source.url, source])).values()];
+  const record = (title, items) => `<div><h4>${title}</h4>${items?.length ? `<ul>${items.map(item => `<li>${esc(item)}</li>`).join("")}</ul>` : '<p>確認できた資料なし</p>'}</div>`;
+  return `<section class="dialog-section biography" aria-label="プロフィール">
+    <h3>プロフィール</h3>
+    <dl class="player-facts">${facts.map(([label, value, detail]) => `<div><dt>${label}</dt>
+      <dd${value ? "" : ' class="bio-unverified"'}>${esc(value || "資料未確認")}${detail ? `<small>${esc(detail)}</small>` : ""}</dd></div>`).join("")}</dl>
+    <div class="bio-records">${record("大会・チーム実績", biography?.honours)}${record("個人受賞歴", biography?.awards)}</div>
+    ${citations.length ? `<div class="bio-sources"><h4>プロフィールの出典</h4><ul>${citations.map(source => `<li>${externalLink(source)}</li>`).join("")}</ul></div>` : ""}
+  </section>`;
+}
+
+function showPlayerDetails(player, context) {
+  const profile = feeds.profiles.profiles?.find(item => item.id === player.id);
+  const portrait = portraitFor(player);
+  const reports = playerReports(player);
+  const clubReports = reports.filter(report => report.type === "club");
+  const medicalReports = reports.filter(report => report.type === "injury" || report.type === "return");
+  showDialog(`<div class="player-detail-identity">${portraitMarkup(player, portrait)}
+    <div><h2 id="dialog-title">${esc(player.name)}</h2>
+      ${player.latin ? `<p>${esc(player.latin)}</p>` : ""}
+      <p>${esc([positionNames[player.position] ?? player.position, player.club, player.league].filter(Boolean).join(" · "))}</p>
+      ${player.clubAsOf ? `<p>所属確認 ${dateLabel(player.clubAsOf)} ${externalLink(player.clubSource)}</p>` : ""}
+      ${player.callup ? `<p>${esc(player.callup)}</p>` : ""}
+      ${player.status ? `<p>${esc(player.status)} ${externalLink(player.statusSource)}</p>` : ""}
+      ${player.source ? `<p>${externalLink(player.source)}</p>` : ""}</div></div>
+    ${portrait ? `<p class="portrait-credit">写真 ${esc(portrait.attribution)} · ${externalLink(portrait.source)} · ${externalLink({ label: portrait.license, url: portrait.licenseUrl })}</p>` : '<p class="portrait-credit">確認できた写真はありません。</p>'}
+    ${context ? `<div class="dialog-section lineup-context"><h3>日本 vs ${esc(local(context.match.opponent))} の先発</h3>
+      <p>${esc(dateLabel(context.match.date))}${context.participant.number ? ` · 背番号 ${esc(context.participant.number)}` : ""}${context.participant.role ? ` · ${esc(context.participant.role)}` : ""}</p>
+      <p>${externalLink(context.lineup.source)}</p>
+      <a class="panel-link" href="#matches/${matchId(context.match)}">フォーメーションに戻る ${icon("arrow", 14)}</a></div>` : ""}
+    ${biographySection(player, profile)}
+    <div class="dialog-section"><h3>クラブ活動</h3>${clubReports.length ? reportsMarkup(clubReports) : "<p>掲載できるクラブ活動の報告はありません。</p>"}</div>
+    <div class="dialog-section"><h3>負傷・復帰</h3>${medicalReports.length ? reportsMarkup(medicalReports) : "<p>掲載できる負傷・復帰の報告はありません。</p>"}</div>`);
+}
+
+function showDetails(page, id, participantId) {
   if (page === "matches") {
     const { upcoming, recent } = fixtures();
     const match = [...upcoming, ...recent].find(item => item.id === id);
     if (!match) return false;
+    const lineup = findLineup(match);
+    const participant = lineup?.players.find(player => player.id === participantId);
+    if (participant) {
+      showPlayerDetails(players().find(player => player.id === participantId) ?? participant, { match, lineup, participant });
+      return true;
+    }
     showDialog(`<h2 id="dialog-title">日本 vs ${esc(local(match.opponent))}</h2>
       <p>${dateLabel(match.date)}${match.time ? " · " + esc(match.time) + " JST" : ""}</p>
       <p>${esc([local(match.competition), match.venue].filter(Boolean).join(" · "))}</p>
       ${match.score ? `<p class="dialog-score">${esc(match.score)}</p>` : ""}
-      <p class="dialog-section">${externalLink(match.source)}</p>`);
+      <p class="dialog-section">${externalLink(match.source)}</p>
+      <div class="dialog-section">${lineup ? lineupPitch(match, lineup) : "<p>先発フォーメーションを確認できていません。</p>"}</div>`);
     return true;
   }
   if (page === "players") {
     const player = players().find(item => item.id === id);
     if (!player) return false;
-    const reports = playerReports(player);
-    const clubReports = reports.filter(report => report.type === "club");
-    const medicalReports = reports.filter(report => report.type === "injury" || report.type === "return");
-    showDialog(`<h2 id="dialog-title">${esc(player.name)}</h2>
-      ${player.latin ? `<p>${esc(player.latin)}</p>` : ""}
-      <p>${esc([positionNames[player.position], player.club, player.league].filter(Boolean).join(" · "))}</p>
-      <p>${esc(player.callup || "招集情報未確認")}</p>
-      <p>${externalLink(player.source)}</p>
-      <div class="dialog-section"><h3>クラブ活動</h3>${clubReports.length ? reportsMarkup(clubReports) : "<p>掲載できるクラブ活動の報告はありません。</p>"}</div>
-      <div class="dialog-section"><h3>負傷・復帰</h3>${medicalReports.length ? reportsMarkup(medicalReports) : "<p>掲載できる負傷・復帰の報告はありません。</p>"}</div>`);
+    showPlayerDetails(player);
     return true;
   }
   return false;
 }
 
 function render({ fromNavigation = false } = {}) {
-  const [page, id] = route();
+  const [page, id, participantId] = route();
   const previous = shownPage;
   const search = document.querySelector("#player-search")?.value ?? "";
   const pos = document.querySelector("#position-filter")?.value ?? "all";
@@ -390,7 +587,8 @@ function render({ fromNavigation = false } = {}) {
     main.setAttribute("aria-busy", "false");
     if (previous === page && page === "players") {
       document.querySelector("#player-search").value = search;
-      document.querySelector("#position-filter").value = pos;
+      const positionFilter = document.querySelector("#position-filter");
+      positionFilter.value = [...positionFilter.options].some(option => option.value === pos) ? pos : "all";
       filterPlayers();
     }
     if (page === "health") document.querySelector("#health-filter").value = reportFilter;
@@ -404,7 +602,13 @@ function render({ fromNavigation = false } = {}) {
       if (!id) main.focus({ preventScroll: true });
     }
   }
-  if (id && showDetails(page, id)) return;
+  if (id && showDetails(page, id, participantId)) {
+    if (fromNavigation) {
+      dialog.scrollTop = 0;
+      dialog.querySelector(".close-button").focus();
+    }
+    return;
+  }
   if (dialog.open && dialog.dataset.kind === "detail") dialog.close();
 }
 
@@ -435,7 +639,7 @@ async function refresh() {
 
 function statusDetails() {
   dialog.dataset.kind = "status";
-  const labels = { jfa: "試合・招集の取得処理", roster: "大会登録メンバー", clubs: "クラブ・負傷の自動取得" };
+  const labels = { jfa: "試合・招集の取得処理", squad: "直近の招集名簿", biographies: "選手プロフィール", clubReports: "出典付きクラブ記録", healthReports: "出典付き負傷・復帰情報", clubs: "クラブ・負傷の自動取得", ranking: "FIFA ランキング", lineups: "フォーメーション", portraits: "選手写真" };
   const rows = Object.entries(labels).map(([key, label]) => {
     const when = key === "roster" && feeds.roster.rosterDate ? dateLabel(feeds.roster.rosterDate) + " 時点" : timeLabel(feeds[key].checkedAt);
     const coverage = key === "clubs" && feeds.clubs.coverage;
@@ -450,8 +654,44 @@ function statusDetails() {
   showDialog(`<h2 id="dialog-title">データの更新情報</h2>
     <ul>${rows.join("")}${sourceRows.join("")}</ul>
     <p>情報ごとに出典と発表日を表示します。更新時刻はデータを確認した日時です。</p>
-    <p class="dialog-section">${externalLink(sources.jfa)}</p>`);
+    <p class="dialog-section">${externalLink(sources.jfa)}</p>
+    ${window.samuraiLocal ? `<div class="dialog-section local-update">
+      <button class="button button-primary" type="button" id="refresh-local" ${localUpdateRunning ? "disabled" : ""}>今すぐ取得</button>
+      <p role="status">${esc(localUpdateMessage)}</p></div>` : ""}`);
 }
+
+dialog.addEventListener("click", async event => {
+  if (event.target.id !== "refresh-local" || localUpdateRunning) return;
+  const updateMessage = message => {
+    localUpdateMessage = message;
+    if (!dialog.open || dialog.dataset.kind !== "status") return;
+    const button = document.querySelector("#refresh-local");
+    button.disabled = localUpdateRunning;
+    button.nextElementSibling.textContent = message;
+  };
+  localUpdateRunning = true;
+  updateMessage("出典を確認しています…");
+  try {
+    const request = await fetch("./__local/refresh", {
+      method: "POST",
+      headers: { "X-Samurai-Local": "1" },
+    });
+    if (!request.ok) throw new Error("Update request failed");
+    let state;
+    do {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await fetch("./__local/status", { cache: "no-store" });
+      if (!response.ok) throw new Error("Update status unavailable");
+      ({ state } = await response.json());
+    } while (state === "running");
+    await refresh();
+    localUpdateRunning = false;
+    updateMessage(state === "finished" ? "取得処理が完了しました。出典ごとの結果は上の一覧で確認できます。" : "一部の更新処理が完了しませんでした。保存済みのデータを表示しています。");
+  } catch {
+    localUpdateRunning = false;
+    updateMessage("更新処理の状態を確認できませんでした。");
+  }
+});
 
 window.addEventListener("hashchange", () => {
   dialog.dataset.kind = "detail";
@@ -475,19 +715,34 @@ main.addEventListener("click", event => {
   filterPlayers();
 });
 main.addEventListener("change", event => {
+  if (event.target.id === "roster-filter") {
+    rosterSelection = event.target.value;
+    render();
+    document.querySelector("#roster-filter").focus();
+    return;
+  }
   if (event.target.id !== "health-filter") return;
   reportFilter = event.target.value;
   document.querySelector("#health-results").innerHTML = healthResults();
 });
 statusButton.addEventListener("click", statusDetails);
-dialog.addEventListener("close", () => {
+document.addEventListener("error", event => {
+  if (event.target.matches?.(".portrait-frame img")) event.target.hidden = true;
+}, true);
+function resetDetailRoute() {
   const [page, id] = route();
   if (dialog.dataset.kind === "detail" && id) history.replaceState(null, "", `#${page}`);
-});
+}
+dialog.querySelector('form[method="dialog"]').addEventListener("submit", resetDetailRoute);
+dialog.addEventListener("cancel", resetDetailRoute);
+dialog.addEventListener("close", resetDetailRoute);
 dialog.addEventListener("click", event => {
   if (event.target === dialog) {
     const bounds = dialog.getBoundingClientRect();
-    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) {
+      resetDetailRoute();
+      dialog.close();
+    }
   }
 });
 dialog.dataset.kind = "detail";

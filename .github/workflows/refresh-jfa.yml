@@ -25,15 +25,22 @@ jobs:
         with:
           python-version: "3.12"
       - name: Refresh data
-        run: python scripts/refresh_jfa.py
+        run: |
+          jfa_status=0
+          ranking_status=0
+          python scripts/refresh_jfa.py || jfa_status=$?
+          python scripts/update_ranking.py || ranking_status=$?
+          if ((jfa_status != 0 && ranking_status != 0)); then
+            exit 1
+          fi
       - name: Save refreshed records
         run: |
-          git add -- data/jfa.json
+          git add -- data/jfa.json data/ranking.json
           if git diff --cached --quiet; then
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Update Japan fixtures and call-ups'
+          git commit -m 'Update Japan fixtures, call-ups and FIFA ranking'
           git pull --rebase
           git push

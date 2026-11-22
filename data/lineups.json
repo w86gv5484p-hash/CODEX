@@ -1,0 +1,405 @@
+{
+  "checkedAt": "2026-11-19T13:02:08Z",
+  "lineups": [
+    {
+      "matchId": "result-2026-06-29-brazil",
+      "date": "2026-06-29",
+      "opponent": "ブラジル",
+      "formation": "3-4-2-1",
+      "players": [
+        {
+          "id": "zion-suzuki",
+          "name": "鈴木 彩艶",
+          "number": 1,
+          "line": 0,
+          "slot": 0,
+          "role": "GK"
+        },
+        {
+          "id": "hiroki-ito",
+          "name": "伊藤 洋輝",
+          "number": 21,
+          "line": 1,
+          "slot": 0,
+          "role": "LCB"
+        },
+        {
+          "id": "shogo-taniguchi",
+          "name": "谷口 彰悟",
+          "number": 3,
+          "line": 1,
+          "slot": 1,
+          "role": "CB"
+        },
+        {
+          "id": "takehiro-tomiyasu",
+          "name": "冨安 健洋",
+          "number": 22,
+          "line": 1,
+          "slot": 2,
+          "role": "RCB"
+        },
+        {
+          "id": "keito-nakamura",
+          "name": "中村 敬斗",
+          "number": 13,
+          "line": 2,
+          "slot": 0,
+          "role": "LWB"
+        },
+        {
+          "id": "daichi-kamada",
+          "name": "鎌田 大地",
+          "number": 15,
+          "line": 2,
+          "slot": 1,
+          "role": "LCM"
+        },
+        {
+          "id": "kaishu-sano",
+          "name": "佐野 海舟",
+          "number": 24,
+          "line": 2,
+          "slot": 2,
+          "role": "RCM"
+        },
+        {
+          "id": "ritsu-doan",
+          "name": "堂安 律",
+          "number": 10,
+          "line": 2,
+          "slot": 3,
+          "role": "RWB"
+        },
+        {
+          "id": "daizen-maeda",
+          "name": "前田 大然",
+          "number": 11,
+          "line": 3,
+          "slot": 0,
+          "role": "LAM"
+        },
+        {
+          "id": "junya-ito",
+          "name": "伊東 純也",
+          "number": 14,
+          "line": 3,
+          "slot": 1,
+          "role": "RAM"
+        },
+        {
+          "id": "ayase-ueda",
+          "name": "上田 綺世",
+          "number": 18,
+          "line": 4,
+          "slot": 0,
+          "role": "ST"
+        }
+      ],
+      "source": {
+        "label": "WhoScoredの試合記録（Noah Bair収録）",
+        "url": "https://github.com/nlbair/wc2026-events/blob/4674e5c674a852a60def48456d5bbfec0627932a/data/raw/wc2026_brazil_vs_japan_2026-06-29_events.csv#L3"
+      }
+    },
+    {
+      "matchId": "result-2026-06-25-sweden",
+      "date": "2026-06-25",
+      "opponent": "スウェーデン",
+      "formation": "3-4-2-1",
+      "players": [
+        {
+          "id": "zion-suzuki",
+          "name": "鈴木 彩艶",
+          "number": 1,
+          "line": 0,
+          "slot": 0,
+          "role": "GK"
+        },
+        {
+          "id": "hiroki-ito",
+          "name": "伊藤 洋輝",
+          "number": 21,
+          "line": 1,
+          "slot": 0,
+          "role": "LCB"
+        },
+        {
+          "id": "ko-itakura",
+          "name": "板倉 滉",
+          "number": 4,
+          "line": 1,
+          "slot": 1,
+          "role": "CB"
+        },
+        {
+          "id": "ayumu-seko",
+          "name": "瀬古 歩夢",
+          "number": 20,
+          "line": 1,
+          "slot": 2,
+          "role": "RCB"
+        },
+        {
+          "id": "keito-nakamura",
+          "name": "中村 敬斗",
+          "number": 13,
+          "line": 2,
+          "slot": 0,
+          "role": "LWB"
+        },
+        {
+          "id": "daichi-kamada",
+          "name": "鎌田 大地",
+          "number": 15,
+          "line": 2,
+          "slot": 1,
+          "role": "LCM"
+        },
+        {
+          "id": "ao-tanaka",
+          "name": "田中 碧",
+          "number": 7,
+          "line": 2,
+          "slot": 2,
+          "role": "RCM"
+        },
+        {
+          "id": "yukinari-sugawara",
+          "name": "菅原 由勢",
+          "number": 2,
+          "line": 2,
+          "slot": 3,
+          "role": "RWB"
+        },
+        {
+          "id": "daizen-maeda",
+          "name": "前田 大然",
+          "number": 11,
+          "line": 3,
+          "slot": 0,
+          "role": "LAM"
+        },
+        {
+          "id": "ritsu-doan",
+          "name": "堂安 律",
+          "number": 10,
+          "line": 3,
+          "slot": 1,
+          "role": "RAM"
+        },
+        {
+          "id": "ayase-ueda",
+          "name": "上田 綺世",
+          "number": 18,
+          "line": 4,
+          "slot": 0,
+          "role": "ST"
+        }
+      ],
+      "source": {
+        "label": "WhoScoredの試合記録（Noah Bair収録）",
+        "url": "https://github.com/nlbair/wc2026-events/blob/4674e5c674a852a60def48456d5bbfec0627932a/data/raw/wc2026_japan_vs_sweden_2026-06-26_events.csv#L3"
+      }
+    },
+    {
+      "matchId": "result-2026-06-20-tunisia",
+      "date": "2026-06-20",
+      "opponent": "チュニジア",
+      "formation": "3-4-2-1",
+      "players": [
+        {
+          "id": "zion-suzuki",
+          "name": "鈴木 彩艶",
+          "number": 1,
+          "line": 0,
+          "slot": 0,
+          "role": "GK"
+        },
+        {
+          "id": "hiroki-ito",
+          "name": "伊藤 洋輝",
+          "number": 21,
+          "line": 1,
+          "slot": 0,
+          "role": "LCB"
+        },
+        {
+          "id": "ko-itakura",
+          "name": "板倉 滉",
+          "number": 4,
+          "line": 1,
+          "slot": 1,
+          "role": "CB"
+        },
+        {
+          "id": "takehiro-tomiyasu",
+          "name": "冨安 健洋",
+          "number": 22,
+          "line": 1,
+          "slot": 2,
+          "role": "RCB"
+        },
+        {
+          "id": "keito-nakamura",
+          "name": "中村 敬斗",
+          "number": 13,
+          "line": 2,
+          "slot": 0,
+          "role": "LWB"
+        },
+        {
+          "id": "ao-tanaka",
+          "name": "田中 碧",
+          "number": 7,
+          "line": 2,
+          "slot": 1,
+          "role": "LCM"
+        },
+        {
+          "id": "kaishu-sano",
+          "name": "佐野 海舟",
+          "number": 24,
+          "line": 2,
+          "slot": 2,
+          "role": "RCM"
+        },
+        {
+          "id": "ritsu-doan",
+          "name": "堂安 律",
+          "number": 10,
+          "line": 2,
+          "slot": 3,
+          "role": "RWB"
+        },
+        {
+          "id": "daichi-kamada",
+          "name": "鎌田 大地",
+          "number": 15,
+          "line": 3,
+          "slot": 0,
+          "role": "LAM"
+        },
+        {
+          "id": "junya-ito",
+          "name": "伊東 純也",
+          "number": 14,
+          "line": 3,
+          "slot": 1,
+          "role": "RAM"
+        },
+        {
+          "id": "ayase-ueda",
+          "name": "上田 綺世",
+          "number": 18,
+          "line": 4,
+          "slot": 0,
+          "role": "ST"
+        }
+      ],
+      "source": {
+        "label": "WhoScoredの試合記録（Noah Bair収録）",
+        "url": "https://github.com/nlbair/wc2026-events/blob/4674e5c674a852a60def48456d5bbfec0627932a/data/raw/wc2026_tunisia_vs_japan_2026-06-21_events.csv#L3"
+      }
+    },
+    {
+      "matchId": "result-2026-06-14-netherlands",
+      "date": "2026-06-14",
+      "opponent": "オランダ",
+      "formation": "3-4-2-1",
+      "players": [
+        {
+          "id": "zion-suzuki",
+          "name": "鈴木 彩艶",
+          "number": 1,
+          "line": 0,
+          "slot": 0,
+          "role": "GK"
+        },
+        {
+          "id": "hiroki-ito",
+          "name": "伊藤 洋輝",
+          "number": 21,
+          "line": 1,
+          "slot": 0,
+          "role": "LCB"
+        },
+        {
+          "id": "shogo-taniguchi",
+          "name": "谷口 彰悟",
+          "number": 3,
+          "line": 1,
+          "slot": 1,
+          "role": "CB"
+        },
+        {
+          "id": "tsuyoshi-watanabe",
+          "name": "渡辺 剛",
+          "number": 16,
+          "line": 1,
+          "slot": 2,
+          "role": "RCB"
+        },
+        {
+          "id": "keito-nakamura",
+          "name": "中村 敬斗",
+          "number": 13,
+          "line": 2,
+          "slot": 0,
+          "role": "LWB"
+        },
+        {
+          "id": "daichi-kamada",
+          "name": "鎌田 大地",
+          "number": 15,
+          "line": 2,
+          "slot": 1,
+          "role": "LCM"
+        },
+        {
+          "id": "kaishu-sano",
+          "name": "佐野 海舟",
+          "number": 24,
+          "line": 2,
+          "slot": 2,
+          "role": "RCM"
+        },
+        {
+          "id": "ritsu-doan",
+          "name": "堂安 律",
+          "number": 10,
+          "line": 2,
+          "slot": 3,
+          "role": "RWB"
+        },
+        {
+          "id": "daizen-maeda",
+          "name": "前田 大然",
+          "number": 11,
+          "line": 3,
+          "slot": 0,
+          "role": "LAM"
+        },
+        {
+          "id": "takefusa-kubo",
+          "name": "久保 建英",
+          "number": 8,
+          "line": 3,
+          "slot": 1,
+          "role": "RAM"
+        },
+        {
+          "id": "ayase-ueda",
+          "name": "上田 綺世",
+          "number": 18,
+          "line": 4,
+          "slot": 0,
+          "role": "ST"
+        }
+      ],
+      "source": {
+        "label": "WhoScoredの試合記録（Noah Bair収録）",
+        "url": "https://github.com/nlbair/wc2026-events/blob/4674e5c674a852a60def48456d5bbfec0627932a/data/raw/wc2026_netherlands_vs_japan_2026-06-14_events.csv#L3"
+      }
+    }
+  ]
+}
