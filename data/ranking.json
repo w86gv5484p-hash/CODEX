@@ -1,12 +1,12 @@
 {
-  "checkedAt": "2026-11-19T12:59:50Z",
+  "checkedAt": "2026-11-22T04:11:47Z",
   "publishedAt": "2026-07-20",
   "rank": 17,
   "previousRank": 18,
   "points": 1673.68,
-  "archived": true,
+  "archived": false,
   "source": {
-    "label": "FIFA公式APIの保存データ",
-    "url": "https://github.com/deepalibhattarai92-debug/fifa-world-cup-prediction/blob/9e6cde4f21030c0ffc4f3dd6ddc517f09f150c3b/data/raw/fifa_rankings_20261118.json"
+    "label": "FIFA 男子世界ランキング",
+    "url": "https://inside.fifa.com/fifa-world-ranking/men?dateId=id15175"
   }
 }
