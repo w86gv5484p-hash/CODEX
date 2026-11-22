@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-22T03:57:19+00:00",
+  "checkedAt": "2026-11-22T04:01:02+00:00",
   "players": [
     {
       "id": "zion-suzuki",
@@ -66,6 +66,18 @@
         {
           "label": "A代表の出場記録（11footy、2026年11月10日版）",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "A代表初期出場の保存記録（National Football Teams）",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv"
+        },
+        {
+          "label": "A代表デビュー戦の出場メンバー",
+          "url": "https://national-football-teams.com/matches/report/28390/Japan_Cameroon.html"
+        },
+        {
+          "label": "育成経歴・大会実績の公開保存資料",
+          "url": "https://github.com/hyogoa2c/jfa-talent-analysis/blob/db510bb0a5acab92600a6cdbbc5098313399e403/data/manual/pathway_review_queue.csv#L1608-L1620"
         }
       ],
       "birthDate": "2000-06-28",
@@ -75,8 +87,12 @@
         "FIFAワールドカップ2026（日本はラウンド32）・4試合出場",
         "AFCアジアカップ2023（2024年開催、日本はベスト8）・2試合出場"
       ],
-      "firstRecordedDate": "2020-10-09",
-      "firstRecordedOpponent": "Cameroon"
+      "debutDate": "2020-10-09",
+      "development": "ASラランジャ豊川、名古屋グランパスの育成組織。",
+      "awards": [
+        "ヨハン・クライフ・タレント・オブ・ザ・マンス（2022年1月）",
+        "エールディヴィジ月間ベストイレブン（2023年8月）"
+      ]
     },
     {
       "id": "shogo-taniguchi",
@@ -88,16 +104,23 @@
         {
           "label": "A代表の出場記録（11footy、2026年11月10日版）",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "A代表初期出場の保存記録（National Football Teams）",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv"
+        },
+        {
+          "label": "A代表デビュー戦の出場メンバー",
+          "url": "https://national-football-teams.com/matches/report/13156/Japan_Iraq.html"
         }
       ],
       "birthDate": "1991-07-15",
-      "firstRecordedDate": "2021-06-07",
-      "firstRecordedOpponent": "Tajikistan",
       "honours": [
         "FIFAワールドカップ2026（日本はラウンド32）・3試合出場",
         "AFCアジアカップ2023（2024年開催、日本はベスト8）・2試合出場",
         "FIFAワールドカップ2022（日本はベスト16）・2試合出場"
-      ]
+      ],
+      "debutDate": "2015-06-11"
     },
     {
       "id": "ko-itakura",
@@ -172,16 +195,23 @@
         {
           "label": "A代表の出場記録（11footy、2026年11月10日版）",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "A代表初期出場の保存記録（National Football Teams）",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv"
+        },
+        {
+          "label": "A代表デビュー戦の出場メンバー",
+          "url": "https://national-football-teams.com/matches/report/12314/Japan_Ivory_Coast.html"
         }
       ],
       "birthDate": "1986-09-12",
-      "firstRecordedDate": "2008-06-02",
-      "firstRecordedOpponent": "Oman",
       "honours": [
         "FIFAワールドカップ2026（日本はラウンド32）・1試合出場",
         "FIFAワールドカップ2022（日本はベスト16）・4試合出場",
         "AFCアジアカップ2019（日本は準優勝）・6試合出場"
-      ]
+      ],
+      "debutDate": "2008-05-24"
     },
     {
       "id": "shuto-machino",
@@ -193,14 +223,21 @@
         {
           "label": "A代表の出場記録（11footy、2026年11月10日版）",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "A代表初期出場の保存記録（National Football Teams）",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv"
+        },
+        {
+          "label": "A代表デビュー戦の出場メンバー",
+          "url": "https://national-football-teams.com/matches/report/34967/Japan_Hong_Kong.html"
         }
       ],
       "birthDate": "1999-09-30",
-      "firstRecordedDate": "2022-09-23",
-      "firstRecordedOpponent": "United States",
       "honours": [
         "FIFAワールドカップ2026（日本はラウンド32）・1試合出場"
-      ]
+      ],
+      "debutDate": "2022-07-19"
     },
     {
       "id": "ao-tanaka",
@@ -224,6 +261,14 @@
         {
           "label": "11footy 代表戦の出場・大会記録",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "National Football Teams A代表出場記録の保存資料",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv#L57709"
+        },
+        {
+          "label": "National Football Teams A代表初出場の試合記録",
+          "url": "https://national-football-teams.com/matches/report/24764/Japan_Hong_Kong.html"
         }
       ],
       "birthDate": "1998-09-10",
@@ -235,8 +280,8 @@
         "FIFAワールドカップ2026（日本はラウンド32）・3試合出場",
         "FIFAワールドカップ2022（日本はベスト16）・3試合出場"
       ],
-      "firstRecordedDate": "2021-10-12",
-      "firstRecordedOpponent": "Australia"
+      "debutDate": "2019-12-14",
+      "debutDetails": "EAFF E-1サッカー選手権、香港戦に先発"
     },
     {
       "id": "takefusa-kubo",
@@ -333,20 +378,50 @@
         {
           "label": "11footy 代表戦の出場・大会記録",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "育成経路研究の堂安律プロフィール保存資料",
+          "url": "https://github.com/hyogoa2c/jfa-talent-analysis/blob/db510bb0a5acab92600a6cdbbc5098313399e403/data/manual/pathway_review_queue.csv#L1365-L1375"
+        },
+        {
+          "label": "育成経路研究の堂安律 タイトル・代表歴の保存資料",
+          "url": "https://github.com/hyogoa2c/jfa-talent-analysis/blob/db510bb0a5acab92600a6cdbbc5098313399e403/data/manual/pathway_review_queue.csv#L1472-L1503"
+        },
+        {
+          "label": "RSSSF AFC U-19選手権2016 試合結果",
+          "url": "https://www.rsssf.org/tablesa/as-u19-2016.html"
+        },
+        {
+          "label": "National Football Teams A代表出場記録の保存資料",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv#L102417"
+        },
+        {
+          "label": "National Football Teams A代表初出場の試合記録",
+          "url": "https://national-football-teams.com/matches/report/20657/Japan_Costa_Rica.html"
         }
       ],
       "birthDate": "1998-06-16",
       "birthplace": "兵庫県尼崎市",
       "debutDate": "2018-09-11",
-      "debutDetails": "国際親善試合、コスタリカ戦に先発",
+      "debutDetails": "キリンチャレンジカップ、コスタリカ戦に先発",
       "honours": [
         "AFCアジアカップ2019 準優勝（日本代表）",
         "FIFAワールドカップ2022 ベスト16（日本代表）",
         "FIFAワールドカップ2026 ベスト32（日本代表）",
+        "AFC U-19選手権2016 優勝（U-19日本代表）",
+        "東京2020オリンピック 4位（U-24日本代表）",
+        "KNVBカップ2021–22 優勝（PSV）",
         "FIFAワールドカップ2026（日本はラウンド32）・4試合出場",
         "AFCアジアカップ2023（2024年開催、日本はベスト8）・5試合出場",
         "FIFAワールドカップ2022（日本はベスト16）・4試合出場",
         "AFCアジアカップ2019（日本は準優勝）・6試合出場"
+      ],
+      "highSchool": "追手門学院高等学校 → 向陽台高等学校（転校）",
+      "development": "ガンバ大阪ジュニアユース → ガンバ大阪ユース",
+      "awards": [
+        "AFC U-19選手権2016 大会MVP",
+        "AFCアジア年間最優秀ユース選手賞（2016年）",
+        "JPFAアワード ベストイレブン（2022年）"
       ]
     },
     {
@@ -367,6 +442,26 @@
         {
           "label": "11footy 代表戦の出場・大会記録",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "RSSSF 2021年Jリーグ得点記録",
+          "url": "https://www.rsssf.org/tablesj/jpn2021.html"
+        },
+        {
+          "label": "National Football Teams A代表出場記録の保存資料",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv#L102871"
+        },
+        {
+          "label": "National Football Teams A代表初出場の試合記録",
+          "url": "https://national-football-teams.com/matches/report/23300/Japan_Chile.html"
+        },
+        {
+          "label": "Jリーグ 前田大然の育成経歴",
+          "url": "https://www.jleague.jp/special/sb/pride_2026/maeda_daizen.html"
+        },
+        {
+          "label": "Jリーグ資料に基づく育成経歴の照合記録",
+          "url": "https://github.com/hyogoa2c/jfa-talent-analysis/blob/db510bb0a5acab92600a6cdbbc5098313399e403/data/manual/gold_holdout/verdicts/batch_B007_rater_a.csv#L5"
         }
       ],
       "birthDate": "1997-10-20",
@@ -380,7 +475,12 @@
         "AFCアジアカップ2023（2024年開催、日本はベスト8）・3試合出場",
         "FIFAワールドカップ2022（日本はベスト16）・3試合出場",
         "コパ・アメリカ2019（日本はグループステージ）・2試合出場"
-      ]
+      ],
+      "awards": [
+        "J1リーグ得点王（2021年、23得点、同数）"
+      ],
+      "highSchool": "山梨学院大学附属高等学校",
+      "development": "太子JSC → 川上FC → 山梨学院大学附属高校 → 松本山雅FC"
     },
     {
       "id": "keisuke-osako",
@@ -392,14 +492,21 @@
         {
           "label": "A代表の出場記録（11footy、2026年11月10日版）",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "A代表初期出場の保存記録（National Football Teams）",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv"
+        },
+        {
+          "label": "A代表デビュー戦の出場メンバー",
+          "url": "https://national-football-teams.com/matches/report/23300/Japan_Chile.html"
         }
       ],
       "birthDate": "1999-07-28",
-      "firstRecordedDate": "2019-06-17",
-      "firstRecordedOpponent": "Chile",
       "honours": [
         "コパ・アメリカ2019（日本はグループステージ）・1試合出場"
-      ]
+      ],
+      "debutDate": "2019-06-17"
     },
     {
       "id": "keito-nakamura",
@@ -419,6 +526,14 @@
         {
           "label": "11footy 代表戦の出場・大会記録",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "National Football Teams A代表出場記録の保存資料",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv#L104060"
+        },
+        {
+          "label": "National Football Teams A代表初出場の試合記録",
+          "url": "https://national-football-teams.com/matches/report/36493/Japan_Uruguay.html"
         }
       ],
       "birthDate": "2000-07-28",
@@ -465,6 +580,14 @@
         {
           "label": "A代表の出場記録（11footy、2026年11月10日版）",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "A代表初期出場の保存記録（National Football Teams）",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv"
+        },
+        {
+          "label": "A代表デビュー戦の出場メンバー",
+          "url": "https://national-football-teams.com/matches/report/18749/Japan_North_Korea.html"
         }
       ],
       "birthDate": "1993-03-09",
@@ -477,8 +600,7 @@
         "FIFAワールドカップ2022（日本はベスト16）・4試合出場",
         "AFCアジアカップ2019（日本は準優勝）・5試合出場"
       ],
-      "firstRecordedDate": "2018-09-11",
-      "firstRecordedOpponent": "Costa Rica"
+      "debutDate": "2017-12-09"
     },
     {
       "id": "daichi-kamada",
@@ -510,6 +632,14 @@
         {
           "label": "A代表の出場記録（11footy、2026年11月10日版）",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "A代表初期出場の保存記録（National Football Teams）",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv"
+        },
+        {
+          "label": "A代表デビュー戦の出場メンバー",
+          "url": "https://national-football-teams.com/matches/report/22564/Japan_Colombia.html"
         }
       ],
       "birthDate": "1996-08-05",
@@ -520,8 +650,7 @@
         "FIFAワールドカップ2026（日本はラウンド32）・4試合出場",
         "FIFAワールドカップ2022（日本はベスト16）・4試合出場"
       ],
-      "firstRecordedDate": "2019-03-22",
-      "firstRecordedOpponent": "Colombia"
+      "debutDate": "2019-03-22"
     },
     {
       "id": "tsuyoshi-watanabe",
@@ -549,6 +678,14 @@
         {
           "label": "アジアカップの出場記録（11footy、2026年11月10日版）",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "A代表初期出場の保存記録（National Football Teams）",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv"
+        },
+        {
+          "label": "A代表デビュー戦の出場メンバー",
+          "url": "https://national-football-teams.com/matches/report/24764/Japan_Hong_Kong.html"
         }
       ],
       "birthDate": "1997-02-05",
@@ -559,8 +696,7 @@
         "FIFAワールドカップ2026（日本はラウンド32）・2試合出場",
         "AFCアジアカップ2023（2024年開催、日本はベスト8）・1試合出場"
       ],
-      "firstRecordedDate": "2023-11-16",
-      "firstRecordedOpponent": "Myanmar"
+      "debutDate": "2019-12-14"
     },
     {
       "id": "yuito-suzuki",
@@ -613,17 +749,24 @@
         {
           "label": "A代表の出場記録（11footy、2026年11月10日版）",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "A代表初期出場の保存記録（National Football Teams）",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv"
+        },
+        {
+          "label": "A代表デビュー戦の出場メンバー",
+          "url": "https://national-football-teams.com/matches/report/23300/Japan_Chile.html"
         }
       ],
       "birthDate": "1998-08-28",
-      "firstRecordedDate": "2019-06-17",
-      "firstRecordedOpponent": "Chile",
       "honours": [
         "FIFAワールドカップ2026（日本はラウンド32）・4試合出場",
         "AFCアジアカップ2023（2024年開催、日本はベスト8）・5試合出場",
         "FIFAワールドカップ2022（日本はベスト16）・1試合出場",
         "コパ・アメリカ2019（日本はグループステージ）・3試合出場"
-      ]
+      ],
+      "debutDate": "2019-06-17"
     },
     {
       "id": "koki-ogawa",
@@ -643,16 +786,41 @@
         {
           "label": "11footy 代表戦の出場・大会記録",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "RSSSF EAFF E-1 2019 試合結果・得点者",
+          "url": "https://www.rsssf.org/tablese/eastasia2019.html"
+        },
+        {
+          "label": "RSSSF AFC U-19選手権2016 試合結果",
+          "url": "https://www.rsssf.org/tablesa/as-u19-2016.html"
+        },
+        {
+          "label": "RSSSF 2022年Jリーグ得点記録",
+          "url": "https://www.rsssf.org/tablesj/jpn2022.html"
+        },
+        {
+          "label": "National Football Teams A代表出場記録の保存資料",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv#L57713"
+        },
+        {
+          "label": "National Football Teams A代表初出場の試合記録",
+          "url": "https://national-football-teams.com/matches/report/24764/Japan_Hong_Kong.html"
         }
       ],
       "birthDate": "1997-08-08",
       "birthplace": "神奈川県横浜市",
       "honours": [
         "FIFAワールドカップ2026 ベスト32（日本代表）",
+        "EAFF E-1サッカー選手権2019 準優勝（日本代表、香港戦で3得点）",
+        "AFC U-19選手権2016 優勝（U-19日本代表）",
         "FIFAワールドカップ2026（日本はラウンド32）・2試合出場"
       ],
-      "firstRecordedDate": "2024-03-21",
-      "firstRecordedOpponent": "North Korea"
+      "awards": [
+        "J2リーグ得点王（2022年、26得点）"
+      ],
+      "debutDate": "2019-12-14",
+      "debutDetails": "EAFF E-1サッカー選手権、香港戦に先発し3得点"
     },
     {
       "id": "ayumu-seko",
@@ -680,6 +848,14 @@
         {
           "label": "A代表の出場記録（11footy、2026年11月10日版）",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "A代表初期出場の保存記録（National Football Teams）",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv"
+        },
+        {
+          "label": "A代表デビュー戦の出場メンバー",
+          "url": "https://national-football-teams.com/matches/report/36493/Japan_Uruguay.html"
         }
       ],
       "birthDate": "2000-06-07",
@@ -688,8 +864,7 @@
         "2026年W杯グループステージのスウェーデン戦に先発。",
         "FIFAワールドカップ2026（日本はラウンド32）・2試合出場"
       ],
-      "firstRecordedDate": "2023-03-24",
-      "firstRecordedOpponent": "Uruguay"
+      "debutDate": "2023-03-24"
     },
     {
       "id": "hiroki-ito",
@@ -747,18 +922,25 @@
         {
           "label": "A代表の出場記録（11footy、2026年11月10日版）",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "A代表初期出場の保存記録（National Football Teams）",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv"
+        },
+        {
+          "label": "A代表デビュー戦の出場メンバー",
+          "url": "https://national-football-teams.com/matches/report/20809/Japan_Panama.html"
         }
       ],
       "birthDate": "1998-11-05",
-      "firstRecordedDate": "2018-10-12",
-      "firstRecordedOpponent": "Panama",
       "honours": [
         "FIFAワールドカップ2026（日本はラウンド32）・3試合出場",
         "AFCアジアカップ2023（2024年開催、日本はベスト8）・4試合出場",
         "FIFAワールドカップ2022（日本はベスト16）・3試合出場",
         "コパ・アメリカ2019（日本はグループステージ）・3試合出場",
         "AFCアジアカップ2019（日本は準優勝）・6試合出場"
-      ]
+      ],
+      "debutDate": "2018-10-12"
     },
     {
       "id": "tomoki-hayakawa",
@@ -854,6 +1036,10 @@
         {
           "label": "A代表大会の出場記録（11footy、2026年11月10日版）",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "育成経歴・大会実績の公開保存資料",
+          "url": "https://github.com/hyogoa2c/jfa-talent-analysis/blob/db510bb0a5acab92600a6cdbbc5098313399e403/data/manual/pathway_review_queue.csv#L664-L671"
         }
       ],
       "birthDate": "2003-07-12",
@@ -862,6 +1048,11 @@
       "honours": [
         "2026年W杯ではチュニジア戦とラウンド32のブラジル戦に途中出場。",
         "FIFAワールドカップ2026（日本はラウンド32）・2試合出場"
+      ],
+      "highSchool": "帝京大学可児高等学校",
+      "development": "ディバイン、SC岐阜VAMOSを経て帝京大学可児高校へ。",
+      "awards": [
+        "第99回全国高校サッカー選手権 優秀選手"
       ]
     },
     {
@@ -1006,6 +1197,14 @@
         {
           "label": "A代表の出場記録（11footy、2026年11月10日版）",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "A代表初期出場の保存記録（National Football Teams）",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv"
+        },
+        {
+          "label": "A代表デビュー戦の出場メンバー",
+          "url": "https://national-football-teams.com/matches/report/14098/Iran_Japan.html"
         }
       ],
       "birthDate": "1995-01-16",
@@ -1016,8 +1215,7 @@
         "FIFAワールドカップ2022（日本はベスト16）・3試合出場",
         "AFCアジアカップ2019（日本は準優勝）・6試合出場"
       ],
-      "firstRecordedDate": "2015-11-17",
-      "firstRecordedOpponent": "Cambodia"
+      "debutDate": "2015-10-13"
     },
     {
       "id": "tatsuhiro-sakamoto",
@@ -1033,6 +1231,14 @@
         {
           "label": "11footy 代表戦の出場・大会記録",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "National Football Teams A代表出場記録の保存資料",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv#L103386"
+        },
+        {
+          "label": "National Football Teams A代表初出場の試合記録",
+          "url": "https://national-football-teams.com/matches/report/31030/Japan_Tajikistan.html"
         }
       ],
       "birthDate": "1996-10-22",
@@ -1050,15 +1256,36 @@
         {
           "label": "11footy 代表戦の出場・大会記録",
           "url": "https://github.com/fm-devlab/11footy-dataset/releases/tag/11footy-2026-11-10"
+        },
+        {
+          "label": "RSSSF EAFF E-1 2022 試合結果・得点者",
+          "url": "https://www.rsssf.org/tablese/eastasia2022.html"
+        },
+        {
+          "label": "National Football Teams A代表出場記録の保存資料",
+          "url": "https://github.com/quachthanhhung12349/FootballPredictionsAFC/blob/2784b130135b5cd370849cd4fe70de446de43a60/downloaded_files/scrape_exports/afc_match_lineups_coaches.csv#L49618"
+        },
+        {
+          "label": "National Football Teams A代表初出場の試合記録",
+          "url": "https://national-football-teams.com/matches/report/24762/China_Japan.html"
+        },
+        {
+          "label": "育成経路研究資料に記録された早稲田大学同期選手",
+          "url": "https://github.com/hyogoa2c/jfa-talent-analysis/blob/db510bb0a5acab92600a6cdbbc5098313399e403/data/manual/phase1_pathway_youth_vs_university_review_queue.csv#L486"
         }
       ],
       "birthDate": "1997-02-25",
       "honours": [
+        "EAFF E-1サッカー選手権2022 優勝（日本代表）",
         "FIFAワールドカップ2022 ベスト16（日本代表）",
         "FIFAワールドカップ2022（日本はベスト16）・1試合出場"
       ],
-      "firstRecordedDate": "2022-09-27",
-      "firstRecordedOpponent": "Ecuador"
+      "awards": [
+        "EAFF E-1サッカー選手権2022 大会最多得点（3得点、同数）"
+      ],
+      "debutDate": "2019-12-10",
+      "debutDetails": "EAFF E-1サッカー選手権、中国戦に途中出場",
+      "development": "早稲田大学ア式蹴球部"
     },
     {
       "id": "kuryu-matsuki",
@@ -1074,12 +1301,25 @@
         {
           "label": "Transfermarkt由来の選手プロフィール公開データ",
           "url": "https://github.com/salimt/football-datasets/blob/da9227e1f42baf74561324290dbf1ad2e3c00edd/datalake/transfermarkt/player_profiles/player_profiles.csv#L87949"
+        },
+        {
+          "label": "育成経歴・大会実績の公開保存資料",
+          "url": "https://github.com/hyogoa2c/jfa-talent-analysis/blob/db510bb0a5acab92600a6cdbbc5098313399e403/data/manual/pathway_review_queue.csv#L672-L686"
         }
       ],
       "birthDate": "2003-04-30",
       "birthplace": "北海道室蘭市",
       "debutDate": "2026-09-24",
-      "debutDetails": "ウルグアイ戦でA代表初出場・初得点"
+      "debutDetails": "ウルグアイ戦でA代表初出場・初得点",
+      "highSchool": "青森山田高等学校",
+      "development": "室蘭大沢FC、青森山田中学校、青森山田高校。",
+      "honours": [
+        "第100回全国高校サッカー選手権 優勝（青森山田、4得点）",
+        "全国中学校サッカー大会 優勝（青森山田中、2年次）"
+      ],
+      "awards": [
+        "AFC年間最優秀ユース選手賞（男子、2022年分）"
+      ]
     },
     {
       "id": "kodai-sano",
