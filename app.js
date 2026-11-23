@@ -128,7 +128,7 @@ function playerReports(player) {
 
 function portraitFor(player) {
   const portrait = feeds.portraits.portraits?.find(item => item.id === player.id);
-  if (portrait?.verification?.method !== "commons-single-person-v1") return null;
+  if (portrait?.verification?.method !== "wikipedia-wikidata-birthdate-v1") return null;
   const path = portrait?.path ?? "";
   if (/^assets\/portraits\/[a-z0-9-]+\.(?:jpg|jpeg|png|webp)$/i.test(path)
     || /^data:image\/(?:jpeg|png|webp);base64,[\w+/=]+$/.test(path)) return portrait;
@@ -136,9 +136,11 @@ function portraitFor(player) {
 }
 
 function portraitMarkup(player, portrait, lazy = false) {
+  const fallback = Number.isInteger(player.number) ? String(player.number)
+    : (player.latin ?? "").split(/\s+/).map(word => word[0] ?? "").join("").slice(0, 2).toUpperCase();
   return `<span class="portrait-frame">
-    ${portrait ? `<img src="${esc(portrait.path)}" alt="${lazy ? "" : esc(player.name + "の写真")}" ${lazy ? 'loading="lazy"' : ""}>` : ""}
-    <span class="portrait-placeholder" aria-hidden="true">${icon("people", 21)}</span>
+    ${portrait ? `<img src="${esc(portrait.path)}" alt="${lazy ? "" : esc(player.name + "の写真")}" ${lazy ? 'loading="lazy" decoding="async"' : ""}>` : ""}
+    <span class="portrait-placeholder" aria-hidden="true">${esc(fallback) || icon("people", 21)}</span>
   </span>`;
 }
 
@@ -396,12 +398,18 @@ function playerCards(query = "", position = "all") {
     && [player.name, player.latin, player.club].some(field => simplify(field).includes(key)));
   if (!visible.length) return emptyState(roster.length ? "条件に一致する選手がいません。" : "この一覧で確認できる選手情報はありません。", roster.length ? undefined : sources.jfa);
   return `<div class="player-grid">${visible.map(player => `
-    <a class="panel player-card" href="#players/${encodeURIComponent(player.id)}">
-      ${tag("callup", player.position || "選手")}${Number.isInteger(player.number) ? `<span class="player-number" aria-label="登録番号 ${player.number}">#${player.number}</span>` : ""}
-      <div class="player-card-identity">${portraitMarkup(player, portraitFor(player), true)}<div><strong>${esc(player.name)}</strong>
-      ${player.latin ? `<small>${esc(player.latin)}</small>` : ""}
-      <small>${esc(player.club || "所属情報未確認")}</small>
-      ${player.status ? `<small>${esc(player.status)}</small>` : ""}</div></div>
+    <a class="player-card pos-${esc((player.position || "").split("/")[0].toLowerCase())}" href="#players/${encodeURIComponent(player.id)}">
+      ${portraitMarkup(player, portraitFor(player), true)}
+      <span class="player-card-top">
+        ${Number.isInteger(player.number) ? `<span class="player-number" aria-label="登録番号 ${player.number}">${player.number}</span>` : "<span></span>"}
+        <span class="player-pos">${esc(player.position || "選手")}</span>
+      </span>
+      <span class="player-card-body">
+        <strong>${esc(player.name)}</strong>
+        ${player.latin ? `<small class="player-latin">${esc(player.latin)}</small>` : ""}
+        <small class="player-club">${esc(player.club || "所属情報未確認")}</small>
+        ${player.status ? `<small class="player-status">${esc(player.status)}</small>` : ""}
+      </span>
     </a>`).join("")}</div>`;
 }
 

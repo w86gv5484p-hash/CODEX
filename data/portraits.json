@@ -1,5 +1,486 @@
 {
-  "verificationMethod": "commons-single-person-v1",
-  "checkedAt": null,
-  "portraits": []
+  "verificationMethod": "wikipedia-wikidata-birthdate-v1",
+  "checkedAt": "2026-11-23T23:29:08+00:00",
+  "portraits": [
+    {
+      "id": "ao-tanaka",
+      "attribution": "内閣官房内閣広報室",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Fumio_Kishida_with_Japan_National_Football_Team_after_Qatar_World_Cup_(5)_(cropped).jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q27920148",
+        "media": "M126448926"
+      },
+      "path": "assets/portraits/ao-tanaka.jpg"
+    },
+    {
+      "id": "ayase-ueda",
+      "attribution": "Carlo Bruil Fotografie",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Go_Ahead_Eagles_-_Feyenoord_-_53679351240_(Ayase_Ueda).jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q62085431",
+        "media": "M148017953"
+      },
+      "path": "assets/portraits/ayase-ueda.jpg"
+    },
+    {
+      "id": "ayumu-seko",
+      "attribution": "Keiteay",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Ayumu_Seko_Japan_2025_(cropped).jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q27990922",
+        "media": "M177279784"
+      },
+      "path": "assets/portraits/ayumu-seko.jpg"
+    },
+    {
+      "id": "daichi-kamada",
+      "attribution": "Sven Mandel",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:2022128173756_2022-05-08_Fussball_Eintracht_Frankfurt_vs_Borussia_M%C3%B6nchengladbach_-_Sven_-_1D_X_MK_II_-_0725_-_AK8I7460_(Daichi_Kamada_cropped).jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q20039495",
+        "media": "M118201971"
+      },
+      "path": "assets/portraits/daichi-kamada.jpg"
+    },
+    {
+      "id": "daizen-maeda",
+      "attribution": "Hameltion",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Celtic-20240722-018_(cropped).jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q27990906",
+        "media": "M150700881"
+      },
+      "path": "assets/portraits/daizen-maeda.jpg"
+    },
+    {
+      "id": "hiroki-ito",
+      "attribution": "Jeollo von VfB-exklusiv.de",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Hiroki_Ito_VfB_Stuttgart.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q30933054",
+        "media": "M107417625"
+      },
+      "path": "assets/portraits/hiroki-ito.jpg"
+    },
+    {
+      "id": "junnosuke-suzuki",
+      "attribution": "Quinntropy",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Junnosuke_Suzuki_15-10-2026_(cropped).jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q109594121",
+        "media": "M201951744"
+      },
+      "path": "assets/portraits/junnosuke-suzuki.jpg"
+    },
+    {
+      "id": "junya-ito",
+      "attribution": "Werner100359",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:FC_Salzburg_gegen_KRC_Genk_(UEFA_Championsleague_17._September_2019)_12.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q21913126",
+        "media": "M82317084"
+      },
+      "path": "assets/portraits/junya-ito.jpg"
+    },
+    {
+      "id": "kaishu-sano",
+      "attribution": "RuinDig/Yuki Uchida",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Kaishu_Sano_2024_(cropped).jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q65029955",
+        "media": "M152027273"
+      },
+      "path": "assets/portraits/kaishu-sano.jpg"
+    },
+    {
+      "id": "keisuke-osako",
+      "attribution": "neko kabachi",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Sanfrecce_Hiroshima_-1_Keisuke_OSAKO.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q30925365",
+        "media": "M151044928"
+      },
+      "path": "assets/portraits/keisuke-osako.jpg"
+    },
+    {
+      "id": "keito-nakamura",
+      "attribution": "Werner100359",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:FC_Red_Bull_Salzburg_gegen_Linzer_ASK_(2022-10-01)a_02.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q45819496",
+        "media": "M123646101"
+      },
+      "path": "assets/portraits/keito-nakamura.jpg"
+    },
+    {
+      "id": "ko-itakura",
+      "attribution": "McRonaldo9",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:K%C5%8D_Itakura_-_%E6%9D%BF%E5%80%89%E5%A0%B0.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q20038711",
+        "media": "M105095915"
+      },
+      "path": "assets/portraits/ko-itakura.jpg"
+    },
+    {
+      "id": "kodai-sano",
+      "attribution": "Hans Reefman",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Kodai_Sano.JPG"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q110969381",
+        "media": "M200332395"
+      },
+      "path": "assets/portraits/kodai-sano.jpg"
+    },
+    {
+      "id": "koki-machida",
+      "attribution": "Sidney.Cortez",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Koki_Machida_USG_2024.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q22910803",
+        "media": "M148776839"
+      },
+      "path": "assets/portraits/koki-machida.jpg"
+    },
+    {
+      "id": "koki-ogawa",
+      "attribution": "Carlo Bruil Fotografie",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:GAE_-_NEC_-_53493888105_(Koki_Ogawa).jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q22127681",
+        "media": "M144693525"
+      },
+      "path": "assets/portraits/koki-ogawa.jpg"
+    },
+    {
+      "id": "kuryu-matsuki",
+      "attribution": "Uln2",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Kuryu_Matsuki_(cropped).jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q109288432",
+        "media": "M151246694"
+      },
+      "path": "assets/portraits/kuryu-matsuki.jpg"
+    },
+    {
+      "id": "leo-brian-kokubo",
+      "attribution": "Sport Lisboa e Benfica",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Leo_Kokubo_2020.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q61058085",
+        "media": "M101948580"
+      },
+      "path": "assets/portraits/leo-brian-kokubo.jpg"
+    },
+    {
+      "id": "ritsu-doan",
+      "attribution": "El Loko Foto",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Ritsu_Doan_20191301_(cropped).jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q20630956",
+        "media": "M106515135"
+      },
+      "path": "assets/portraits/ritsu-doan.jpg"
+    },
+    {
+      "id": "shogo-taniguchi",
+      "attribution": "Whispered11",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Shogo_Taniguchi.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q17160970",
+        "media": "M50649754"
+      },
+      "path": "assets/portraits/shogo-taniguchi.jpg"
+    },
+    {
+      "id": "shuto-machino",
+      "attribution": "内閣官房内閣広報室",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Sh%C5%ABto_Machino_20221208.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q47582288",
+        "media": "M126551888"
+      },
+      "path": "assets/portraits/shuto-machino.jpg"
+    },
+    {
+      "id": "takefusa-kubo",
+      "attribution": "Ali Mohammed Mahdi",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Takefusa_Kubo.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q27067753",
+        "media": "M201066029"
+      },
+      "path": "assets/portraits/takefusa-kubo.jpg"
+    },
+    {
+      "id": "takehiro-tomiyasu",
+      "attribution": "Amir Ostovari",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Takehiro_Tomiyasu,_2019_AFC_Asian_Cup_1.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q21286402",
+        "media": "M76079002"
+      },
+      "path": "assets/portraits/takehiro-tomiyasu.jpg"
+    },
+    {
+      "id": "takumi-minamino",
+      "attribution": "Paté kroute",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Minamino_asse_asm_2425.png"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q776878",
+        "media": "M164971165"
+      },
+      "path": "assets/portraits/takumi-minamino.png"
+    },
+    {
+      "id": "tatsuhiro-sakamoto",
+      "attribution": "MilesaMFC",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Tatshurio_Sakamoto.png"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q62085112",
+        "media": "M178286010"
+      },
+      "path": "assets/portraits/tatsuhiro-sakamoto.png"
+    },
+    {
+      "id": "tomoki-hayakawa",
+      "attribution": "RuinDig/Yuki Uchida",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:J1League-Football-2026-2027---YokohamaFM-and-Kashima---2026-08-07_00057_(cropped)-Tomoki-Hayakawa.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q105704210",
+        "media": "M200090920"
+      },
+      "path": "assets/portraits/tomoki-hayakawa.jpg"
+    },
+    {
+      "id": "yuito-suzuki",
+      "attribution": "Hugob67",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Suzuki_buteur.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q85884126",
+        "media": "M130810829"
+      },
+      "path": "assets/portraits/yuito-suzuki.jpg"
+    },
+    {
+      "id": "yuki-soma",
+      "attribution": "内閣官房内閣広報室",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Yuki_Soma_(cropped).jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q56349145",
+        "media": "M126448896"
+      },
+      "path": "assets/portraits/yuki-soma.jpg"
+    },
+    {
+      "id": "yukinari-sugawara",
+      "attribution": "Timmy96",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Yukinari_Sugawara_2212024_(5).jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q50073536",
+        "media": "M157565382"
+      },
+      "path": "assets/portraits/yukinari-sugawara.jpg"
+    },
+    {
+      "id": "yuto-nagatomo",
+      "attribution": "Ирина Рыбакова",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Yuto_Nagatomo_in_2018.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q281734",
+        "media": "M74714323"
+      },
+      "path": "assets/portraits/yuto-nagatomo.jpg"
+    },
+    {
+      "id": "zion-suzuki",
+      "attribution": "RuinDig/Yuki Uchida",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "source": {
+        "label": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:ZION_SUZUKI_-_JPN_vs_THA_-_Friendly_Match_-_2024.01.01.jpg"
+      },
+      "verification": {
+        "method": "wikipedia-wikidata-birthdate-v1",
+        "entity": "Q67498669",
+        "media": "M144017833"
+      },
+      "path": "assets/portraits/zion-suzuki.jpg"
+    }
+  ]
 }

@@ -5,7 +5,7 @@ on:
     branches: [main]
   workflow_dispatch:
   workflow_run:
-    workflows: [Refresh Japan fixtures and call-ups, Refresh club activity]
+    workflows: [Refresh Japan fixtures and call-ups, Refresh club activity, Refresh player portraits]
     types: [completed]
 
 permissions:

@@ -7,9 +7,9 @@ import json
 from pathlib import Path
 import re
 from tempfile import NamedTemporaryFile
-from time import monotonic
+from time import monotonic, sleep
 import unicodedata
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, urlparse
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
@@ -17,21 +17,17 @@ from urllib.request import HTTPRedirectHandler, Request, build_opener
 ROOT = Path(__file__).resolve().parents[1]
 WIKIPEDIA = "https://en.wikipedia.org/w/api.php"
 COMMONS = "https://commons.wikimedia.org/w/api.php"
-UPLOAD_HOST = "upload.wikimedia.org"
+WIKIDATA = "https://www.wikidata.org/w/api.php"
+UPLOAD_HOSTS = ("upload.wikimedia.org", "thumb.wikimedia.org")
 USER_AGENT = "SamuraiWatch/1.0 (https://github.com/w86gv5484p-hash/CODEX)"
-RUN_SECONDS = 50
+RUN_SECONDS = 240
 MAX_BYTES = 3 * 1024 * 1024
 IMAGE_TYPES = {"image/jpeg": "jpg", "image/png": "png", "image/webp": "webp"}
-LICENSE_PATH = re.compile(r"/(?:licenses/(by|by-sa)/(?:1\.0|2\.0|2\.5|3\.0|4\.0)(?:/[a-z-]+)?|publicdomain/zero/1\.0)/?")
-VERIFICATION_METHOD = "commons-single-person-v1"
+LICENSE_PATH = re.compile(r"/(?:licenses/(by|by-sa)/(?:1\.0|2\.0|2\.5|3\.0|4\.0)(?:/[a-z-]+)?|publicdomain/zero/1\.0)/?(?:deed\.[a-zA-Z-]+)?")
+VERIFICATION_METHOD = "wikipedia-wikidata-birthdate-v1"
 PERSON_ID = re.compile(r"Q[1-9]\d*")
 MEDIA_ID = re.compile(r"M[1-9]\d*")
-PORTRAIT_CAPTION = re.compile(r"\b(?:portrait|headshot|head shot|profile photo(?:graph)?)\b|肖像|顔写真|ポートレート", re.I)
-GROUP_CAPTION = re.compile(
-    r"\b(?:group|team (?:photo(?:graph)?|portrait)|line ?up|alongside|and|with|from (?:the )?(?:left|right))\b"
-    r"|集合写真|チーム写真|記念撮影|左から|右から|と一緒|とともに",
-    re.I,
-)
+
 
 
 class PortraitError(Exception):
@@ -62,11 +58,12 @@ class Wikimedia:
         self.opener = build_opener(WikimediaRedirect())
         self.deadline = monotonic() + RUN_SECONDS
 
-    def read(self, url):
+    def read(self, url, attempt=0):
         seconds = min(8, self.deadline - monotonic())
         if seconds <= 0:
             raise PortraitError("The portrait update time limit was reached.")
         request = Request(url, headers={"User-Agent": USER_AGENT})
+        sleep(1)  # stay well under Wikimedia's request-rate limits
         try:
             with self.opener.open(request, timeout=seconds) as reply:
                 content = bytearray()
@@ -75,6 +72,11 @@ class Wikimedia:
                     if not chunk:
                         return bytes(content), reply.headers.get_content_type()
                     content.extend(chunk)
+        except HTTPError as exc:
+            if exc.code == 429 and attempt < 3 and monotonic() + 10 < self.deadline:
+                sleep(5 * (attempt + 1))
+                return self.read(url, attempt + 1)
+            raise PortraitError(f"Wikimedia returned HTTP {exc.code} for {urlparse(url).hostname}.") from exc
         except (URLError, OSError) as exc:
             raise PortraitError(f"Wikimedia could not be reached for {urlparse(url).hostname}.") from exc
         raise PortraitError("Wikimedia response exceeded the size or time limit.")
@@ -98,12 +100,6 @@ class Wikimedia:
             return result
         except (KeyError, TypeError, ValueError) as exc:
             raise PortraitError("Wikimedia did not return a readable page list.") from exc
-
-    def media_entities(self, ids):
-        entities = self.request_json(COMMONS, action="wbgetentities", ids="|".join(ids)).get("entities")
-        if not isinstance(entities, dict):
-            raise PortraitError("Wikimedia Commons did not return structured file information.")
-        return entities
 
 
 class MetadataText(HTMLParser):
@@ -134,22 +130,95 @@ def name_forms(value):
     return {" ".join(words), " ".join(reversed(words))}
 
 
-def selected_article_images(result, players):
-    articles = result["pages"]
-    names = {row["id"]: name_forms(row["latin"]) for row in players}
+def article_matches(article):
+    """True when a Wikipedia article is about a Japanese footballer."""
+    if article.get("ns") != 0 or article.get("missing"):
+        return False
+    if not PERSON_ID.fullmatch(article.get("pageprops", {}).get("wikibase_item", "")):
+        return False
+    summary = " ".join(article.get("terms", {}).get("description", [])).casefold()
+    return "japan" in summary and re.search(r"football|soccer", summary) is not None
+
+
+def candidate_titles(player, birth_dates):
+    latin = player["latin"]
+    titles = [latin, f"{latin} (footballer)"]
+    year = birth_dates.get(player["id"], "")[:4]
+    if year:
+        titles.append(f"{latin} (footballer, born {year})")
+    return titles
+
+
+def wikidata_facts(client, ids):
+    facts = {}
+    for chunk in (ids[i:i + 50] for i in range(0, len(ids), 50)):
+        result = client.request_json(WIKIDATA, action="wbgetentities", ids="|".join(chunk), props="claims")
+        for entity_id, entity in (result.get("entities") or {}).items():
+            claims = entity.get("claims", {})
+            def first(prop):
+                for claim in claims.get(prop, []):
+                    if claim.get("rank") == "deprecated":
+                        continue
+                    value = claim.get("mainsnak", {}).get("datavalue", {}).get("value")
+                    if value:
+                        return value
+                return None
+            birth = first("P569")
+            facts[entity_id] = {
+                "birth": birth.get("time", "")[1:11] if isinstance(birth, dict) else "",
+                "image": first("P18") if isinstance(first("P18"), str) else "",
+            }
+    return facts
+
+
+def selected_images(client, players, birth_dates):
+    """Map player id -> (Commons file title, Wikidata id) using Wikipedia + Wikidata."""
+    titles = {}
+    for player in players:
+        for title in candidate_titles(player, birth_dates):
+            titles.setdefault(title, []).append(player["id"])
+    pages = {}
+    redirects = {}
+    names = list(titles)
+    for chunk in (names[i:i + 50] for i in range(0, len(names), 50)):
+        result = client.query(
+            WIKIPEDIA, titles="|".join(chunk), redirects=1,
+            prop="pageimages|pageterms|pageprops", piprop="name", pilicense="free",
+            ppprop="wikibase_item", wbptterms="description",
+        )
+        for row in result.get("normalized", []) + result.get("redirects", []):
+            redirects[row["from"]] = row["to"]
+        for article in result["pages"]:
+            pages[article.get("title", "")] = article
+
+    def resolve(title):
+        seen = set()
+        while title in redirects and title not in seen:
+            seen.add(title)
+            title = redirects[title]
+        return pages.get(title)
+
+    matched = {}
+    for player in players:
+        for title in candidate_titles(player, birth_dates):
+            article = resolve(title)
+            if article and article_matches(article):
+                matched[player["id"]] = article
+                break
+    if not matched:
+        return {}
+    facts = wikidata_facts(client, sorted({a["pageprops"]["wikibase_item"] for a in matched.values()}))
     images = {}
-    for article in articles:
-        title = re.sub(r"\s*\([^)]*\)$", "", article.get("title", ""))
-        image = article.get("pageimage")
-        entity = article.get("pageprops", {}).get("wikibase_item", "")
-        if not image or article.get("ns") != 0 or not PERSON_ID.fullmatch(entity):
+    for player_id, article in matched.items():
+        entity = article["pageprops"]["wikibase_item"]
+        fact = facts.get(entity, {})
+        expected = birth_dates.get(player_id, "")
+        if expected and fact.get("birth") != expected:
             continue
-        summary = " ".join([article.get("extract", ""), *article.get("terms", {}).get("description", [])]).casefold()
-        if "japanese" not in summary or not re.search(r"\b(?:footballer|football player|soccer player)\b", summary):
+        image = fact.get("image") or article.get("pageimage")
+        if not image:
             continue
-        for player_id, forms in names.items():
-            if identity(title) in forms:
-                images[player_id] = (f"File:{image.replace('_', ' ')}", entity)
+        images[player_id] = (f"File:{image.replace('_', ' ')}", entity)
     return images
 
 
@@ -157,37 +226,15 @@ def valid_license(url):
     return safe_url(url, "creativecommons.org") and LICENSE_PATH.fullmatch(urlparse(url).path)
 
 
-def matches_portrait_caption(description, file_label, player):
-    if not PORTRAIT_CAPTION.search(identity(description) + " " + description):
-        return False
-    context = " ".join([description, file_label])
-    if GROUP_CAPTION.search(identity(context) + " " + context):
-        return False
-    normalized = " " + identity(description) + " "
-    japanese_name = re.sub(r"\s+", "", unicodedata.normalize("NFKC", player.get("name", "")))
-    japanese_description = re.sub(r"\s+", "", unicodedata.normalize("NFKC", description))
-    japanese_match = bool(re.search(r"[\u3400-\u9fff]", japanese_name)) and japanese_name in japanese_description
-    return japanese_match or any(f" {name} " in normalized for name in name_forms(player["latin"]))
-
-
 def media_id(page):
     page_id = page.get("pageid")
     return f"M{page_id}" if type(page_id) is int and page_id > 0 and page.get("ns") == 6 else ""
 
 
-def depicts_only(entity, media, person):
-    if entity.get("id") != media or entity.get("type") != "mediainfo":
-        return False
-    properties = entity.get("statements", entity.get("claims", {}))
-    depicted = [statement.get("mainsnak", {}).get("datavalue", {}).get("value")
-                for statement in properties.get("P180", []) if statement.get("rank") != "deprecated"]
-    return bool(depicted) and all(isinstance(value, dict) and value.get("id") == person for value in depicted)
-
-
-def decide_photo(page, player, person, entity):
+def decide_photo(page, player, person):
     images = page.get("imageinfo", [])
     media = media_id(page)
-    if not images or not media or not depicts_only(entity, media, person):
+    if not images or not media:
         return None
     info = images[0]
     fields = info.get("extmetadata", {})
@@ -203,13 +250,9 @@ def decide_photo(page, player, person, entity):
     if not valid_license(license_url) or not re.fullmatch(r"CC(?:\s+BY(?:-SA)?|0)(?:\s+[\w.() -]+)?", license_name, re.I):
         return None
 
-    file_label = " ".join([page["title"], metadata_text(fields, "ObjectName")])
-    if not matches_portrait_caption(metadata_text(fields, "ImageDescription"), file_label, player):
-        return None
-
     file_url = info.get("thumburl") or info.get("url", "")
     source_url = info.get("descriptionurl", "")
-    if not safe_url(file_url, UPLOAD_HOST, "/wikipedia/commons/"):
+    if not any(safe_url(file_url, host, "/wikipedia/commons/") for host in UPLOAD_HOSTS):
         return None
     if not safe_url(source_url, "commons.wikimedia.org", "/wiki/"):
         return None
@@ -266,36 +309,34 @@ def is_usable(row):
     )
 
 
-def refresh(client, players, available):
+def refresh(client, players, available, birth_dates):
     pending = [row for row in players if row["id"] not in available]
     if not pending:
         return False
-    articles = client.query(
-        WIKIPEDIA, titles="|".join(row["latin"] for row in pending), redirects=1,
-        prop="pageimages|pageterms|extracts|pageprops", piprop="name", pilicense="free", ppprop="wikibase_item",
-        wbptterms="description", exintro=1, explaintext=1, exsentences=2, exlimit="max",
-    )
-    images = selected_article_images(articles, pending)
+    images = selected_images(client, pending, birth_dates)
     if not images:
         return True
-
-    commons = client.query(
-        COMMONS, titles="|".join(dict.fromkeys(title for title, _ in images.values())), redirects=1,
-        prop="imageinfo", iiprop="url|mime|size|extmetadata", iiurlwidth=640,
-        iiextmetadatafilter="Artist|LicenseShortName|LicenseUrl|ObjectName|ImageDescription",
-    )
-    redirects = {row["from"]: row["to"] for row in commons.get("normalized", []) + commons.get("redirects", [])}
+    commons = {"pages": [], "normalized": [], "redirects": []}
+    file_titles = list(dict.fromkeys(title for title, _ in images.values()))
+    for chunk in (file_titles[i:i + 50] for i in range(0, len(file_titles), 50)):
+        result = client.query(
+            COMMONS, titles="|".join(chunk), redirects=1,
+            prop="imageinfo", iiprop="url|mime|size|extmetadata", iiurlwidth=500,
+            iiextmetadatafilter="Artist|LicenseShortName|LicenseUrl",
+        )
+        for key in commons:
+            commons[key].extend(result.get(key, []))
+    redirects = {row["from"]: row["to"] for row in commons["normalized"] + commons["redirects"]}
     files = {row["title"]: row for row in commons["pages"]}
-    ids = list(dict.fromkeys(media_id(page) for page in commons["pages"] if media_id(page)))
-    entities = client.media_entities(ids) if ids else {}
     for player in pending:
         player_id = player["id"]
         if player_id not in images:
             continue
         title, person = images[player_id]
         page = files.get(redirects.get(title, title))
-        choice = decide_photo(page, player, person, entities.get(media_id(page), {})) if page else None
+        choice = decide_photo(page, player, person) if page else None
         if not choice:
+            print(f"No reusable photo for {player['latin']}.")
             continue
         url, portrait = choice
         try:
@@ -336,7 +377,13 @@ def main():
         current_method = existing.get("verificationMethod") == VERIFICATION_METHOD
         if not current_method or len(previous) != len(available):
             save_snapshot(output, available, existing.get("checkedAt") if current_method else None)
-        if refresh(Wikimedia(), list(players.values()), available):
+        biographies_path = ROOT / "data/player-biographies.json"
+        biographies = json.loads(biographies_path.read_text(encoding="utf-8")) if biographies_path.exists() else {}
+        birth_dates = {
+            row["id"]: row["birthDate"] for row in biographies.get("players", [])
+            if re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(row.get("birthDate", "")))
+        }
+        if refresh(Wikimedia(), list(players.values()), available, birth_dates):
             save_snapshot(output, available, datetime.now(timezone.utc).isoformat(timespec="seconds"))
         count = len(players.keys() & available.keys())
         print(f"Verified portraits available for {count} of {len(players)} roster players.")
