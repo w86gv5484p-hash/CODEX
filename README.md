@@ -35,7 +35,7 @@ Windows では `py -3 scripts/run_local.py --open` を使います。ポート�
 | 試合結果 | JFA と [International football results](https://github.com/martj42/international_results) の公開データを使用します。 |
 | FIFA男子世界ランキング | [FIFA](https://inside.fifa.com/fifa-world-ranking/men) の発表を確認し、トップ画面に順位、発表日、確認できた場合は前回比を表示します。取得に失敗した場合は保存済みの順位を保持します。 |
 | 先発フォーメーション | `data/lineups.json` に登録された、出典で確認できた試合を表示します。ピッチ上の選手を選ぶとプロフィール、クラブ、負傷・復帰の情報を確認できます。 |
-| 選手の写真 | ローカル版の起動時と「今すぐ取得」で、Wikimedia Commons の該当選手の写真を確認します。本人と再利用条件を確認できた写真を保存し、選手詳細に作者・出典・ライセンスを表示します。 |
+| 選手の写真 | 各選手の英語版 Wikipedia 記事と Wikidata から、自由ライセンス（CC BY / CC BY-SA / CC0）の写真を Wikimedia Commons で取得します。Wikidata の生年月日が `data/player-biographies.json` と一致した場合だけ採用し、同姓同名の別人を避けます。選手詳細に撮影者・出典・ライセンスを表示します。**Refresh player portraits** ワークフローが毎週月曜に新しい招集選手の写真を追加し、ローカル版は起動時と「今すぐ取得」でも確認します。写真がない選手は背番号またはイニシャルを表示します。 |
 | 選手・監督 | 直近のJFA招集発表を保存資料から照合し、2026年W杯登録名簿とは別に表示します。監督には役割と報道日または最終指揮日を掲載します。 |
 | 選手プロフィール | `data/player-biographies.json` に出典とともに生年月日、出身地、高校・育成年代、A代表デビュー、実績・受賞歴を保存します。出場を確認できた最古の試合は、デビュー日の裏付けがない場合に別の項目で表示します。 |
 | クラブ出場、負傷 | 公開資料から確認した試合・負傷情報を掲載します。ローカル版は公式Fantasy Premier Leagueから対象選手のリーグ累計と公表された負傷情報の取得も試みます。対応範囲を広げる場合は任意でAPI-FOOTBALLを設定できます。 |
