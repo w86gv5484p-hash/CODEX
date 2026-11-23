@@ -16,11 +16,14 @@ from time import monotonic
 from urllib.parse import urlsplit
 import webbrowser
 
+mimetypes.add_type("application/manifest+json", ".webmanifest")
+
 ROOT = Path(__file__).resolve().parents[1]
 APP_FILES = {
     f"/{name}": ROOT / name
     for name in (
-        "index.html", "app.js", "styles.css",
+        "index.html", "app.js", "styles.css", "sw.js", "manifest.webmanifest",
+        "assets/icon-192.png", "assets/icon-512.png", "assets/apple-touch-icon.png",
         "assets/favicon.svg", "assets/hero.webp", "assets/editorial.webp",
         "data/jfa.json", "data/players.json", "data/clubs.json",
         "data/ranking.json", "data/lineups.json", "data/profiles.json", "data/portraits.json",

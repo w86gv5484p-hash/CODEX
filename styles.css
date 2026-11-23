@@ -22,7 +22,7 @@ button, select { cursor: pointer; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #5e7ff4; outline-offset: 3px; }
 svg { flex: none; vertical-align: middle; }
 .shell { width: min(100% - 64px, 1320px); margin-inline: auto; }
-.skip-link { position: absolute; left: 1rem; top: -5rem; z-index: 3; background: white; padding: 12px; }
+.skip-link { position: absolute; left: 1rem; top: -5rem; z-index: 6; background: white; padding: 12px; }
 .skip-link:focus { top: 1rem; }
 .site-header { background: var(--paper); border-bottom: 1px solid var(--line); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 74px; }
@@ -325,3 +325,26 @@ dialog .portrait-credit { margin-top: 5px; color: var(--muted); font-size: 10px;
 .bio-sources li, .bio-sources .source-link { display: inline; font-size: 11px; }
 .bio-sources li { display: block; }
 .bio-sources .source-link svg { margin-left: 3px; }
+
+/* App shell: focus target, install-friendly bottom tab bar on phones */
+main:focus { outline: none; }
+.nav-icon { display: none; }
+@media (max-width: 670px) {
+  body { padding-bottom: calc(66px + env(safe-area-inset-bottom)); }
+  .site-header { position: sticky; top: 0; z-index: 4; padding-top: env(safe-area-inset-top); }
+  .header-inner { padding-bottom: 10px; }
+  .site-nav {
+    position: fixed; inset: auto 0 0 0; z-index: 5;
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0;
+    padding: 0 max(4px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(4px, env(safe-area-inset-left));
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -6px 20px #0b19360f;
+  }
+  .site-nav a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 60px; padding: 6px 2px; font-size: 10.5px; -webkit-tap-highlight-color: transparent; }
+  .site-nav a span { white-space: nowrap; }
+  .nav-icon { display: block; }
+  .site-nav a[aria-current]::after { top: 0; bottom: auto; inset-inline: 22%; border-radius: 0 0 3px 3px; }
+  .site-nav a[aria-current] .nav-icon { stroke-width: 2.3; }
+}
