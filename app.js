@@ -750,3 +750,7 @@ refresh();
 setInterval(() => {
   if (!document.hidden) refresh();
 }, 15 * 60 * 1000);
+
+if ("serviceWorker" in navigator && window.isSecureContext) {
+  navigator.serviceWorker.register("./sw.js").catch(() => {});
+}

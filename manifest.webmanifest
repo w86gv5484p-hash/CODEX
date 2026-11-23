@@ -1,0 +1,16 @@
+{
+  "name": "SAMURAI WATCH サッカー日本代表トラッカー",
+  "short_name": "SAMURAI WATCH",
+  "description": "サッカー男子日本代表の試合日程、招集、クラブでの活動、負傷・復帰情報を出典付きで確認できます。",
+  "lang": "ja",
+  "start_url": "./#overview",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f6fb",
+  "theme_color": "#102653",
+  "icons": [
+    { "src": "./assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
