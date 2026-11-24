@@ -23,10 +23,10 @@ Scope: the Japan national team app only — `data/` and `assets/portraits/`. Nev
 
 ## Procedure
 1. Pick the scripts the request needs. For a general refresh: `update_squad.py` first (others read its output), then the `refresh-jfa.yml` order: `refresh_jfa.py`, `update_ranking.py`, `update_jfa_profiles.py`, `update_fpl.py`, `update_injury_news.py`. Add `update_clubs.py` / `update_portraits.py` only when asked about clubs or photos.
-2. Run each from the repo root (`python3 scripts/<name>.py; echo $?`). The scripts keep the previous data on failure. Treat the run as failed only if both `refresh_jfa.py` and `update_ranking.py` fail (same rule as CI); report any other failure per source.
+2. Run each from the repo root (`python3 scripts/<name>.py; echo $?`). The scripts keep the previous data on failure. `update_ranking.py` exits 1 whenever it cannot confirm the latest FIFA publication (CI marks the job failed after saving the other files); treat that as a ranking failure and report it. Report any other failure per source.
 3. Check that each source really updated. Exit 0 is not proof:
    - `update_clubs.py` exits 0 and changes nothing when `API_FOOTBALL_KEY` is unset (no proxy supplies it). Check the variable's presence (never print its value) and say so if it is missing; the fix is the repo secret / a local env var.
-   - `ranking.json`: compare `publishedAt`, not `checkedAt`. `checkedAt` moves on every run.
+   - `ranking.json`: compare `publishedAt`, not `checkedAt`. `checkedAt` moves on every successful run. The legacy `api.fifa.com/api/v3/rankings` feed stopped at 2026-07-20; the script uses it only when it returns a newer publication.
    - `jfa.json`: every `feeds.*.status` should be `ok`.
    - `current-squad.json`: "変更はありません" means the archive has nothing newer yet; compare against the newest call-up in `jfa.json`.
 4. `git diff --stat` and skim: dates and counts should move plausibly.
