@@ -126,7 +126,98 @@ function playerReports(player) {
   return [...new Map(reports.map(report => [`${report.date}:${report.type}:${report.title}`, report])).values()].sort(byLatest);
 }
 
+// Photos the viewer imports stay in this browser only (IndexedDB); they are never uploaded.
+const localPhotos = new Map();
+const PHOTO_ID = /^[a-z0-9-]{2,60}$/;
+const PHOTO_DATA = /^data:image\/(?:jpeg|png|webp);base64,[\w+/=]+$/;
+
+function photoStore(mode) {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open("samurai-watch-local", 1);
+    request.onupgradeneeded = () => request.result.createObjectStore("photos");
+    request.onsuccess = () => resolve(request.result.transaction("photos", mode));
+    request.onerror = () => reject(request.error);
+  });
+}
+
+function finished(transaction) {
+  return new Promise((resolve, reject) => {
+    transaction.oncomplete = resolve;
+    transaction.onerror = transaction.onabort = () => reject(transaction.error);
+  });
+}
+
+async function loadLocalPhotos() {
+  try {
+    const transaction = await photoStore("readonly");
+    const request = transaction.objectStore("photos").openCursor();
+    await new Promise(resolve => {
+      request.onsuccess = () => {
+        const cursor = request.result;
+        if (!cursor) return resolve();
+        if (cursor.value instanceof Blob && PHOTO_ID.test(cursor.key)) {
+          localPhotos.set(cursor.key, URL.createObjectURL(cursor.value));
+        }
+        cursor.continue();
+      };
+      request.onerror = () => resolve();
+    });
+  } catch {
+    // Private browsing or blocked storage: show the published photos only.
+  }
+}
+
+async function importPhotos(files) {
+  const entries = [];
+  for (const file of files) {
+    if (/\.json$/i.test(file.name) || file.type === "application/json") {
+      const bundle = JSON.parse(await file.text());
+      for (const [id, data] of Object.entries(bundle?.photos ?? {})) {
+        if (PHOTO_ID.test(id) && PHOTO_DATA.test(data)) entries.push([id, await (await fetch(data)).blob()]);
+      }
+    } else if (/^image\/(?:jpeg|png|webp)$/.test(file.type)) {
+      const id = file.name.replace(/\.[^.]+$/, "").toLowerCase();
+      if (PHOTO_ID.test(id)) entries.push([id, file]);
+    }
+  }
+  if (!entries.length) return 0;
+  const transaction = await photoStore("readwrite");
+  for (const [id, blob] of entries) transaction.objectStore("photos").put(blob, id);
+  await finished(transaction);
+  for (const [id, blob] of entries) {
+    if (localPhotos.has(id)) URL.revokeObjectURL(localPhotos.get(id));
+    localPhotos.set(id, URL.createObjectURL(blob));
+  }
+  return entries.length;
+}
+
+async function clearLocalPhotos() {
+  const transaction = await photoStore("readwrite");
+  transaction.objectStore("photos").clear();
+  await finished(transaction);
+  for (const url of localPhotos.values()) URL.revokeObjectURL(url);
+  localPhotos.clear();
+}
+
+function staffPhotoId(person) {
+  return "staff-" + String(person?.latin ?? "").toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function localPhotoPanel() {
+  const count = localPhotos.size;
+  return `<div class="panel local-photos">
+    <div><strong>この端末の写真</strong>
+      <p>${count ? `${count}人分の写真を取り込み済みです。この端末だけで表示され、公開サイトや他の人には表示されません。` : "写真ファイル（.json）を取り込むと、この端末でだけ写真を差し替えて表示します。"}</p>
+      <p class="local-photos-status" id="photo-status" role="status"></p></div>
+    <div class="local-photos-actions">
+      <label class="button button-primary">写真を取り込む<input type="file" id="photo-import" accept=".json,application/json,image/jpeg,image/png,image/webp" multiple hidden></label>
+      ${count ? '<button type="button" class="button button-ghost" id="photo-clear">取り込んだ写真を消す</button>' : ""}
+    </div>
+  </div>`;
+}
+
 function portraitFor(player) {
+  if (localPhotos.has(player.id)) return { path: localPhotos.get(player.id), local: true };
   const portrait = feeds.portraits.portraits?.find(item => item.id === player.id);
   if (portrait?.verification?.method !== "wikipedia-wikidata-birthdate-v1") return null;
   const path = portrait?.path ?? "";
@@ -255,7 +346,7 @@ function coachPanel() {
   return `<section class="panel coach-panel" aria-labelledby="coach-title">
     <h2 class="panel-kicker" id="coach-title">${icon("people", 16)} 代表監督</h2>
     ${[coach, previousCoach].filter(person => person?.name).map(person => `
-      <div class="coach-row"><div><span>${esc(person.role ?? "監督")}</span><strong>${esc(person.name)}</strong></div>
+      <div class="coach-row${localPhotos.has(staffPhotoId(person)) ? " has-photo" : ""}">${localPhotos.has(staffPhotoId(person)) ? `<img class="coach-photo" src="${esc(localPhotos.get(staffPhotoId(person)))}" alt="${esc(person.name)}の写真">` : ""}<div><span>${esc(person.role ?? "監督")}</span><strong>${esc(person.name)}</strong></div>
         <p>${person.lastMatchDate ? `最終指揮 ${dateLabel(person.lastMatchDate)} ` : person.asOf ? `${dateLabel(person.asOf)}報道 ` : ""}${externalLink(person.source)}</p></div>`).join("")}
   </section>`;
 }
@@ -446,6 +537,7 @@ function playersPage() {
         <select id="position-filter" aria-label="ポジションで絞り込む"><option value="all">全ポジション</option>${Object.entries(positionNames).map(([position, name]) => `<option value="${position}">${position} · ${name}</option>`).join("")}${!archive ? '<option value="MF/FW">MF/FW（JFA発表の区分）</option>' : ""}</select>
       </div>
       <div id="player-results" aria-live="polite">${playerCards()}</div>
+      ${localPhotoPanel()}
     </section>
     <div class="stack">
       ${coachPanel()}
@@ -583,7 +675,7 @@ function showPlayerDetails(player, context) {
       ${player.status ? `<p>${esc(player.status)} ${externalLink(player.statusSource)}</p>` : ""}
       ${player.source ? `<p>${externalLink(player.source)}</p>` : ""}</div></div>
     ${jfaProfileLink(player)}
-    ${portrait ? `<p class="portrait-credit">写真 ${esc(portrait.attribution)} · ${externalLink(portrait.source)} · ${externalLink({ label: portrait.license, url: portrait.licenseUrl })}</p>` : '<p class="portrait-credit">確認できた写真はありません。</p>'}
+    ${portrait?.local ? '<p class="portrait-credit">この端末に取り込んだ写真です（この端末でのみ表示）。</p>' : portrait ? `<p class="portrait-credit">写真 ${esc(portrait.attribution)} · ${externalLink(portrait.source)} · ${externalLink({ label: portrait.license, url: portrait.licenseUrl })}</p>` : '<p class="portrait-credit">確認できた写真はありません。</p>'}
     ${context ? `<div class="dialog-section lineup-context"><h3>日本 vs ${esc(local(context.match.opponent))} の先発</h3>
       <p>${esc(dateLabel(context.match.date))}${context.participant.number ? ` · 背番号 ${esc(context.participant.number)}` : ""}${context.participant.role ? ` · ${esc(context.participant.role)}` : ""}</p>
       <p>${externalLink(context.lineup.source)}</p>
@@ -754,13 +846,29 @@ function filterPlayers() {
 main.addEventListener("input", event => {
   if (event.target.id === "player-search" || event.target.id === "position-filter") filterPlayers();
 });
-main.addEventListener("click", event => {
+main.addEventListener("click", async event => {
+  if (event.target.id === "photo-clear") {
+    try { await clearLocalPhotos(); } catch { /* storage unavailable */ }
+    render();
+    return;
+  }
   const button = event.target.closest(".pitch-position");
   if (!button) return;
   document.querySelector("#position-filter").value = button.getAttribute("aria-pressed") === "true" ? "all" : button.dataset.position;
   filterPlayers();
 });
-main.addEventListener("change", event => {
+main.addEventListener("change", async event => {
+  if (event.target.id === "photo-import") {
+    const status = document.querySelector("#photo-status");
+    try {
+      const count = await importPhotos([...event.target.files]);
+      render();
+      document.querySelector("#photo-status").textContent = count ? `${count}人分の写真を取り込みました。` : "取り込める写真が見つかりませんでした。";
+    } catch {
+      status.textContent = "写真を取り込めませんでした。ファイルを確認してください。";
+    }
+    return;
+  }
   if (event.target.id === "roster-filter") {
     rosterSelection = event.target.value;
     render();
@@ -792,7 +900,7 @@ dialog.addEventListener("click", event => {
   }
 });
 dialog.dataset.kind = "detail";
-refresh();
+loadLocalPhotos().finally(refresh);
 setInterval(() => {
   if (!document.hidden) refresh();
 }, 15 * 60 * 1000);
