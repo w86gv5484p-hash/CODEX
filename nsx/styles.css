@@ -265,3 +265,7 @@ dialog .form { display: grid; gap: 12px; margin-top: 10px; }
 #dlg-body > .eyebrow { padding-right: 44px; }
 .type-group > .list { border-top: 0; border-radius: 0 0 12px 12px; }
 .subtabs a.chip { text-decoration: none; }
+
+/* 閲覧専用（share/）の案内 */
+.ro-note { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; margin: 12px 0; padding: 10px 14px; border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 10px; background: var(--panel); font-size: 13px; color: var(--muted); }
+.ro-note b { color: var(--gold); font-weight: 700; letter-spacing: .04em; }
