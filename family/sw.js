@@ -1,5 +1,5 @@
 // オフラインでも直近の画面を表示する Service Worker（通信優先、失敗時に保存済みを返す）。
-const CACHE = "famcal-v1";
+const CACHE = "famcal-v2";
 const CORE = ["./", "./index.html", "./styles.css", "./app.js", "./sync.js", "./ocr.js", "./config.js",
   "./manifest.webmanifest", "./icon.svg", "./icon-180.png"];
 

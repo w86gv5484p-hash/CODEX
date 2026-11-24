@@ -9,7 +9,14 @@
 // （これらの値は公開されても問題ない識別子です。データは firestore.rules と家族コードで守られます。）
 
 // ▼▼▼ ここから ▼▼▼
-const firebaseConfig = null;
+const firebaseConfig = {
+  apiKey: "AIzaSyBFJOy3YPHoi1BUyCDL7evoxiPgq5o1JRA",
+  authDomain: "family-schedule-2656b.firebaseapp.com",
+  projectId: "family-schedule-2656b",
+  storageBucket: "family-schedule-2656b.firebasestorage.app",
+  messagingSenderId: "109447851725",
+  appId: "1:109447851725:web:82682975826232a20c8384"
+};
 // ▲▲▲ ここまで ▲▲▲
 
 window.FAMCAL_FIREBASE = firebaseConfig;
