@@ -1,4 +1,4 @@
-// ビカク日記 — 育てているビカクシダの成長記録アプリ。
+// Laboratorio del Cervo — 育てているビカクシダの成長記録アプリ。
 // 株・写真・水やり・害虫の記録はすべてこの端末のブラウザー（IndexedDB）に保存し、外部には送信しません。
 // 写真は取り込み時に縮小（長辺1600px）して保存します。機種変更に備えて「保存」タブから書き出せます。
 
@@ -243,7 +243,7 @@ function renderPlants() {
   const pests = openPests().length;
   $main.innerHTML = `
     <section class="wall"><div class="wall-bg empty" id="wall-bg"></div>
-      <div class="wall-txt"><p class="kicker">Staghorn Fern Gallery</p><h1>ビカク日記</h1>
+      <div class="wall-txt"><p class="kicker">Staghorn Fern Gallery</p><h1 class="title">Laboratorio<br><i>del</i> Cervo</h1>
         <p class="sub">${plants.length}株を展示中 · 写真 ${state.photos.length}枚</p></div>
       <button class="wall-edit" id="wall-edit">背景の写真</button></section>
     <div class="head" style="margin-top:22px"><div><p class="kicker">Collection</p><h2>展示室</h2></div>
@@ -699,7 +699,7 @@ async function exportBackup() {
   const wallBlob = await getOne("blobs", WALL_ID);
   const wall = wallBlob ? { full: await blobToDataURL(wallBlob.full), thumb: await blobToDataURL(wallBlob.thumb) } : null;
   const data = { app: "fern-log", version: 1, exported: new Date().toISOString(), plants: state.plants, logs: state.logs, pests: state.pests, photos, wall };
-  const name = `bikaku-backup-${todayIso().replaceAll("-", "")}.json`;
+  const name = `cervo-backup-${todayIso().replaceAll("-", "")}.json`;
   const file = new File([JSON.stringify(data)], name, { type: "application/json" });
   if (navigator.canShare?.({ files: [file] }) && /iPhone|iPad|Android/i.test(navigator.userAgent)) {
     try { await navigator.share({ files: [file], title: name }); toast("書き出しました"); return; }
@@ -716,7 +716,7 @@ $fileBackup.onchange = async () => {
   if (!file) return;
   try {
     const data = JSON.parse(await file.text());
-    if (data.app !== "fern-log") throw new Error("ビカク日記のバックアップではありません");
+    if (data.app !== "fern-log") throw new Error("Laboratorio del Cervo のバックアップではありません");
     if (!confirm(`株 ${data.plants?.length || 0}・写真 ${data.photos?.length || 0}枚の記録を読み込みます。よろしいですか？`)) return;
     toast("読み込んでいます…");
     for (const p of data.plants || []) await save("plants", p);

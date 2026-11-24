@@ -1,6 +1,6 @@
 {
-  "name": "ビカク日記",
-  "short_name": "ビカク日記",
+  "name": "Laboratorio del Cervo",
+  "short_name": "Lab. Cervo",
   "description": "ビカクシダの成長記録。株ごとの写真、水やり、害虫と駆除状況、育成ガイド。",
   "lang": "ja",
   "start_url": "./#plants",
