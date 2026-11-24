@@ -301,3 +301,6 @@ dialog .card-box { background: #141415; }
 .wall-txt h1.title { font-family: var(--serif); font-weight: 500; font-size: clamp(46px, 13.5vw, 84px); letter-spacing: .03em; line-height: .98; margin-top: 8px; }
 .wall-txt h1.title i { font-weight: 500; color: var(--brass); }
 .wall-txt .kicker { text-shadow: 0 1px 8px rgba(0, 0, 0, .9); }
+
+/* ファイル選択は display:none だと一部の iPhone で開かないことがあるため、見えない形で置いておく */
+.picker { position: fixed; left: -9999px; top: 0; width: 1px; height: 1px; opacity: 0; }
