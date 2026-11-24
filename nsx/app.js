@@ -2,6 +2,11 @@
 // 入力した交換日・チェック・部品メモは端末のブラウザー（localStorage）に保存します。
 // データファイルは1日1回（日付が変わったとき）取り直し、アラートも日付ごとに再計算します。
 
+// 共有用の閲覧専用ページ（share/index.html）は <html data-readonly> を付けて同じ app.js を読み込む。
+// 閲覧専用では data/shared-records.json の記録を表示し、端末（localStorage）には何も読み書きしない。
+const READONLY = document.documentElement.hasAttribute("data-readonly");
+const asset = path => new URL(path, import.meta.url).href; // app.js と同じフォルダー基準（share/ から読んでも同じ場所を指す）
+
 const $main = document.getElementById("main");
 const $dlg = document.getElementById("dlg");
 const $dlgBody = document.getElementById("dlg-body");
@@ -20,7 +25,11 @@ const MAINT_STATE = {
 };
 
 // ---------- 保存 ----------
-const store = {
+const memory = new Map(); // 閲覧専用：表示の切り替えだけをページを開いている間だけ覚える
+const store = READONLY ? {
+  get(key, fallback) { return memory.has(key) ? memory.get(key) : fallback; },
+  set(key, value) { memory.set(key, value); },
+} : {
   get(key, fallback) {
     try { const v = localStorage.getItem("nsx." + key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
   },
@@ -68,17 +77,25 @@ let data = null;
 let supply = { partNumbers: [], sources: [], changes: [] };
 let photos = {};
 let loadedFor = "";
+let sharedAt = ""; // 閲覧専用：記録を書き出した日時
 
 async function loadData() {
   const day = iso(today());
   const get = async name => {
-    const res = await fetch(`./data/${name}?d=${day}`, { cache: "no-cache" });
+    const res = await fetch(asset(`data/${name}?d=${day}`), { cache: "no-cache" });
     if (!res.ok) throw new Error(name);
     return res.json();
   };
   data = await get("vehicle.json");
   try { supply = await get("supply.json"); } catch { /* 供給データがなくても他の画面は使える */ }
   try { photos = await get("photos.json"); } catch { photos = {}; }
+  if (READONLY) {
+    try {
+      const r = await get("shared-records.json");
+      ({ maint = {}, custom = [], checks = {}, parts = {} } = r);
+      sharedAt = r.exported || "";
+    } catch { maint = {}; custom = []; checks = {}; parts = {}; }
+  }
   loadedFor = day;
 }
 
@@ -88,7 +105,7 @@ const maintItems = () => [...data.maintenance, ...custom];
 
 // ---------- 写真 ----------
 const pic = (key, attrs = "") => photos[key]
-  ? `<img src="./img/${photos[key].file}" alt="${esc(photos[key].caption)}" loading="lazy" decoding="async" ${attrs}>` : "";
+  ? `<img src="${asset(`img/${photos[key].file}`)}" alt="${esc(photos[key].caption)}" loading="lazy" decoding="async" ${attrs}>` : "";
 const shortCredit = key => photos[key] ? `Photo: ${esc(photos[key].author)} / ${esc(photos[key].license)}` : "";
 const banner = (key, eyebrow, title, text, num = "") => `
   <section class="banner" data-photo="${key}">${pic(key, 'loading="eager"')}
@@ -108,7 +125,7 @@ let officialRows = null; // 継続供給中リスト [元の品番, 現在の品
 async function loadOfficial() {
   if (officialRows) return officialRows;
   try {
-    const res = await fetch(`./data/supply-list.json?d=${loadedFor}`, { cache: "no-cache" });
+    const res = await fetch(asset(`data/supply-list.json?d=${loadedFor}`), { cache: "no-cache" });
     officialRows = res.ok ? (await res.json()).rows || [] : [];
   } catch { officialRows = []; }
   return officialRows;
@@ -130,8 +147,13 @@ function render() {
   const tab = (location.hash.slice(1) || "home").split("/")[0];
   const view = views[tab] ? tab : "home";
   document.querySelectorAll(".tabs a").forEach(a => a.classList.toggle("active", a.dataset.tab === view));
-  $main.innerHTML = views[view]();
+  $main.innerHTML = (READONLY ? readonlyNote() : "") + views[view]();
   updateBadge();
+}
+
+function readonlyNote() {
+  const when = sharedAt ? `${jp(new Date(sharedAt))}時点の記録です` : "記録はまだ共有されていません";
+  return `<div class="ro-note" role="note"><b>閲覧専用</b><span>${when}。画面は自由に操作できますが、記録の追加・変更・保存はできません。</span></div>`;
 }
 
 function updateBadge() {
@@ -139,7 +161,7 @@ function updateBadge() {
   const link = document.querySelector('.tabs a[data-tab="alerts"]');
   link.querySelector(".badge")?.remove();
   if (n) link.insertAdjacentHTML("beforeend", `<span class="badge">${n}</span>`);
-  if (navigator.setAppBadge) (n ? navigator.setAppBadge(n) : navigator.clearAppBadge()).catch(() => {});
+  if (!READONLY && navigator.setAppBadge) (n ? navigator.setAppBadge(n) : navigator.clearAppBadge()).catch(() => {});
 }
 
 function alertBanner() {
@@ -152,6 +174,7 @@ function alertBanner() {
       `<li><b>${esc(i.name)}</b>：${s.state === "over" ? `${-s.daysLeft}日超過` : `あと${s.daysLeft}日`}（期限 ${jp(s.due)}）</li>`).join("");
     return `<div class="alert-banner ${over.length ? "over" : "soon"}" role="alert"><span class="ico">!</span><div><strong>交換時期のお知らせ</strong><ul>${list}</ul></div></div>`;
   }
+  if (unset.length === items.length && READONLY) return `<div class="alert-banner soon"><span class="ico">i</span><div><strong>交換日の記録はまだありません</strong></div></div>`;
   if (unset.length === items.length) return `<div class="alert-banner soon"><span class="ico">i</span><div><strong>まず交換日を入力してください</strong>「交換時期」タブで前回の交換日を入れると、期限の1か月半前からここにお知らせします。</div></div>`;
   return `<div class="alert-banner ok"><span class="ico">✓</span><div><strong>交換時期が近い項目はありません</strong>${unset.length ? `<span class="small muted">未入力：${unset.map(x => esc(x.i.name)).join("、")}</span>` : ""}</div></div>`;
 }
@@ -166,7 +189,7 @@ function home() {
   return `
   <section class="hero">
     ${photo ? `<img src="${photo}" alt="愛車の写真">` : pic("hero", 'loading="eager" fetchpriority="high"')}
-    <button class="btn ghost small photo-btn" data-act="photo">${photo ? "写真を変更" : "📷 愛車の写真にする"}</button>
+    ${READONLY ? "" : `<button class="btn ghost small photo-btn" data-act="photo">${photo ? "写真を変更" : "📷 愛車の写真にする"}</button>`}
     <div class="hero-body">
       <p class="hero-mark"><span>NSX</span></p>
       <p class="hero-sub">NEW SPORTSCAR e<b>X</b>PERIMENTAL</p>
@@ -216,25 +239,25 @@ function alerts() {
     return `<article class="card maint-card" style="--c:${st.color}">
       <div class="maint-head"><h3>${esc(item.name)} <span class="muted small">${intervalText(item.months)}</span></h3><span class="pill ${st.cls}">${st.label}</span></div>
       ${s.state !== "unset" ? `<div class="days" style="color:${st.color}">${Math.abs(s.daysLeft)}<small>${s.daysLeft >= 0 ? "日後に交換" : "日超過"}</small></div><div class="bar"><span style="width:${Math.round(s.ratio * 100)}%;background:${st.color}"></span></div>
-      <dl class="kv"><dt>前回交換</dt><dd>${jp(s.last)}</dd><dt>次回交換</dt><dd>${jp(s.due)}（${s.daysLeft >= 0 ? `あと${s.daysLeft}日` : `${-s.daysLeft}日超過`}）</dd><dt>アラート開始</dt><dd>${jp(s.alertFrom)}（1か月半前）</dd></dl>` : `<p class="small muted" style="margin:8px 0 0">前回の交換日を入力してください。</p>`}
+      <dl class="kv"><dt>前回交換</dt><dd>${jp(s.last)}</dd><dt>次回交換</dt><dd>${jp(s.due)}（${s.daysLeft >= 0 ? `あと${s.daysLeft}日` : `${-s.daysLeft}日超過`}）</dd><dt>アラート開始</dt><dd>${jp(s.alertFrom)}（1か月半前）</dd></dl>` : `<p class="small muted" style="margin:8px 0 0">${READONLY ? "交換日の記録はありません。" : "前回の交換日を入力してください。"}</p>`}
       <p class="small muted" style="margin:8px 0 0">${esc(item.note || "")}</p>
-      <div class="maint-row">
+      ${READONLY ? "" : `<div class="maint-row">
         <label class="field">交換日を記録<input type="date" max="${iso(today())}" value="${iso(today())}" data-date="${item.id}"></label>
         <button class="btn primary" data-act="record" data-id="${item.id}">記録する</button>
         ${hist.length ? `<button class="btn small" data-act="undo" data-id="${item.id}">直前の記録を取り消す</button>` : ""}
         ${isCustom ? `<button class="btn small" data-act="del-custom" data-id="${item.id}">項目を削除</button>` : ""}
-      </div>
+      </div>`}
       ${hist.length > 1 ? `<details style="margin-top:8px"><summary class="small muted">交換履歴（${hist.length}回）</summary><ol class="history">${[...hist].reverse().map(d => `<li>${jp(parse(d))}</li>`).join("")}</ol></details>` : ""}
     </article>`;
   }).join("");
-  const notif = "Notification" in window && Notification.permission === "default"
+  const notif = !READONLY && "Notification" in window && Notification.permission === "default"
     ? `<button class="btn small" data-act="notify">アプリを開いたときに通知する</button>` : "";
   return `${banner("road-red", "Maintenance", "交換タイミングアラート", "交換した日を入力すると次回交換日を計算し、<b>その1か月半前</b>からお知らせします。", "05")}
   ${alertBanner()}
   <div class="maint">${cards}</div>
-  <div class="toolbar" style="margin-top:16px"><button class="btn" data-act="add-custom">＋ 交換項目を追加（タイミングベルトなど）</button>${notif}
+  ${READONLY ? "" : `<div class="toolbar" style="margin-top:16px"><button class="btn" data-act="add-custom">＋ 交換項目を追加（タイミングベルトなど）</button>${notif}
   <button class="btn small" data-act="export">データを書き出す</button><button class="btn small" data-act="import">読み込む</button></div>
-  <p class="small muted">記録はこの端末のブラウザーに保存されます。機種変更の前に「データを書き出す」で保存してください。</p>`;
+  <p class="small muted">記録はこの端末のブラウザーに保存されます。機種変更の前に「データを書き出す」で保存してください。</p>`}`;
 }
 
 function partState(p) {
@@ -421,11 +444,11 @@ function faults() {
       <div class="progress">整備チェック ${done}/${f.checks.length}<div class="bar"><span style="width:${done / f.checks.length * 100}%;background:var(--ok)"></span></div></div>
       <ul class="checks">${f.checks.map((c, i) => {
         const key = `${f.id}:${i}`, when = checks[key];
-        return `<li><label><input type="checkbox" data-act="check" data-key="${key}" ${when ? "checked" : ""}><span class="${when ? "done" : ""}">${esc(c)}${when ? `<span class="when">✓ ${jp(parse(when))} 実施</span>` : ""}</span></label></li>`;
+        return `<li><label><input type="checkbox" data-act="check" data-key="${key}" ${when ? "checked" : ""} ${READONLY ? "disabled" : ""}><span class="${when ? "done" : ""}">${esc(c)}${when ? `<span class="when">✓ ${jp(parse(when))} 実施</span>` : ""}</span></label></li>`;
       }).join("")}</ul>
     </article>`;
   }).join("")}
-  <button class="btn small" data-act="reset-checks">チェックをすべて外す</button>`;
+  ${READONLY ? "" : `<button class="btn small" data-act="reset-checks">チェックをすべて外す</button>`}`;
 }
 
 function info() {
@@ -457,7 +480,7 @@ function info() {
 function openPhoto(key) {
   const p = photos[key]; if (!p) return;
   $dlg.classList.add("photo");
-  $dlgBody.innerHTML = `<img src="./img/${p.file}" alt="${esc(p.caption)}"><div class="cap"><b>${esc(p.caption)}</b>Photo: ${esc(p.author)} ・ ${esc(p.license)} ・ <a href="${esc(p.source)}" target="_blank" rel="noopener">Wikimedia Commons</a></div>`;
+  $dlgBody.innerHTML = `<img src="${asset(`img/${p.file}`)}" alt="${esc(p.caption)}"><div class="cap"><b>${esc(p.caption)}</b>Photo: ${esc(p.author)} ・ ${esc(p.license)} ・ <a href="${esc(p.source)}" target="_blank" rel="noopener">Wikimedia Commons</a></div>`;
   $dlg.showModal();
 }
 $dlg.addEventListener("close", () => $dlg.classList.remove("photo"));
@@ -465,6 +488,18 @@ $dlg.addEventListener("close", () => $dlg.classList.remove("photo"));
 function openPart(id) {
   const p = data.parts.flatMap(c => c.items).find(x => x.id === id);
   const s = partState(p);
+  if (READONLY) {
+    $dlgBody.innerHTML = `<h3>${esc(p.name)}</h3><div class="form">
+      ${numberRows(s.official, "ホンダ純正品番（1991年式MT向けの推定・現在の品番）")}
+      ${numberRows(p.candidates, "品番の候補（適合を確認してください）")}
+      ${p.note ? `<p class="small" style="margin:0;color:var(--muted)">${esc(p.note)}</p>` : ""}
+      <dl class="kv"><dt>販売状況</dt><dd><span class="pill ${STATUS[s.status].cls}">${STATUS[s.status].label}</span></dd>
+      ${s.partNo ? `<dt>使用する品番</dt><dd>${esc(s.partNo)}${s.listed ? "（継続供給中リストに掲載）" : ""}</dd>` : ""}
+      ${s.memo ? `<dt>メモ</dt><dd style="white-space:pre-wrap">${esc(s.memo)}</dd>` : ""}</dl>
+    </div>`;
+    $dlg.showModal();
+    return;
+  }
   $dlgBody.innerHTML = `<h3>${esc(p.name)}</h3>
     <div class="form">
       ${numberRows(s.official, "ホンダ純正品番（1991年式MT向けの推定・現在の品番）")}
@@ -539,18 +574,20 @@ function importData() {
 }
 
 function notifyDue() {
-  if (!("Notification" in window) || Notification.permission !== "granted") return;
+  if (READONLY || !("Notification" in window) || Notification.permission !== "granted") return;
   const due = maintItems().filter(i => ["soon", "over"].includes(maintStatus(i).state));
   const key = "notified";
   if (!due.length || store.get(key, "") === iso(today())) return;
   store.set(key, iso(today()));
-  new Notification("NSX CARE 交換時期のお知らせ", { body: due.map(i => i.name).join("、") + " の交換時期です。", icon: "./icon-192.png" });
+  new Notification("NSX CARE 交換時期のお知らせ", { body: due.map(i => i.name).join("、") + " の交換時期です。", icon: asset("icon-192.png") });
 }
 
+const WRITE_ACTS = new Set(["record", "undo", "del-custom", "add-custom", "notify", "export", "import", "photo", "reset-checks"]);
 $main.addEventListener("click", e => {
   const el = e.target.closest("[data-act]");
   if (!el) { const ph = e.target.closest("[data-photo]"); if (ph && !e.target.closest("a")) openPhoto(ph.dataset.photo); return; }
   const { act, id, k } = el.dataset;
+  if (READONLY && WRITE_ACTS.has(act)) return;
   if (act === "record") {
     const v = $main.querySelector(`[data-date="${id}"]`).value;
     if (!v) return;
@@ -578,6 +615,7 @@ $main.addEventListener("change", e => {
   const el = e.target;
   if (el.dataset.act === "showat") { showAT = el.checked; store.set("showAT", showAT); render(); return; }
   if (el.dataset.act === "check") {
+    if (READONLY) { el.checked = !el.checked; return; }
     if (el.checked) checks[el.dataset.key] = iso(today()); else delete checks[el.dataset.key];
     store.set("checks", checks); render();
   }
@@ -612,5 +650,5 @@ setInterval(refreshIfNewDay, 3600_000);
     $main.innerHTML = `<p>データを読み込めませんでした。通信状態を確認して再読み込みしてください。</p>`; return;
   }
   render(); notifyDue();
-  if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(() => {});
+  if (!READONLY && "serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(() => {});
 })();
