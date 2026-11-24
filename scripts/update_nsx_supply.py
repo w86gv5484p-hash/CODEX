@@ -26,6 +26,25 @@ PART_RE = re.compile(r"\b\d{5}-[A-Z0-9]{3}-[A-Z0-9]{3,4}\b")
 # PDF の表では区切りがスペースや別のダッシュになっている場合があるため、資料からはゆるく読み取って正規化する
 LOOSE_RE = re.compile(r"(?<![0-9A-Z])(\d{5})[ \-‐–—]{0,2}([A-Z0-9]{3})[ \-‐–—]{0,2}([A-Z0-9]{3,4})(?![0-9A-Z])")
 DIAG: dict[str, dict] = {}
+TEXTS: dict[str, str] = {}
+LIST_OUT = ROOT / "nsx" / "data" / "supply-list.json"
+NUM = r"\d{5}-[A-Z0-9]{3}-[A-Z0-9]{3,4}"
+ROW_RE = re.compile(rf"({NUM})(?:\s+({NUM}))?\s+(.+?)(?=\s+{NUM}|\s+\d+\s*/\s*\d+\s|$)", re.S)
+
+
+def parse_rows(text: str) -> list[list[str]]:
+    """継続供給中リストの本文を [元の品番, 現在の品番, 部品名] の行に分けます。"""
+    text = unicodedata.normalize("NFKC", text)
+    rows, seen = [], set()
+    for orig, current, name in ROW_RE.findall(text):
+        name = re.sub(r"\s+", " ", name).strip()
+        name = re.sub(r"[^\x20-\x7E]+.*$", "", name).strip()  # 行末に続くページ見出し（日本語）を除く
+        key = (orig, current or orig)
+        if key in seen or not re.search(r"[A-Z]", name):
+            continue
+        seen.add(key)
+        rows.append([orig, current or orig, name[:80]])
+    return rows
 
 
 def unshift(text: str) -> str:
@@ -101,6 +120,7 @@ def document_parts(url: str) -> set[str]:
             found = find_parts(alt)
             if found:
                 text, decoded = alt, "shift31"
+        TEXTS[url] = text
         DIAG[url] = {"bytes": len(raw), "pages": len(reader.pages), "textChars": len(text.strip()),
                      "found": len(found), "decoded": decoded, "sample": re.sub(r"\s+", " ", text)[:600]}
         return found
@@ -193,6 +213,11 @@ def main() -> int:
         parts = new_parts
     if new_catalog is not None:
         catalog = new_catalog
+
+    list_rows = [r for url, t in TEXTS.items() if "parts-list" in url.lower() for r in parse_rows(t)]
+    if list_rows:
+        LIST_OUT.write_text(json.dumps({"checkedAt": now.isoformat(timespec="minutes"), "columns": ["original", "current", "name"], "rows": list_rows}, ensure_ascii=False, separators=(",", ":")) + "\n", "utf-8")
+        print(f"supply list rows: {len(list_rows)}")
 
     data = {
         "listVersion": 2,

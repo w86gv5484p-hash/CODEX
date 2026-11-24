@@ -103,6 +103,28 @@ const views = { home, alerts, parts: partsView, faults, info };
 let infoTab = "specs";
 let partFilter = "all";
 let partQuery = "";
+let officialRows = null; // 継続供給中リスト [元の品番, 現在の品番, 部品名]（必要になったときに読み込む）
+
+async function loadOfficial() {
+  if (officialRows) return officialRows;
+  try {
+    const res = await fetch(`./data/supply-list.json?d=${loadedFor}`, { cache: "no-cache" });
+    officialRows = res.ok ? (await res.json()).rows || [] : [];
+  } catch { officialRows = []; }
+  return officialRows;
+}
+
+async function searchOfficial(q) {
+  const box = $main.querySelector("#oresults"); if (!box) return;
+  const words = q.trim().toUpperCase().split(/\s+/).filter(Boolean);
+  if (!words.length) { box.innerHTML = ""; return; }
+  const rows = await loadOfficial();
+  if (!rows.length) { box.innerHTML = `<p class="small muted">公式リストのデータはまだありません（次回の自動確認で作成されます）。</p>`; return; }
+  const hits = rows.filter(r => words.every(w => (r[0] + " " + r[1] + " " + r[2]).includes(w)));
+  box.innerHTML = hits.length ? `<p class="small muted">${hits.length.toLocaleString()}件${hits.length > 60 ? "（先頭60件を表示）" : ""}</p><div class="list">${hits.slice(0, 60).map(([o, c, n]) => `
+    <div class="part" style="cursor:default"><div><div class="name">${esc(n)}</div><div class="sub">現在の品番 <b style="color:var(--text)">${esc(c)}</b>${o !== c ? ` ・ 元の品番 ${esc(o)}` : ""}</div></div><span class="pill st-ok">供給中</span></div>`).join("")}</div>`
+    : `<p class="small muted">見つかりませんでした。英語の部品名（例：FILTER OIL、PAD BRAKE、BELT TIMING）で検索してください。</p>`;
+}
 
 function render() {
   const tab = (location.hash.slice(1) || "home").split("/")[0];
@@ -257,6 +279,11 @@ function partsView() {
     ${sources || `<p class="small muted">自動確認はまだ実行されていません（GitHub Actions の「Refresh NSX parts supply」が毎朝実行します）。</p>`}
     ${changes ? `<h3 style="margin-top:14px">最近の変化</h3><ul class="small" style="padding-left:18px;margin:0">${changes}</ul>` : ""}
     <p class="small muted" style="margin-bottom:0">最終確認：${esc(supply.checkedAt?.replace("T", " ") || "—")}。最終的な在庫・価格・廃番はホンダ販売店でご確認ください。</p>
+  </div>
+  <div class="section"><div class="eyebrow">Search</div><h2 class="section-title">公式部品検索（継続供給中リスト）</h2>
+    <p class="lead">ホンダ公式「NSX 継続供給中の部品番号リスト」から、英語の部品名や品番で探せます。NA1・NA2共通のリストのため、年式への適合は販売店で確認してください。</p>
+    <div class="toolbar"><input type="text" id="osearch" placeholder="例：PAD BRAKE / BELT TIMING / 15400" aria-label="公式部品を検索"></div>
+    <div id="oresults"></div>
   </div>`;
 }
 
@@ -427,6 +454,7 @@ $main.addEventListener("change", e => {
   }
 });
 $main.addEventListener("input", e => {
+  if (e.target.id === "osearch") { searchOfficial(e.target.value); return; }
   if (e.target.dataset.act !== "search") return;
   partQuery = e.target.value;
   const pos = e.target.selectionStart;
