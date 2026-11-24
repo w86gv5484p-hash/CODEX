@@ -192,6 +192,11 @@ const openPests = plantId => state.pests.filter(p => p.status !== "resolved" && 
 const pestInfo = id => state.guide?.pests.find(p => p.id === id);
 const pestLabel = p => (p.pestId === "other" ? p.otherName || "その他" : pestInfo(p.pestId)?.name || p.otherName || "害虫");
 const sortedPlants = () => [...state.plants].sort((a, b) => a.name.localeCompare(b.name, "ja"));
+// 展示番号：登録した順に No.01, No.02 …
+const plantNo = id => { const i = [...state.plants].sort((a, b) => (a.created || 0) - (b.created || 0)).findIndex(p => p.id === id); return `No.${pad(i + 1)}`; };
+// 品種名の（）内の学名をイタリックで添える
+const speciesHtml = s => { const m = String(s || "").match(/^(.*?)（(.+)）$/); return m ? `${esc(m[1])} <span class="lat">${esc(m[2])}</span>` : esc(s); };
+const WALL_ID = "__wall";
 
 // ---------- 共通UI ----------
 let toastTimer;
@@ -237,7 +242,11 @@ function renderPlants() {
   const due = plants.filter(p => waterState(p).cls === "due").length;
   const pests = openPests().length;
   $main.innerHTML = `
-    <div class="head"><div><h1>株の一覧</h1><p class="muted small">${plants.length}株を記録中</p></div>
+    <section class="wall"><div class="wall-bg empty" id="wall-bg"></div>
+      <div class="wall-txt"><p class="kicker">Staghorn Fern Gallery</p><h1>ビカク日記</h1>
+        <p class="sub">${plants.length}株を展示中 · 写真 ${state.photos.length}枚</p></div>
+      <button class="wall-edit" id="wall-edit">背景の写真</button></section>
+    <div class="head" style="margin-top:22px"><div><p class="kicker">Collection</p><h2>展示室</h2></div>
       <button class="btn primary" id="add-plant"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>株を追加</button></div>
     ${plants.length ? `
     <div class="summary">
@@ -247,15 +256,48 @@ function renderPlants() {
     </div>
     <div class="grid">${plants.map(p => {
       const w = waterState(p), op = openPests(p.id).length;
-      return `<a class="card" href="#plant/${esc(p.id)}"><div class="ph">${imgSlot(coverOf(p))}</div>
-        <div class="body"><div class="name">${esc(p.name)}</div>${p.species ? `<div class="sp">${esc(p.species)}</div>` : ""}
+      return `<a class="art" href="#plant/${esc(p.id)}"><div class="frame"><div class="ph">${imgSlot(coverOf(p))}</div></div>
+        <div class="plaque"><span class="no">${plantNo(p.id)}</span><span class="name">${esc(p.name)}</span>${p.species ? `<span class="sp">${speciesHtml(p.species)}</span>` : ""}
         <div class="chips"><span class="chip ${w.cls}">${w.days === null ? w.label : `水やり ${ago(w.last)}`}</span>${op ? `<span class="chip active">害虫 ${op}件</span>` : ""}</div></div></a>`;
     }).join("")}</div>` : `
-    <div class="empty"><h2>最初の株を登録しましょう</h2><p>名前と品種を登録すると、写真・水やり・害虫の記録をつけられます。</p>
+    <div class="empty"><h2>最初の一株を飾りましょう</h2><p>名前と品種を登録すると、写真・水やり・害虫の記録をつけられます。</p>
       <button class="btn primary" id="add-plant2">株を追加</button></div>`}`;
   $main.querySelector("#add-plant").onclick = () => plantForm();
   $main.querySelector("#add-plant2")?.addEventListener("click", () => plantForm());
+  $main.querySelector("#wall-edit").onclick = wallForm;
   fillThumbs($main);
+  (async () => {
+    // 背景：設定した写真 → なければ一番新しい株の写真 → なければスポットライトの壁
+    const own = await getOne("blobs", WALL_ID);
+    const latest = [...state.photos].sort((a, b) => (b.date + b.created).localeCompare(a.date + a.created))[0];
+    const blob = own?.full || (latest && (await getOne("blobs", latest.id))?.full);
+    const el = document.getElementById("wall-bg");
+    if (blob && el) { el.classList.remove("empty"); el.innerHTML = `<img src="${URL.createObjectURL(blob)}" alt="">`; }
+  })();
+}
+
+function wallForm() {
+  (async () => {
+    const own = await getOne("blobs", WALL_ID);
+    const url = own ? URL.createObjectURL(own.thumb) : null;
+    const body = openDialog(`
+      <div class="form"><h2>ギャラリーの背景</h2>
+        <p class="muted small" style="margin:0">一覧の上に大きく表示する写真です。飾っている壁や部屋の写真がおすすめです。この端末の中だけに保存されます。</p>
+        <div class="wall-preview">${url ? `<img src="${url}" alt="">` : `<div class="wall-bg empty" style="position:static;height:100%"></div>`}</div>
+        <p class="hint" style="margin:0">${own ? "設定した写真を表示しています。" : "未設定のときは、いちばん新しい株の写真を表示します。"}</p>
+        <div class="form-btns">${own ? `<button type="button" class="btn danger ghost" id="wdel">元に戻す</button><span class="spacer"></span>` : ""}<button type="button" class="btn primary" id="wpick">写真を選ぶ</button></div>
+      </div>`, { onClose: () => url && URL.revokeObjectURL(url) });
+    body.querySelector("#wpick").onclick = async () => {
+      const [file] = await pickPhotos();
+      if (!file) return;
+      try {
+        const full = await resize(file, 2000, 0.84);
+        await save("blobs", { id: WALL_ID, full, thumb: await resize(full, 640, 0.75) });
+        closeDialog(); route(); toast("背景を設定しました");
+      } catch { toast("この写真は読み込めませんでした"); }
+    };
+    body.querySelector("#wdel")?.addEventListener("click", async () => { await del("blobs", WALL_ID); closeDialog(); route(); toast("背景を元に戻しました"); });
+  })();
 }
 
 function plantForm(plant) {
@@ -317,16 +359,17 @@ function renderPlant(id) {
 
   $main.innerHTML = `
     <a class="back" href="#plants">‹ 株の一覧</a>
-    <div class="hero">${cover ? `<div class="noimg" id="hero-img">${LEAF_SVG}</div>${coverPhoto ? `<span class="hero-date">${jp(coverPhoto.date)}</span>` : ""}` : `<div class="noimg">${LEAF_SVG}</div>`}</div>
-    <div class="plant-title"><div><h1>${esc(p.name)}</h1>${p.species ? `<div class="sp">${esc(p.species)}</div>` : ""}</div>
+    <div class="showcase"><div class="hero"><div class="pic" id="hero-pic">${cover ? `<div class="noimg" id="hero-img">${LEAF_SVG}</div>` : `<div class="noimg">${LEAF_SVG}</div>`}</div>
+      ${coverPhoto ? `<span class="hero-date">${jp(coverPhoto.date)}</span>` : ""}</div></div>
+    <div class="plant-title"><p class="kicker">${plantNo(id)}</p><h1>${esc(p.name)}</h1>${p.species ? `<div class="sp">${speciesHtml(p.species)}</div>` : ""}
       <button class="btn sm" id="edit">編集</button></div>
+    <div class="chips" style="margin-top:10px"><span class="chip ${w.cls}">${w.label}</span>${openPests(id).length ? `<span class="chip active">害虫 対応中 ${openPests(id).length}件</span>` : ""}</div>
     <div class="facts">
       <div class="fact"><span>育成</span><b>${age === null ? "—" : age >= 0 ? `${age + 1}日目` : "入手前"}</b></div>
       <div class="fact"><span>前回の水やり</span><b>${w.last ? ago(w.last) : "—"}</b></div>
       <div class="fact"><span>水やり間隔</span><b>${w.interval}日</b></div>
       <div class="fact"><span>置き場所</span><b>${esc(p.place || "—")}</b></div>
     </div>
-    <div class="chips" style="margin-top:8px"><span class="chip ${w.cls}">${w.label}</span>${openPests(id).length ? `<span class="chip active">害虫 対応中 ${openPests(id).length}件</span>` : ""}</div>
     ${p.memo ? `<div class="memo">${esc(p.memo)}</div>` : ""}
     <div class="actions">
       <button class="btn primary" id="a-photo"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>写真を追加</button>
@@ -335,10 +378,10 @@ function renderPlant(id) {
       <button class="btn" id="a-pest">害虫を記録</button>
     </div>
 
-    <section class="section"><h2>成長の記録 <small>${photos.length}枚</small></h2>
+    <section class="section"><h2>成長のアーカイブ <small>${photos.length}枚</small></h2>
       ${photos.length >= 2 ? `<div class="compare">
-        <figure><img data-full="${esc(oldest.id)}" alt="最初の写真" id="cmp-a"><figcaption><b>最初</b> ${jp(oldest.date)}</figcaption></figure>
-        <figure><img data-full="${esc(newest.id)}" alt="最新の写真" id="cmp-b"><figcaption><b>最新</b> ${jp(newest.date)}（${daysBetween(oldest.date, newest.date)}日後）</figcaption></figure>
+        <figure><div class="mat"><img data-full="${esc(oldest.id)}" alt="最初の写真"></div><figcaption><b>Before</b>${jp(oldest.date)}</figcaption></figure>
+        <figure><div class="mat"><img data-full="${esc(newest.id)}" alt="最新の写真"></div><figcaption><b>Now</b>${jp(newest.date)}（${daysBetween(oldest.date, newest.date)}日後）</figcaption></figure>
       </div>` : ""}
       ${photos.length ? Object.entries(months).map(([m, list]) => `<div class="month"><h3>${m.slice(0, 4)}年${Number(m.slice(5))}月</h3><div class="thumbs">
         ${list.map(ph => `<button class="thumb" data-photo="${esc(ph.id)}" aria-label="${jp(ph.date)}の写真">${imgSlot(ph.id)}<span class="d">${jpShort(ph.date)}</span>${ph.pestId ? `<span class="tag">害虫</span>` : ""}</button>`).join("")}
@@ -375,7 +418,10 @@ function renderPlant(id) {
   $main.querySelectorAll("[data-photo]").forEach(b => b.onclick = () => photoViewer(b.dataset.photo));
   $main.querySelectorAll("[data-pest]").forEach(b => b.onclick = () => pestDetail(b.dataset.pest));
   (async () => {
-    if (cover) { const url = await fullURL(cover); if (url) $("#hero-img").outerHTML = `<img src="${url}" alt="${esc(p.name)}">`; }
+    if (cover) {
+      const url = await fullURL(cover);
+      if (url) { $("#hero-img").outerHTML = `<img src="${url}" alt="${esc(p.name)}">`; $("#hero-pic").onclick = () => photoViewer(cover); }
+    }
     for (const im of $main.querySelectorAll("img[data-full]")) { im.src = await thumb(im.dataset.full); im.onclick = () => photoViewer(im.dataset.full); }
     fillThumbs($main);
   })();
@@ -445,7 +491,7 @@ function renderWater() {
   const plants = sortedPlants().map(p => ({ p, w: waterState(p) })).sort((a, b) => a.w.rank - b.w.rank || (b.w.days ?? 0) - (a.w.days ?? 0));
   const due = plants.filter(x => x.w.cls === "due");
   $main.innerHTML = `
-    <div class="head"><div><h1>水やり</h1><p class="muted small">${due.length ? `${due.length}株が水やりの目安を迎えています` : "目安を過ぎた株はありません"}</p></div>
+    <div class="head"><div><p class="kicker">Watering</p><h1>水やり</h1><p class="muted small">${due.length ? `${due.length}株が水やりの目安を迎えています` : "目安を過ぎた株はありません"}</p></div>
       ${due.length > 1 ? `<button class="btn water sm" id="all">目安の${due.length}株に記録</button>` : ""}</div>
     ${plants.length ? `<div class="list">${plants.map(({ p, w }) => {
       const doneToday = w.last === today;
@@ -483,7 +529,7 @@ function renderPests() {
   const done = state.pests.filter(p => p.status === "resolved").sort((a, b) => (b.resolved || b.found).localeCompare(a.resolved || a.found));
   const list = pestFilter === "open" ? open : done;
   $main.innerHTML = `
-    <div class="head"><div><h1>害虫・病気</h1><p class="muted small">発見から駆除までを株ごとに記録します</p></div>
+    <div class="head"><div><p class="kicker">Pests &amp; Care</p><h1>害虫・病気</h1><p class="muted small">発見から駆除までを株ごとに記録します</p></div>
       ${state.plants.length ? `<button class="btn primary" id="add-pest"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>記録</button>` : ""}</div>
     <div class="seg" role="tablist"><button data-f="open" class="${pestFilter === "open" ? "on" : ""}">対応中・経過観察 ${open.length}</button><button data-f="done" class="${pestFilter === "done" ? "on" : ""}">解決済み ${done.length}</button></div>
     ${list.length ? list.map(pestCard).join("") : `<div class="empty"><p>${pestFilter === "open" ? "対応中の害虫はありません。葉の裏・付け根・成長点まわりを定期的に確認しましょう。" : "解決済みの記録はまだありません。"}</p>
@@ -594,7 +640,7 @@ function renderGuide(anchor) {
   if (!g) { $main.innerHTML = `<p class="muted">ガイドを読み込めませんでした。通信できる場所でもう一度開いてください。</p>`; return; }
   const list = arr => `<ul>${arr.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`;
   $main.innerHTML = `
-    <div class="head"><div><h1>育成ガイド</h1><p class="muted small">育成のポイントと、主な病害虫の対策</p></div></div>
+    <div class="head"><div><p class="kicker">Care Guide</p><h1>育成ガイド</h1><p class="muted small">育成のポイントと、主な病害虫の対策</p></div></div>
     <div class="note">${esc(g.note)}</div>
     <section><h2 style="margin-bottom:10px">育成のポイント</h2>
       ${g.points.map(p => `<details class="acc" id="g-${esc(p.id)}"><summary><b>${esc(p.title)}</b><span>${esc(p.summary)}</span></summary><div class="in">${list(p.body)}</div></details>`).join("")}
@@ -625,7 +671,7 @@ async function renderSettings() {
   } catch { /* 取得できない環境 */ }
   const persisted = await navigator.storage?.persisted?.().catch(() => false);
   $main.innerHTML = `
-    <div class="head"><div><h1>データの保存</h1><p class="muted small">記録はこの端末の中だけに保存されています</p></div></div>
+    <div class="head"><div><p class="kicker">Archive</p><h1>データの保存</h1><p class="muted small">記録はこの端末の中だけに保存されています</p></div></div>
     <div class="card-box"><h2>バックアップを書き出す</h2>
       <p>株・写真・水やり・害虫の記録をすべて1つのファイルにまとめます。機種変更の前や、定期的（月1回など）に書き出してクラウドやパソコンに保存してください。</p>
       <p class="muted small">株 ${state.plants.length} · 写真 ${state.photos.length}枚 · お手入れ ${state.logs.length}件 · 害虫 ${state.pests.length}件</p>
@@ -633,12 +679,14 @@ async function renderSettings() {
     <div class="card-box"><h2>バックアップを読み込む</h2>
       <p>書き出したファイルを選ぶと、記録をこの端末に戻します。同じ記録は上書きされ、この端末にしかない記録は残ります。</p>
       <button class="btn" id="import">ファイルを選ぶ</button></div>
+    <div class="card-box"><h2>ギャラリーの背景</h2><p>一覧の上に表示する写真を、飾っている壁や部屋の写真に変えられます。</p><button class="btn" id="wall">背景の写真を設定</button></div>
     <div class="card-box"><h2>保存容量</h2>${usage || `<p class="muted small">この環境では容量を確認できません。</p>`}
       <p class="small">${persisted ? "この端末では記録が自動で消されないよう保護されています。" : "空き容量が少なくなると、ブラウザーが記録を消すことがあります。ホーム画面に追加して使うと消えにくくなります。"}</p></div>
     <div class="card-box"><h2>ホーム画面に追加</h2>
       <p>iPhone は Safari の共有ボタン →「ホーム画面に追加」、Android は Chrome のメニュー →「アプリをインストール」を選ぶと、アプリとして全画面で使えます。</p>
       <p class="muted small">注意：iPhone では Safari で開いたときとホーム画面から開いたときで保存場所が別になります。どちらか一方で使い続けてください。</p></div>`;
   $main.querySelector("#export").onclick = exportBackup;
+  $main.querySelector("#wall").onclick = wallForm;
   $main.querySelector("#import").onclick = () => { $fileBackup.value = ""; $fileBackup.click(); };
 }
 async function exportBackup() {
@@ -648,7 +696,9 @@ async function exportBackup() {
     const b = await getOne("blobs", ph.id);
     if (b) photos.push({ ...ph, full: await blobToDataURL(b.full), thumb: await blobToDataURL(b.thumb) });
   }
-  const data = { app: "fern-log", version: 1, exported: new Date().toISOString(), plants: state.plants, logs: state.logs, pests: state.pests, photos };
+  const wallBlob = await getOne("blobs", WALL_ID);
+  const wall = wallBlob ? { full: await blobToDataURL(wallBlob.full), thumb: await blobToDataURL(wallBlob.thumb) } : null;
+  const data = { app: "fern-log", version: 1, exported: new Date().toISOString(), plants: state.plants, logs: state.logs, pests: state.pests, photos, wall };
   const name = `bikaku-backup-${todayIso().replaceAll("-", "")}.json`;
   const file = new File([JSON.stringify(data)], name, { type: "application/json" });
   if (navigator.canShare?.({ files: [file] }) && /iPhone|iPad|Android/i.test(navigator.userAgent)) {
@@ -677,6 +727,7 @@ $fileBackup.onchange = async () => {
       await save("photos", meta);
       thumbURL.delete(meta.id);
     }
+    if (data.wall) await save("blobs", { id: WALL_ID, full: await (await fetch(data.wall.full)).blob(), thumb: await (await fetch(data.wall.thumb)).blob() });
     route(); updateBadges(); toast("読み込みました");
   } catch (e) { console.error(e); toast(`読み込めませんでした：${esc(e.message)}`); }
 };
