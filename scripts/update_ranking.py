@@ -11,8 +11,11 @@ import sys
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-PAGE = "https://inside.fifa.com/fifa-world-ranking/men"
+PAGE = "https://inside.fifa.com/fifa-rankings/world-ranking/men"
+SCHEDULE_API = "https://api.fifa.com/api/v3/fifarankings/rankings/rankingsbyschedule"
 API = "https://inside.fifa.com/api/ranking-overview"
+# 2026-10 以降、FIFA はこの旧APIを更新していない（7/20 発表のまま）。
+# 公式ページが読めない時の最後の手段としてだけ使い、公開日で鮮度を検証する。
 FIFA_API = "https://api.fifa.com/api/v3/rankings?gender=1"
 LABEL = "FIFA 男子世界ランキング"
 OUTPUT = Path(__file__).resolve().parents[1] / "data" / "ranking.json"
@@ -53,6 +56,15 @@ def parse_position(value):
     return rank
 
 
+def schedule_ranking(payload):
+    """api.fifa.com rankingsbyschedule（FRS_ 形式の日付ID用。公式ページが使う）"""
+    for item in payload["Results"]:
+        if item.get("IdCountry") != "JPN" or item.get("Gender") != 1:
+            continue
+        return ranking_values(item["Rank"], item.get("PrevRank"), item["TotalPoints"])
+    raise ValueError("FIFA APIの男子ランキングに日本の項目がありません")
+
+
 def japan_ranking(payload):
     for row in payload["rankings"]:
         item = row["rankingItem"]
@@ -65,7 +77,7 @@ def japan_ranking(payload):
 def ranking_values(rank, previous_rank, points):
     rank = parse_position(rank)
     previous = parse_position(previous_rank) if previous_rank not in (None, "", 0, "0") else None
-    points = float(points)
+    points = round(float(points), 2)
     if not math.isfinite(points) or not 0 < points < 10000:
         raise ValueError("FIFAのポイント形式が変わりました")
     return rank, previous, points
@@ -83,16 +95,38 @@ def api_ranking(payload, today):
     raise ValueError("FIFA APIの男子ランキングに日本の項目がありません")
 
 
-def refresh(now):
+def official_ranking(date_id):
+    errors = []
+    query = urlencode({"rankingScheduleId": date_id, "language": "en"})
     try:
-        published, date_id = latest_publication(fetch(PAGE), now.date())
-        query = urlencode({"locale": "en", "dateId": date_id})
-        rank, previous_rank, points = japan_ranking(json.loads(fetch(f"{API}?{query}")))
+        return schedule_ranking(json.loads(fetch(f"{SCHEDULE_API}?{query}")))
     except (OSError, ValueError, KeyError, TypeError) as error:
-        print(f"FIFA公式ページの読み込みに失敗したため、公式APIを確認します。 {error}", file=sys.stderr)
+        errors.append(f"rankingsbyschedule: {error}")
+    query = urlencode({"locale": "en", "dateId": date_id})
+    try:
+        return japan_ranking(json.loads(fetch(f"{API}?{query}")))
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        errors.append(f"ranking-overview: {error}")
+    raise ValueError(f"{date_id} の順位を取得できません（{'; '.join(errors)}）")
+
+
+def refresh(now):
+    latest = None
+    confirmed = True
+    try:
+        latest = latest_publication(fetch(PAGE), now.date())
+        published, date_id = latest
+        rank, previous_rank, points = official_ranking(date_id)
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        print(f"FIFA公式ページからの取得に失敗したため、旧APIを確認します。 {error}", file=sys.stderr)
         published, date_id, values = api_ranking(json.loads(fetch(FIFA_API)), now.date())
         rank, previous_rank, points = values
-    return {
+        confirmed = False
+        if latest is not None and published < latest[0]:
+            raise ValueError(
+                f"旧APIの公開日 {published} は公式ページの最新発表 {latest[0]} より古いため使えません"
+            )
+    return confirmed, {
         "checkedAt": now.isoformat(timespec="seconds").replace("+00:00", "Z"),
         "publishedAt": published.isoformat(),
         "rank": rank,
@@ -109,12 +143,21 @@ def main():
     args = parser.parse_args()
     previous = json.loads(args.output.read_text(encoding="utf-8")) if args.output.exists() else {}
     try:
-        data = refresh(datetime.now(timezone.utc))
+        confirmed, data = refresh(datetime.now(timezone.utc))
     except (OSError, ValueError, KeyError, TypeError) as error:
         print(f"FIFAランキングを取得できませんでした。既存データを保持します。 {error}", file=sys.stderr)
         return 1
     if previous.get("publishedAt") and previous["publishedAt"] > data["publishedAt"]:
         print("公式ページから取得した公開日が保存済みデータより古いため、既存データを保持します。", file=sys.stderr)
+        return 1
+    if not confirmed and (previous.get("publishedAt") or "") >= data["publishedAt"]:
+        # 旧APIは更新が止まっているので、新しい発表を返した時だけ採用する。
+        # 同じ公開日なら最新かどうか確かめられていないので、checkedAt も進めずに失敗扱いにする。
+        print(
+            f"公式ページで最新発表を確認できず、旧APIの公開日 {data['publishedAt']} も新しくないため、"
+            "既存データを保持します。",
+            file=sys.stderr,
+        )
         return 1
     if (
         (previous.get("checkedAt") or "")[:10] == data["checkedAt"][:10]

@@ -34,6 +34,7 @@ jobs:
           python scripts/update_jfa_profiles.py || true
           python scripts/update_fpl.py || echo "FPL refresh failed; previous data kept."
           python scripts/update_injury_news.py || echo "Injury news refresh failed; previous data kept."
+          echo "ranking_status=$ranking_status" >> "$GITHUB_ENV"
           if ((jfa_status != 0 && ranking_status != 0)); then
             exit 1
           fi
@@ -48,3 +49,9 @@ jobs:
           git commit -m 'Update Japan fixtures, call-ups, ranking and injury news'
           git pull --rebase
           git push
+      - name: Report ranking failure
+        # ほかのデータは保存したうえで、FIFAランキングの取得失敗をジョブの失敗として残す。
+        if: env.ranking_status != '0'
+        run: |
+          echo "::error::FIFAランキングを取得できませんでした（data/ranking.json は前回のまま）。上の Refresh data のログを確認してください。"
+          exit 1

@@ -8,7 +8,7 @@ let localUpdateRunning = false;
 const sources = {
   jfa: { label: "JFA 男子日本代表", url: "https://www.jfa.jp/samuraiblue/" },
   schedule: { label: "JFA 試合日程・結果", url: "https://www.jfa.jp/samuraiblue/schedule_result/" },
-  fifa: { label: "FIFA 公式ランキング", url: "https://inside.fifa.com/fifa-world-ranking/men" },
+  fifa: { label: "FIFA 公式ランキング", url: "https://inside.fifa.com/fifa-rankings/world-ranking/men" },
 };
 
 const sections = new Set(["overview", "matches", "players", "clubs", "health"]);
