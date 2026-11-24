@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d0d0e">
+  <meta name="color-scheme" content="dark">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Lab. Cervo">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="育てているビカクシダの成長記録アプリ。株ごとの写真、水やり、害虫と駆除状況を記録し、育成ポイントと主な病害虫の対策を確認できます。">
+  <title>Laboratorio del Cervo</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon-180.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Shippori+Mincho:wght@500;600&display=swap">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="#plants" aria-label="Laboratorio del Cervo 株の一覧"><img src="./icon.svg" alt="" width="34" height="34"><span><b>Laboratorio del Cervo</b><small>Galleria di Platycerium</small></span></a>
+      <nav class="tabs" aria-label="メニュー">
+        <a href="#plants" data-tab="plants"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V11M12 11C12 6 8 3 4 3c0 4 3 8 8 8ZM12 13c0-4 3-7 8-7 0 4-3 7-8 7Z"/></svg><span>株</span></a>
+        <a href="#water" data-tab="water"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11Z"/></svg><span>水やり</span></a>
+        <a href="#pests" data-tab="pests"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="14" rx="5" ry="6"/><path d="M12 8V20M9 5l1.5 2.5M15 5l-1.5 2.5M7 12H3M21 12h-4M7 17l-3 2M17 17l3 2"/></svg><span>害虫</span></a>
+        <a href="#guide" data-tab="guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5ZM4 21h15M9 7h6"/></svg><span>ガイド</span></a>
+        <a href="#settings" data-tab="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span>保存</span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="wrap"><p class="muted">読み込み中…</p></main>
+  <input type="file" id="file-photo" class="picker" accept="image/*" multiple>
+  <input type="file" id="file-backup" class="picker" accept="application/json,.json">
+  <dialog id="dlg"><button type="button" class="x" aria-label="閉じる">×</button><div id="dlg-body"></div></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="wrap">JavaScript を有効にしてください。</p></noscript>
+</body>
+</html>
