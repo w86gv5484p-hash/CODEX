@@ -28,6 +28,11 @@ LOOSE_RE = re.compile(r"(?<![0-9A-Z])(\d{5})[ \-‐–—]{0,2}([A-Z0-9]{3})[ \-
 DIAG: dict[str, dict] = {}
 
 
+def unshift(text: str) -> str:
+    """文字コードが 31 ずれて埋め込まれた PDF（例: "&/(*/&" = "ENGINE"）の英数字を元に戻す。"""
+    return "".join(chr(ord(c) + 31) if 0 < ord(c) < 0x60 and c not in " \n\r\t" else c for c in text)
+
+
 def find_parts(text: str) -> set[str]:
     text = unicodedata.normalize("NFKC", text).upper()
     found = set(PART_RE.findall(text))
@@ -90,8 +95,14 @@ def document_parts(url: str) -> set[str]:
         reader = PdfReader(io.BytesIO(raw))
         text = " ".join(page.extract_text() or "" for page in reader.pages)
         found = find_parts(text)
+        decoded = ""
+        if not found and text.strip():
+            alt = unshift(text)
+            found = find_parts(alt)
+            if found:
+                text, decoded = alt, "shift31"
         DIAG[url] = {"bytes": len(raw), "pages": len(reader.pages), "textChars": len(text.strip()),
-                     "found": len(found), "sample": re.sub(r"\s+", " ", text)[:600]}
+                     "found": len(found), "decoded": decoded, "sample": re.sub(r"\s+", " ", text)[:600]}
         return found
     if lower.endswith(".xlsx"):
         try:
