@@ -72,3 +72,12 @@ Windows では `py -3 scripts/run_local.py --open` を使います。ポート�
 写真は Wikimedia Commons で公開されている NA1 の自由ライセンス画像（CC0 / CC BY / CC BY-SA）を縮小して `nsx/img/` に収録しています。撮影者・ライセンスは `nsx/data/photos.json` と、アプリの「車両情報 → 写真クレジット」に記載しています。ホンダの公式画像やロゴは使用していません。
 
 交換日・チェック・部品メモはその端末のブラウザーに保存されます。機種変更の前に「交換時期 → データを書き出す」でファイルに保存し、新しい端末で「読み込む」を使ってください。部品の在庫・価格・廃番は必ずホンダ販売店で確認してください。
+
+## Claude Code skills
+
+`.claude/skills/` holds project skills shared with everyone using Claude Code here. Each skill stays inside one section of the repo; when another section needs it, call it by name (for example `/refresh-nsx-data`).
+- `skill-creator` — create, test and improve skills (`/skill-creator`).
+- `refresh-samurai-data` — refresh the Japan national team data in `data/` and `assets/portraits/`.
+- `refresh-nsx-data` — refresh the NSX parts-supply data in `nsx/data/`.
+
+To add a skill, ask Claude「skill-creator で○○のスキルを作って」and keep it in `.claude/skills/<name>/`.

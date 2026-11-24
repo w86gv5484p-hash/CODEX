@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: stale-club-data
+expected_outcome: |
+  Explains that update_clubs.py needs API_FOOTBALL_KEY, exits 0 and keeps old data when the key is unset, checks for the key, and says which data actually updated.

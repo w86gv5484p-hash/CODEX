@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: refresh-nsx-supply
+expected_outcome: |
+  Runs only the NSX supply refresh with its document-reader dependencies, stages both NSX supply files, and commits.

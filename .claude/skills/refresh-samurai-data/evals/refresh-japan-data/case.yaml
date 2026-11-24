@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: refresh-japan-data
+expected_outcome: |
+  Runs the Japan football refresh in the workflow order, updates the call-up snapshot before scripts that read it, stays out of NSX data, and reports which sources updated and which kept old data without committing.
