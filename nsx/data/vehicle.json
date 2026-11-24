@@ -436,47 +436,121 @@
         {
           "id": "oil-filter",
           "name": "オイルフィルター",
-          "status": "supply"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "15400-PL2-306",
+              "name": "CARTRIDGE OIL FILTER TOYO ROKI",
+              "orig": "15400-PL2-004"
+            }
+          ]
         },
         {
           "id": "spark-plug",
           "name": "スパークプラグ（6本）",
-          "status": "supply"
+          "status": "supply",
+          "note": "汎用品（社外品・市販品）が使えるため、ホンダ品番は設定していません。"
         },
         {
           "id": "timing-belt",
           "name": "タイミングベルト",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "06141-PR7-315",
+              "name": "BELT KIT TIMING",
+              "orig": "06141-PR7-305",
+              "label": "ベルトキット"
+            }
+          ],
+          "note": "ベルト単品の品番は継続供給中リストになく、キットで供給されています。"
         },
         {
           "id": "tensioner",
           "name": "タイミングベルトテンショナー",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "14510-PR7-A01",
+              "name": "ADJUSTER COMP. TIMING BELT",
+              "label": "アジャスター"
+            }
+          ]
         },
         {
           "id": "head-gasket",
           "name": "ヘッドカバーガスケット",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "12341-PR7-A01",
+              "name": "PACKING CYLINDER HEAD COVER",
+              "orig": "12341-PR7-A00"
+            }
+          ]
         },
         {
           "id": "dist-cap",
           "name": "ディストリビューターキャップ・ローター",
-          "status": "check"
+          "status": "check",
+          "note": "公式の継続供給中リストに該当なし（販売終了の可能性）。在庫・代替品は販売店で確認。"
         },
         {
           "id": "air-filter",
           "name": "エアクリーナーエレメント",
-          "status": "supply"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "17220-PR7-505",
+              "name": "ELEMENT ASSY. AIR CLEANER",
+              "orig": "17220-PR7-A00"
+            }
+          ]
         },
         {
           "id": "engine-mount",
           "name": "エンジンマウント",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "50810-SL0-010",
+              "name": "RUBBER RR. ENGINE MOUNTING MT",
+              "label": "リア（MT）"
+            },
+            {
+              "no": "50820-SL0-000",
+              "name": "RUBBER SIDE ENGINE MOUNTING MT",
+              "label": "サイド（MT）"
+            },
+            {
+              "no": "50840-SL0-000",
+              "name": "RUBBER ASSY. FR. ENGINE MOUNTING",
+              "label": "フロント"
+            },
+            {
+              "no": "50805-SL0-010",
+              "name": "RUBBER TRANSMISSION MOUNTING MT",
+              "label": "ミッションマウント（MT）"
+            }
+          ]
         },
         {
           "id": "ecu",
           "name": "エンジンECU",
-          "status": "check"
+          "status": "check",
+          "candidates": [
+            {
+              "no": "37820-PR7-J18",
+              "name": "CONTROL MODULE ENGINE",
+              "orig": "37820-PR7-J16"
+            },
+            {
+              "no": "37820-PR7-J32",
+              "name": "CONTROL MODULE ENGINE",
+              "orig": "37820-PR7-J31"
+            }
+          ],
+          "note": "C30A用の候補が2種類あり、1991年式MTの適合はパーツカタログまたは販売店で確認してください。"
         }
       ]
     },
@@ -486,27 +560,73 @@
         {
           "id": "water-pump",
           "name": "ウォーターポンプ",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "19200-PR7-305",
+              "name": "PUMP ASSY. WATER",
+              "orig": "19200-PR7-A01"
+            }
+          ]
         },
         {
           "id": "radiator",
           "name": "ラジエーター",
-          "status": "check"
+          "status": "check",
+          "note": "公式の継続供給中リストに該当なし（販売終了の可能性）。在庫・代替品は販売店で確認。"
         },
         {
           "id": "coolant-hose",
           "name": "冷却水ホース類",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "19501-PR7-000",
+              "name": "HOSE FR. WATER UPPER YELLOW PAINTED",
+              "label": "フロント アッパー"
+            },
+            {
+              "no": "19502-PR7-010",
+              "name": "HOSE FR. WATER LOWER YELLOW PAINTED",
+              "label": "フロント ロワー"
+            },
+            {
+              "no": "19518-PR7-A00",
+              "name": "HOSE WATER UPPER MIDDLE",
+              "label": "アッパー ミドル"
+            },
+            {
+              "no": "19519-PR7-A00",
+              "name": "HOSE WATER LOWER MIDDLE",
+              "label": "ロワー ミドル"
+            }
+          ],
+          "note": "主なホースのみ。ほかのホースは下の「公式部品検索」で HOSE WATER などと検索できます。"
         },
         {
           "id": "thermostat",
           "name": "サーモスタット",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "19301-P8E-A10",
+              "name": "THERMOSTAT ASSY. FUJI THOMSON",
+              "orig": "19301-PR7-305"
+            }
+          ]
         },
         {
           "id": "fan-motor",
           "name": "電動ファンモーター",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "80151-SL0-A01",
+              "name": "MOTOR COOLING FAN",
+              "label": "クーリングファンモーター"
+            }
+          ],
+          "note": "公式リストの名称は「MOTOR COOLING FAN」です。ラジエーター用かエアコンコンデンサー用かは販売店で確認してください。"
         }
       ]
     },
@@ -516,27 +636,66 @@
         {
           "id": "clutch-disc",
           "name": "クラッチディスク・カバー",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "22200-PR7-305",
+              "name": "DISK SET FIRST FRICTION",
+              "label": "1枚目ディスク"
+            },
+            {
+              "no": "22400-PR7-305",
+              "name": "DISK SET SECOND FRICTION",
+              "label": "2枚目ディスク"
+            },
+            {
+              "no": "22300-PR7-025",
+              "name": "DISK COMP. PRESSURE",
+              "label": "プレッシャーディスク"
+            }
+          ],
+          "note": "NA1のMTはツインプレートクラッチです。"
         },
         {
           "id": "clutch-master",
           "name": "クラッチマスターシリンダー",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "46920-SL0-003",
+              "name": "CYLINDER ASSY. CLUTCH MASTER"
+            }
+          ]
         },
         {
           "id": "clutch-slave",
           "name": "クラッチスレーブシリンダー",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "46930-SL0-003",
+              "name": "CYLINDER ASSY. SLAVE"
+            }
+          ]
         },
         {
           "id": "drive-boot",
           "name": "ドライブシャフトブーツ",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "42017-SL0-020",
+              "name": "BOOT SET DRIVESHAFT",
+              "orig": "42017-SL0-000",
+              "label": "ブーツセット"
+            }
+          ]
         },
         {
           "id": "mt-snapring",
           "name": "MT対策スナップリング",
-          "status": "check"
+          "status": "check",
+          "note": "ミッション内部の対策部品は個別に特定できないため、品番は設定していません。分解整備時に販売店・専門店で確認してください。"
         }
       ]
     },
@@ -546,27 +705,102 @@
         {
           "id": "pad-front",
           "name": "ブレーキパッド（前）",
-          "status": "supply"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "45022-SL0-G03",
+              "name": "PAD SET FR.",
+              "orig": "45022-SL0-010"
+            }
+          ]
         },
         {
           "id": "pad-rear",
           "name": "ブレーキパッド（後）",
-          "status": "supply"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "43022-SL0-030",
+              "name": "PAD SET RR.",
+              "orig": "43022-SL0-000"
+            }
+          ]
         },
         {
           "id": "rotor",
           "name": "ブレーキローター",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "45251-SL0-030",
+              "name": "DISK FR. BRAKE",
+              "label": "フロント"
+            },
+            {
+              "no": "43251-SL0-010",
+              "name": "DISK RR. BRAKE",
+              "label": "リア"
+            }
+          ]
         },
         {
           "id": "caliper-seal",
           "name": "キャリパーシールキット",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "45217-SL0-003",
+              "name": "SEAL PISTON 36MM",
+              "label": "フロント ピストンシール 36mm"
+            },
+            {
+              "no": "45218-SL0-003",
+              "name": "SEAL PISTON 40MM",
+              "label": "フロント ピストンシール 40mm"
+            },
+            {
+              "no": "43209-SL0-003",
+              "name": "SEAL PISTON 42MM",
+              "label": "リア ピストンシール 42mm"
+            },
+            {
+              "no": "45214-SL0-003",
+              "name": "BOOT PISTON 36MM",
+              "label": "フロント ピストンブーツ 36mm"
+            },
+            {
+              "no": "45215-SL0-003",
+              "name": "BOOT PISTON 40MM",
+              "label": "フロント ピストンブーツ 40mm"
+            },
+            {
+              "no": "43214-SL0-003",
+              "name": "BOOT PISTON",
+              "label": "リア ピストンブーツ"
+            }
+          ]
         },
         {
           "id": "abs-unit",
           "name": "ABSモジュレーター",
-          "status": "check"
+          "status": "check",
+          "candidates": [
+            {
+              "no": "57110-SL0-901",
+              "name": "MODULATOR ASSY."
+            },
+            {
+              "no": "57110-SL0-J03",
+              "name": "MODULATOR ASSY.",
+              "orig": "57110-SL0-J02"
+            },
+            {
+              "no": "57110-SL0-Z03",
+              "name": "MODULATOR ASSY.",
+              "orig": "57110-SL0-Z02"
+            }
+          ],
+          "note": "初期型の元品番が継続供給中リストに見当たらないため、候補のみ表示しています。"
         }
       ]
     },
@@ -576,27 +810,73 @@
         {
           "id": "damper",
           "name": "ショックアブソーバー",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "51602-SL0-013",
+              "name": "ABSORBER ASSY. L. FR. SHOCK",
+              "label": "フロント左"
+            },
+            {
+              "no": "52610-SL0-013",
+              "name": "ABSORBER ASSY. RR. SHOCK",
+              "label": "リア"
+            }
+          ],
+          "note": "フロント右の初期型品番は継続供給中リストに見当たりません。"
         },
         {
           "id": "bush-front",
           "name": "フロントアームブッシュ",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "51370-SL0-000",
+              "name": "PIVOT ASSY. R. FR. COMPLIANCE",
+              "label": "右 フロントコンプライアンスピボット"
+            },
+            {
+              "no": "51380-SL0-000",
+              "name": "PIVOT ASSY. L. FR. COMPLIANCE",
+              "label": "左 フロントコンプライアンスピボット"
+            }
+          ]
         },
         {
           "id": "bush-rear",
           "name": "リアコンプライアンスブッシュ",
-          "status": "check"
+          "status": "check",
+          "note": "公式の継続供給中リストに該当なし（販売終了の可能性）。在庫・代替品は販売店で確認。"
         },
         {
           "id": "ball-joint",
           "name": "ボールジョイント",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "51010-SL0-000",
+              "name": "BOOT SET BALL JOINT",
+              "label": "ブーツセット"
+            }
+          ],
+          "note": "ボールジョイント本体は継続供給中リストに見当たりません。"
         },
         {
           "id": "tie-rod",
           "name": "タイロッドエンド",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "53540-SL0-A01",
+              "name": "END COMP. R. TIE ROD",
+              "label": "右"
+            },
+            {
+              "no": "53560-SL0-A01",
+              "name": "END COMP. L. TIE ROD",
+              "label": "左"
+            }
+          ]
         }
       ]
     },
@@ -606,37 +886,101 @@
         {
           "id": "retra-motor",
           "name": "リトラクタブルライトモーター",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "76101-SL0-A03",
+              "name": "RETRACTABLE COMP. R. HEADLIGHT",
+              "orig": "76101-SL0-A02",
+              "label": "右 リトラクタブルASSY"
+            },
+            {
+              "no": "76131-SL0-A03",
+              "name": "RETRACTABLE COMP. L. HEADLIGHT",
+              "orig": "76131-SL0-A02",
+              "label": "左 リトラクタブルASSY"
+            },
+            {
+              "no": "38330-SL0-003",
+              "name": "CONTROL UNIT RETRACTABLE HEADLIGHT MITSUBA",
+              "label": "コントロールユニット"
+            }
+          ],
+          "note": "モーター単品の品番は継続供給中リストに見当たりません。"
         },
         {
           "id": "window-motor",
           "name": "パワーウインドウモーター",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "38370-SL0-003",
+              "name": "CONTROL UNIT POWER WINDOW",
+              "label": "パワーウインドウ コントロールユニット"
+            }
+          ],
+          "note": "モーター単品の品番は継続供給中リストに見当たりません。"
         },
         {
           "id": "window-reg",
           "name": "ウインドウレギュレーター",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "72210-SL0-013",
+              "name": "REGULATOR ASSY. R. DOOR POWER",
+              "orig": "72210-SL0-003",
+              "label": "右"
+            },
+            {
+              "no": "72250-SL0-013",
+              "name": "REGULATOR ASSY. L. DOOR POWER",
+              "orig": "72250-SL0-003",
+              "label": "左"
+            }
+          ]
         },
         {
           "id": "climate-unit",
           "name": "クライメートコントロールユニット",
-          "status": "check"
+          "status": "check",
+          "note": "公式の継続供給中リストに該当なし（販売終了の可能性）。在庫・代替品は販売店で確認。"
         },
         {
           "id": "battery",
           "name": "バッテリー",
-          "status": "supply"
+          "status": "supply",
+          "note": "汎用品（社外品・市販品）が使えるため、ホンダ品番は設定していません。"
         },
         {
           "id": "alternator",
           "name": "オルタネーター",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "31100-PR7-A03",
+              "name": "ALTERNATOR ASSY. CLB16 DENSO",
+              "orig": "31100-PR7-A01"
+            }
+          ]
         },
         {
           "id": "fuel-pump",
           "name": "燃料ポンプ",
-          "status": "check"
+          "status": "check",
+          "candidates": [
+            {
+              "no": "17040-SL0-A30",
+              "name": "PUMP SET FUEL",
+              "orig": "17040-SL0-930"
+            },
+            {
+              "no": "17040-SL0-A31",
+              "name": "PUMP SET FUEL",
+              "orig": "17040-SL0-931"
+            }
+          ],
+          "note": "候補が2種類あり、適合は販売店で確認してください。"
         }
       ]
     },
@@ -646,27 +990,75 @@
         {
           "id": "door-trim",
           "name": "ドアトリム（内張り）",
-          "status": "check"
+          "status": "check",
+          "note": "公式の継続供給中リストに該当なし（販売終了の可能性）。在庫・代替品は販売店で確認。"
         },
         {
           "id": "weatherstrip",
           "name": "ウェザーストリップ",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "72310-SL0-023",
+              "name": "WEATHERSTRIP R. DOOR LOWER",
+              "orig": "72310-SL0-003",
+              "label": "右ドア ロワー"
+            },
+            {
+              "no": "72350-SL0-023",
+              "name": "WEATHERSTRIP L. DOOR LOWER",
+              "orig": "72350-SL0-003",
+              "label": "左ドア ロワー"
+            },
+            {
+              "no": "72335-SL0-003",
+              "name": "WEATHERSTRIP R. DOOR INNER",
+              "label": "右ドア インナー"
+            },
+            {
+              "no": "72375-SL0-003",
+              "name": "WEATHERSTRIP L. DOOR INNER",
+              "label": "左ドア インナー"
+            }
+          ]
         },
         {
           "id": "wiper",
           "name": "ワイパーブレード",
-          "status": "supply"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "76620-SL0-309",
+              "name": "BLADE WINDSHIELD WIPER 550MM DRIVER SIDE",
+              "orig": "76620-SL0-003",
+              "label": "運転席側"
+            },
+            {
+              "no": "76630-SL0-309",
+              "name": "BLADE WINDSHIELD WIPER 550MM PASSENGER SIDE",
+              "orig": "76630-SL0-003",
+              "label": "助手席側"
+            }
+          ]
         },
         {
           "id": "emblem",
           "name": "Hエンブレム",
-          "status": "check"
+          "status": "supply",
+          "numbers": [
+            {
+              "no": "75736-SL0-000",
+              "name": "EMBLEM SIDE NSX",
+              "label": "サイド NSX"
+            }
+          ],
+          "note": "フロント・リアの「H」エンブレムは、初期型用と確認できる品番が継続供給中リストに見当たりません。"
         },
         {
           "id": "tail-lamp",
           "name": "テールランプ",
-          "status": "check"
+          "status": "check",
+          "note": "公式の継続供給中リストに該当なし（販売終了の可能性）。在庫・代替品は販売店で確認。"
         }
       ]
     },
@@ -676,32 +1068,38 @@
         {
           "id": "engine-oil",
           "name": "エンジンオイル",
-          "status": "supply"
+          "status": "supply",
+          "note": "汎用品（社外品・市販品）が使えるため、ホンダ品番は設定していません。"
         },
         {
           "id": "mtf",
           "name": "ミッションオイル（MTF）",
-          "status": "supply"
+          "status": "supply",
+          "note": "汎用品（社外品・市販品）が使えるため、ホンダ品番は設定していません。"
         },
         {
           "id": "brake-fluid",
           "name": "ブレーキフルード",
-          "status": "supply"
+          "status": "supply",
+          "note": "汎用品（社外品・市販品）が使えるため、ホンダ品番は設定していません。"
         },
         {
           "id": "coolant",
           "name": "冷却水（クーラント）",
-          "status": "supply"
+          "status": "supply",
+          "note": "汎用品（社外品・市販品）が使えるため、ホンダ品番は設定していません。"
         },
         {
           "id": "tire-f",
           "name": "タイヤ 205/50ZR15（前）",
-          "status": "supply"
+          "status": "supply",
+          "note": "汎用品（社外品・市販品）が使えるため、ホンダ品番は設定していません。"
         },
         {
           "id": "tire-r",
           "name": "タイヤ 225/50ZR16（後）",
-          "status": "supply"
+          "status": "supply",
+          "note": "汎用品（社外品・市販品）が使えるため、ホンダ品番は設定していません。"
         }
       ]
     }
@@ -711,5 +1109,6 @@
     "寸法・重量": "profile",
     "エンジン": "engine",
     "シャシー": "cockpit"
-  }
+  },
+  "partsNote": "品番はホンダ公式「NSX 継続供給中の部品番号リスト」（2026年9月末時点）から、1991年式MT車向けと考えられるものを選んだ推定です。リストはNA1・NA2共通のため、初期型の元品番（末尾が0xxなど）を手がかりにしています。注文前にパーツカタログまたは販売店で適合を確認してください。"
 }
