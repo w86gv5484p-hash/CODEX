@@ -462,3 +462,17 @@ dialog .portrait-credit { margin-top: 10px; color: var(--muted); font-size: 10px
 .news-meta strong { color: var(--ink); font-size: 12px; }
 .news-title { grid-column: 1; font-size: 13px; font-weight: 700; line-height: 1.6; overflow-wrap: anywhere; }
 .news-item > svg { grid-column: 2; grid-row: 1 / span 2; color: var(--muted); }
+
+/* Photos imported on this device only */
+.local-photos { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; padding: 14px 16px; }
+.local-photos strong { font-size: 14px; }
+.local-photos p { margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.local-photos .local-photos-status:empty { display: none; }
+.local-photos .local-photos-status { color: var(--green); font-weight: 700; }
+.local-photos-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.local-photos-actions .button { cursor: pointer; min-height: 42px; }
+.coach-row.has-photo { grid-template-columns: 56px minmax(0, 1fr); align-items: center; column-gap: 12px; }
+.coach-row.has-photo > p { grid-column: 2; }
+.coach-photo { grid-row: span 2; width: 56px; height: 66px; object-fit: cover; object-position: center 18%; border-radius: 10px; background: #fff; }
+/* JFA-style studio photos have a white background: frame them on the dark cards */
+.player-card .portrait-frame img[src^="blob:"] { object-position: center 12%; }
