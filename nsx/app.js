@@ -254,7 +254,121 @@ const numberRows = (list, title) => list?.length ? `<div><div class="small muted
     <div class="sub">${esc(n.name)}${n.orig ? ` ・ 元の品番 ${esc(n.orig)}` : ""}</div></div>
     ${supply.partNumbers?.includes(n.no) ? `<span class="pill st-ok">供給中</span>` : ""}</div>`).join("")}</div></div>` : "";
 
+// ---------- 公式パーツ一覧（3階層） ----------
+// ホンダ品番の先頭2桁は部品の系統を表す（例：19 = 冷却、45 = フロントブレーキ）。これで大分類 → 中分類 → 部品に整理する。
+const TAXONOMY = [
+  { id: "engine", name: "エンジン本体", en: "Engine", img: "engine", subs: { "11": "シリンダーブロック・カバー", "12": "シリンダーヘッド・バルブ", "13": "クランク・ピストン・コンロッド", "14": "カムシャフト・タイミング", "15": "潤滑（オイル）" } },
+  { id: "intake", name: "吸排気・燃料", en: "Intake / Exhaust", img: "front-trunk", subs: { "16": "燃料噴射・スロットル", "17": "吸気・燃料タンク・ポンプ", "18": "排気・排ガス浄化" } },
+  { id: "cooling", name: "冷却", en: "Cooling", img: "museum-rear", subs: { "19": "ラジエーター・ウォーターポンプ・ホース" } },
+  { id: "drive", name: "クラッチ・ミッション・駆動", en: "Drivetrain", img: "road-red", subs: { "21": "ミッションケース", "22": "クラッチ", "23": "ギア・シャフト", "24": "シフト・セレクト機構", "41": "デファレンシャル", "42": "ドライブシャフト・ハブ", "44": "ホイール・タイヤ" } },
+  { id: "electrical", name: "電装", en: "Electrical", img: "front-1991", subs: { "30": "点火", "31": "充電・始動・バッテリー", "32": "ワイヤーハーネス", "33": "ヘッドライト・フロント灯火", "34": "リア灯火・室内灯", "35": "スイッチ", "36": "センサー・制御バルブ", "37": "ECU・メーター・センサー", "38": "リレー・コントロールユニット・ホーン", "39": "オーディオ・アンテナ" } },
+  { id: "brake", name: "ブレーキ・ペダル", en: "Brakes", img: "profile", subs: { "43": "リアブレーキ", "45": "フロントブレーキ", "46": "マスターシリンダー・ペダル・クラッチ油圧", "47": "パーキングブレーキ", "57": "ABS" } },
+  { id: "chassis", name: "サスペンション・ステアリング", en: "Chassis", img: "silver-side", subs: { "50": "エンジンマウント・サブフレーム", "51": "フロントサスペンション", "52": "リアサスペンション", "53": "ステアリング", "54": "シフトレバー・ケーブル" } },
+  { id: "body", name: "ボディ・外装", en: "Body", img: "black-front", subs: { "60": "ボディ フロント", "61": "ボディ", "63": "ボディ サイド", "64": "ボディ", "66": "ボディ リア", "67": "ドアパネル", "68": "フード・トランク", "69": "ボディ", "70": "ルーフ", "71": "バンパー・フロント外装", "72": "ドア機構・ウェザーストリップ", "73": "ガラス", "74": "外装部品・アンダーカバー", "75": "エンブレム・モール", "76": "ライト周り・ワイパー・ミラー" } },
+  { id: "interior", name: "内装・空調", en: "Interior / A/C", img: "interior", subs: { "77": "ダッシュボード", "78": "メーター", "79": "ヒーター", "80": "エアコン", "81": "シート", "82": "シート", "83": "内装トリム", "84": "内装トリム・マット", "85": "その他内装", "87": "マーク・ラベル", "89": "工具・ジャッキ" } },
+  { id: "hardware", name: "ボルト・ナット・汎用小物", en: "Hardware", img: "tail", subs: { "90": "ボルト・ナット・ワッシャー・クリップ", "91": "ベアリング・オイルシール・Oリング", "92": "汎用部品", "93": "汎用部品", "94": "汎用部品", "95": "汎用部品", "96": "汎用部品" } },
+  { id: "kits", name: "キット・セット品・その他", en: "Kits / Others", img: "museum-red", subs: { "01": "セット品", "04": "セット品", "06": "整備キット", "08": "アクセサリー・ケミカル" } },
+  { id: "at", name: "AT（オートマチック）関連", en: "Automatic", img: "cockpit", at: true, subs: { "25": "AT ケース", "26": "AT ケース", "27": "AT 油圧・バルブボディ", "28": "AT 制御", "29": "AT その他" } },
+];
+const SUB_INDEX = {};
+TAXONOMY.forEach(g => Object.entries(g.subs).forEach(([k, v]) => { SUB_INDEX[k] = { group: g, name: v }; }));
+
+const JP = { BOLT: "ボルト", COVER: "カバー", BRACKET: "ブラケット", SPRING: "スプリング", CLIP: "クリップ", PLATE: "プレート", NUT: "ナット", PIPE: "パイプ", STAY: "ステー", HARNESS: "ハーネス", SHIM: "シム", WASHER: "ワッシャー", "O-RING": "Oリング", CLAMP: "クランプ", BEARING: "ベアリング", HOSE: "ホース", CAP: "キャップ", PACKING: "パッキン", SCREW: "スクリュー", GROMMET: "グロメット", VALVE: "バルブ", COLLAR: "カラー", SEAL: "シール", RUBBER: "ラバー", HOLDER: "ホルダー", TIRE: "タイヤ", GEAR: "ギア", DISK: "ディスク", SENSOR: "センサー", WEIGHT: "ウェイト", TUBE: "チューブ", ABSORBER: "ショックアブソーバー", SWITCH: "スイッチ", LABEL: "ラベル", "BOLT-WASHER": "ボルト（ワッシャー付）", ARM: "アーム", JOINT: "ジョイント", PISTON: "ピストン", RING: "リング", ROD: "ロッド", SHAFT: "シャフト", CYLINDER: "シリンダー", GLASS: "ガラス", BUSH: "ブッシュ", BULB: "電球", PIN: "ピン", LOCK: "ロック", BAND: "バンド", WEATHERSTRIP: "ウェザーストリップ", CALIPER: "キャリパー", GUIDE: "ガイド", DUCT: "ダクト", STOPPER: "ストッパー", CONTROL: "コントロール", RELAY: "リレー", GASKET: "ガスケット", FILTER: "フィルター", CUSHION: "クッション", BOOT: "ブーツ", SPACER: "スペーサー", BOX: "ボックス", CABLE: "ケーブル", HINGE: "ヒンジ", INSULATOR: "インシュレーター", KNOB: "ノブ", PAD: "パッド", COTTER: "コッター", SLEEVE: "スリーブ", "SCREW-WASHER": "スクリュー（ワッシャー付）", CASE: "ケース", RETAINER: "リテーナー", SOCKET: "ソケット", GARNISH: "ガーニッシュ", BODY: "ボディ", MOTOR: "モーター", LIGHT: "ライト", FENDER: "フェンダー", PANEL: "パネル", GUARD: "ガード", SOLENOID: "ソレノイド", FRAME: "フレーム", LAMP: "ランプ", CIRCLIP: "サークリップ", HOOK: "フック", OIL: "オイル", PUMP: "ポンプ", BASE: "ベース", MANIFOLD: "マニホールド", CLUTCH: "クラッチ", LEVER: "レバー", PROTECTOR: "プロテクター", BEAM: "ビーム", WIRE: "ワイヤー", CONVERTER: "コンバーター", PLUG: "プラグ", CARRIER: "キャリア", VISOR: "バイザー", BELT: "ベルト", HEAD: "ヘッド", TANK: "タンク", HORN: "ホーン", TAPE: "テープ", LENS: "レンズ", KNUCKLE: "ナックル", BLOCK: "ブロック", PULLEY: "プーリー", CAMSHAFT: "カムシャフト", SEAT: "シート", STRAINER: "ストレーナー", HANGER: "ハンガー", FORK: "フォーク", HEADLIGHT: "ヘッドライト", FUSE: "ヒューズ", BAR: "バー", MOLDING: "モール", EMBLEM: "エンブレム", ADJUSTER: "アジャスター", ALTERNATOR: "オルタネーター", THERMOSTAT: "サーモスタット", ELEMENT: "エレメント", REGULATOR: "レギュレーター", CARTRIDGE: "カートリッジ", MODULATOR: "モジュレーター", RETRACTABLE: "リトラクタブル", BATTERY: "バッテリー", END: "エンド", PIVOT: "ピボット", MOTION: "モーション", DOWEL: "ダウエル", NEEDLE: "ニードル", INJECTOR: "インジェクター", CONNECTOR: "コネクター", MIRROR: "ミラー", HANDLE: "ハンドル", COIL: "コイル", UNIT: "ユニット", MODULE: "モジュール", "OIL SEAL": "オイルシール", TERMINAL: "ターミナル", GRILLE: "グリル", BUMPER: "バンパー", SPOILER: "スポイラー", MAT: "マット", TRAY: "トレイ", LINER: "ライナー", CHAIN: "チェーン", WHEEL: "ホイール", HUB: "ハブ", BALL: "ボール", ASSY: "ASSY", MARK: "マーク", RESISTOR: "抵抗", THERMOSENSOR: "温度センサー", SUPPORT: "サポート", LID: "リッド", MAINSHAFT: "メインシャフト", COUNTERSHAFT: "カウンターシャフト", SYNCHRO: "シンクロ", FLANGE: "フランジ", FLOAT: "フロート", TANK: "タンク", RESERVOIR: "リザーバー", PEDAL: "ペダル", SPEEDOMETER: "スピードメーター", METER: "メーター", BLADE: "ブレード", MOTOR: "モーター", CORD: "コード", ANTENNA: "アンテナ", SPEAKER: "スピーカー", HEATER: "ヒーター", CONDENSER: "コンデンサー", EVAPORATOR: "エバポレーター", COMPRESSOR: "コンプレッサー", BLOWER: "ブロワー", BOARD: "ボード", LINING: "ライニング", CARPET: "カーペット", BELT: "ベルト", GRIP: "グリップ", STRIKER: "ストライカー", LATCH: "ラッチ", ORNAMENT: "オーナメント", SHIELD: "シールド", DAMPER: "ダンパー", STABILIZER: "スタビライザー", SPRING: "スプリング", LINK: "リンク", RACK: "ラック", GEARBOX: "ギアボックス", COLUMN: "コラム", WHEEL: "ホイール", "SEAT BELT": "シートベルト" };
+const jpType = name => JP[name.split(" ")[0]] || JP[name.split(/[ .]/)[0]] || "";
+
+let catalogQuery = "";
+let showAT = store.get("showAT", false);
+const isAT = r => /-(PR9|PX4)-/.test(r[0] + r[1]) || /(^|\s)AT(\s|-|$)/.test(r[2]) || ["25", "26", "27", "28", "29"].includes(r[1].slice(0, 2));
+const isNA2 = r => /-PBY-/.test(r[1]) || /TYPE R/.test(r[2]);
+const subOf = r => SUB_INDEX[r[1].slice(0, 2)] || { group: TAXONOMY[TAXONOMY.length - 2], name: "その他" };
+const MAIN_NUMBERS = () => new Set(data.parts.flatMap(c => c.items.flatMap(i => (i.numbers || []).map(n => n.no))));
+
+function catalogRows() {
+  return (officialRows || []).filter(r => showAT || !isAT(r));
+}
+
+function catalogItem(r, main) {
+  const t = jpType(r[2]);
+  return `<div class="part" data-act="opart" data-no="${esc(r[1])}" data-orig="${esc(r[0])}" role="button" tabindex="0">
+    <div><div class="name">${t ? `<span class="jp">${esc(t)}</span>` : ""}${esc(r[2])}</div>
+    <div class="sub"><b class="pn">${esc(r[1])}</b>${r[0] !== r[1] ? ` ・ 元 ${esc(r[0])}` : ""}${main.has(r[1]) ? ` ・ <span style="color:var(--gold)">★主要パーツ</span>` : ""}${isNA2(r) ? ` ・ <span class="muted">NA2/タイプR系</span>` : ""}${isAT(r) ? ` ・ <span style="color:var(--soon)">AT</span>` : ""}</div></div>
+    <span class="pill st-ok">供給中</span></div>`;
+}
+
+function catalogView(path) {
+  const head = `${banner("tail", "Parts Catalog", "公式パーツ一覧", "ホンダ公式の継続供給中リストを、品番の系統ごとに3階層で整理しています。", "01")}
+    ${partsTabs("all")}`;
+  if (!officialRows) { loadOfficial().then(() => { if (location.hash.startsWith("#parts/all")) render(); }); return head + `<p class="muted">公式リストを読み込み中…</p>`; }
+  if (!officialRows.length) return head + `<p class="muted">公式リストのデータがまだありません。毎朝の自動確認で作成されます。</p>`;
+  const rows = catalogRows();
+  const main = MAIN_NUMBERS();
+  const [gid, sid] = path;
+  const tools = `<div class="toolbar"><input type="text" id="csearch" placeholder="全体から検索（例：PAD、HOSE WATER、ベアリング、19200）" value="${esc(catalogQuery)}" aria-label="公式パーツを検索">
+    <label class="chip ${showAT ? "on" : ""}" style="display:flex;align-items:center;gap:6px"><input type="checkbox" data-act="showat" ${showAT ? "checked" : ""} style="accent-color:var(--red)">AT用も表示</label></div>
+    <div id="cresults"></div>`;
+  const crumbs = [`<a href="#parts/all">すべて</a>`];
+  let body = "";
+  if (!gid) {
+    const groups = TAXONOMY.filter(g => showAT || !g.at).map(g => ({ g, n: rows.filter(r => subOf(r).group === g).length })).filter(x => x.n);
+    body = `<p class="small muted">${rows.length.toLocaleString()}点（${showAT ? "AT用を含む" : "MT車向け・AT専用部品を除く"}）／ 公式リスト ${esc(supply.checkedAt?.slice(0, 10) || "")} 時点</p>
+      <div class="cat-grid">${groups.map(({ g, n }) => `<a class="cat-card" href="#parts/all/${g.id}">${pic(g.img)}<div class="body"><div class="eyebrow">${esc(g.en)}</div><h3>${esc(g.name)}</h3><p>${n.toLocaleString()}点 ・ ${Object.keys(g.subs).filter(k => rows.some(r => r[1].startsWith(k))).length}分類</p></div></a>`).join("")}</div>`;
+  } else {
+    const g = TAXONOMY.find(x => x.id === gid);
+    if (!g) return head + `<p>分類が見つかりません。<a href="#parts/all">一覧へ戻る</a></p>`;
+    crumbs.push(`<a href="#parts/all/${g.id}">${esc(g.name)}</a>`);
+    const inGroup = rows.filter(r => subOf(r).group === g);
+    if (!sid) {
+      const subs = [...new Set(inGroup.map(r => r[1].slice(0, 2)))].sort();
+      body = `<div class="list">${subs.map(k => {
+        const items = inGroup.filter(r => r[1].startsWith(k));
+        const mains = items.filter(r => main.has(r[1])).length;
+        return `<a class="part" href="#parts/all/${g.id}/${k}" style="text-decoration:none"><div><div class="name"><span class="code">${k}</span>${esc(SUB_INDEX[k]?.name || "その他")}</div><div class="sub">${items.length.toLocaleString()}点${mains ? ` ・ ★主要パーツ ${mains}点` : ""} ・ 例：${esc([...new Set(items.map(r => jpType(r[2]) || r[2].split(" ")[0]))].slice(0, 4).join("、"))}</div></div><span class="go-sm">›</span></a>`;
+      }).join("")}</div>`;
+    } else {
+      crumbs.push(`<span>${esc(SUB_INDEX[sid]?.name || sid)}</span>`);
+      const items = inGroup.filter(r => r[1].startsWith(sid)).sort((a, b) => (main.has(b[1]) - main.has(a[1])) || a[2].localeCompare(b[2]));
+      // 部品の種類（先頭の単語）ごとにまとめる
+      const byType = {};
+      items.forEach(r => { const t = jpType(r[2]) || r[2].split(" ")[0]; (byType[t] ||= []).push(r); });
+      const types = Object.entries(byType).sort((a, b) => b[1].length - a[1].length);
+      body = `<p class="small muted">${items.length.toLocaleString()}点 ・ ${types.length}種類</p>
+        ${types.map(([t, list]) => `<details class="type-group" ${types.length <= 4 || list.some(r => main.has(r[1])) ? "open" : ""}><summary><span>${esc(t)}</span><span class="muted small">${list.length}点</span></summary><div class="list">${list.map(r => catalogItem(r, main)).join("")}</div></details>`).join("")}`;
+    }
+  }
+  return head + tools + `<nav class="crumbs">${crumbs.join(`<span class="sep">›</span>`)}</nav>` + body;
+}
+
+function searchCatalog(q) {
+  const box = $main.querySelector("#cresults"); if (!box) return;
+  catalogQuery = q;
+  const words = q.trim().toUpperCase().split(/\s+/).filter(Boolean);
+  if (!words.length) { box.innerHTML = ""; return; }
+  const main = MAIN_NUMBERS();
+  const hits = catalogRows().filter(r => { const hay = `${r[0]} ${r[1]} ${r[2]} ${jpType(r[2])} ${subOf(r).name}`.toUpperCase(); return words.every(w => hay.includes(w)); });
+  box.innerHTML = hits.length ? `<p class="small muted">${hits.length.toLocaleString()}件${hits.length > 80 ? "（先頭80件）" : ""}</p><div class="list" style="margin-bottom:18px">${hits.slice(0, 80).map(r => catalogItem(r, main)).join("")}</div>`
+    : `<p class="small muted">見つかりませんでした。</p>`;
+}
+
+function openOfficialPart(no, orig) {
+  const r = (officialRows || []).find(x => x[1] === no && x[0] === orig) || [orig, no, ""];
+  const sub = subOf(r);
+  const alts = (officialRows || []).filter(x => x[1] === no && x[0] !== orig).map(x => x[0]);
+  $dlgBody.innerHTML = `<div class="eyebrow">${esc(sub.group.name)} › ${esc(sub.name)}</div>
+    <h3 style="margin-top:6px">${esc(jpType(r[2]) || "部品")}</h3>
+    <div class="form">${numberRows([{ no: r[1], name: r[2], orig: r[0] !== r[1] ? r[0] : undefined }], "ホンダ純正品番（現在の品番）")}
+    ${alts.length ? `<p class="small muted" style="margin:0">この品番に統合された元の品番：${alts.map(esc).join("、")}</p>` : ""}
+    ${isAT(r) ? `<p class="small" style="margin:0;color:var(--soon)">AT車用の部品です。</p>` : ""}${isNA2(r) ? `<p class="small muted" style="margin:0">NA2（3.2L）・タイプR系の部品の可能性があります。</p>` : ""}
+    <p class="small muted" style="margin:0">NA1・NA2共通のリストです。1991年式への適合はパーツカタログまたは販売店で確認してください。</p>
+    <div class="toolbar"><button class="btn" data-copy="${esc(r[1])}">品番をコピー</button></div></div>`;
+  $dlgBody.querySelector("[data-copy]").onclick = e => { navigator.clipboard?.writeText(e.target.dataset.copy).then(() => { e.target.textContent = "コピーしました"; }).catch(() => {}); };
+  $dlg.showModal();
+}
+
+const partsTabs = active => `<div class="subtabs"><a class="chip ${active === "main" ? "on" : ""}" href="#parts">主要パーツ（${data.parts.reduce((n, c) => n + c.items.length, 0)}点）</a><a class="chip ${active === "all" ? "on" : ""}" href="#parts/all">公式パーツ一覧（${officialRows ? `${catalogRows().length.toLocaleString()}点` : "4,000点超"}）</a></div>`;
+
 function partsView() {
+  const path = location.hash.slice(1).split("/");
+  if (path[1] === "all") return catalogView(path.slice(2));
   const q = partQuery.trim().toLowerCase();
   const counts = { all: 0, supply: 0, repro: 0, discontinued: 0, check: 0 };
   const cats = data.parts.map(cat => {
@@ -276,6 +390,7 @@ function partsView() {
     <span class="muted">${s.ok ? "取得成功" : "取得失敗（前回の内容を保持）"} ・ 内容の最終変化 ${esc(s.changedAt || "—")}${s.documents?.length ? ` ・ 添付資料 ${s.documents.length}件` : ""}</span></div>`).join("");
   const changes = (supply.changes || []).slice(0, 8).map(c => `<li><b>${esc(c.date)}</b> ${esc(c.source)}：${esc(c.summary)}</li>`).join("");
   return `${banner("tail", "Parts &amp; Supply", "パーツリスト・部品供給状況", "項目ごとの主要パーツと、ホンダ公式の供給状況（毎日確認）。", "01-02")}
+  ${partsTabs("main")}
   <p class="lead">項目ごとに整理した主要パーツです。タップすると、品番・販売状況（販売中／復刻あり／廃番／要確認）・メモを登録できます。品番を登録すると、毎日確認しているホンダ公式「継続供給中部品番号リスト」と自動で照合します。</p>
   ${data.partsNote ? `<p class="small muted" style="margin-top:-6px">※ ${esc(data.partsNote)}</p>` : ""}
   <div class="toolbar"><input type="text" placeholder="部品名・品番で検索" value="${esc(partQuery)}" data-act="search" aria-label="部品を検索"></div>
@@ -454,12 +569,14 @@ $main.addEventListener("click", e => {
   else if (act === "import") importData();
   else if (act === "photo") setPhoto();
   else if (act === "part") openPart(id);
+  else if (act === "opart") openOfficialPart(el.dataset.no, el.dataset.orig);
   else if (act === "filter") { partFilter = k; render(); }
   else if (act === "info") { infoTab = k; render(); scrollTo(0, 0); }
   else if (act === "reset-checks") { if (confirm("整備チェックをすべて外しますか？")) { checks = {}; store.set("checks", checks); render(); } }
 });
 $main.addEventListener("change", e => {
   const el = e.target;
+  if (el.dataset.act === "showat") { showAT = el.checked; store.set("showAT", showAT); render(); return; }
   if (el.dataset.act === "check") {
     if (el.checked) checks[el.dataset.key] = iso(today()); else delete checks[el.dataset.key];
     store.set("checks", checks); render();
@@ -467,6 +584,7 @@ $main.addEventListener("change", e => {
 });
 $main.addEventListener("input", e => {
   if (e.target.id === "osearch") { searchOfficial(e.target.value); return; }
+  if (e.target.id === "csearch") { searchCatalog(e.target.value); return; }
   if (e.target.dataset.act !== "search") return;
   partQuery = e.target.value;
   const pos = e.target.selectionStart;
@@ -476,6 +594,7 @@ $main.addEventListener("input", e => {
 });
 $main.addEventListener("keydown", e => {
   if (e.key === "Enter" && e.target.dataset?.act === "part") openPart(e.target.dataset.id);
+  if (e.key === "Enter" && e.target.dataset?.act === "opart") openOfficialPart(e.target.dataset.no, e.target.dataset.orig);
 });
 window.addEventListener("hashchange", () => { render(); scrollTo(0, 0); });
 
