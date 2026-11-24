@@ -98,8 +98,12 @@ def main() -> int:
     previous = json.loads(OUT.read_text("utf-8")) if OUT.exists() else {}
     prev_sources = {s["id"]: s for s in previous.get("sources", [])}
     changes = list(previous.get("changes", []))
-    parts = set(previous.get("partNumbers", []))
+    # version 2 からは継続供給中リストとパーツカタログを分けて保存する（以前の混在データとは比較しない）
+    same_format = previous.get("listVersion") == 2
+    parts = set(previous.get("partNumbers", [])) if same_format else set()
+    catalog = set(previous.get("catalogNumbers", []))
     new_parts: set[str] | None = None
+    new_catalog: set[str] | None = None
     results = []
     ok_count = 0
 
@@ -122,16 +126,31 @@ def main() -> int:
             entry.update(hash=digest, ok=True, lastOk=now.isoformat(timespec="minutes"))
             ok_count += 1
             if src.get("collectParts"):
-                found = set(PART_RE.findall(text))
+                # 「parts-list」= 継続供給中部品番号リスト、それ以外の PDF = パーツカタログ（廃番を含む全部品）
                 docs = sorted({urllib.parse.urljoin(src["url"], h) for h in DOC_RE.findall(markup)})
                 entry["documents"] = docs
+                listed: set[str] = set()
+                cataloged: set[str] = set()
+                list_ok = False
                 for doc in docs:
+                    is_list = "parts-list" in doc.lower()
                     try:
-                        found |= document_parts(doc)
+                        found = document_parts(doc)
                     except Exception as exc:  # noqa: BLE001 - 1件の失敗で全体を止めない
                         print(f"document failed: {doc}: {exc}", file=sys.stderr)
-                if found:
-                    new_parts = found
+                        continue
+                    print(f"{'list' if is_list else 'catalog'}: {doc}: {len(found)} part numbers")
+                    if is_list:
+                        listed |= found
+                        list_ok = list_ok or bool(found)
+                    else:
+                        cataloged |= found
+                if not list_ok:
+                    listed = set(PART_RE.findall(text))
+                if listed:
+                    new_parts = listed
+                if cataloged:
+                    new_catalog = cataloged
         except Exception as exc:  # noqa: BLE001
             entry.update(ok=False, error=str(exc)[:200])
             print(f"fetch failed: {src['url']}: {exc}", file=sys.stderr)
@@ -146,16 +165,20 @@ def main() -> int:
                 "added": added[:200], "removed": removed[:200],
             })
         parts = new_parts
+    if new_catalog is not None:
+        catalog = new_catalog
 
     data = {
+        "listVersion": 2,
         "checkedAt": now.isoformat(timespec="minutes"),
         "ok": ok_count > 0,
         "sources": results,
         "partNumbers": sorted(parts),
+        "catalogNumbers": sorted(catalog),
         "changes": changes[:40],
     }
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", "utf-8")
-    print(f"checked {len(SOURCES)} sources, ok={ok_count}, part numbers={len(parts)}")
+    print(f"checked {len(SOURCES)} sources, ok={ok_count}, supply list={len(parts)}, catalog={len(catalog)}")
     return 0 if ok_count else 1
 
 

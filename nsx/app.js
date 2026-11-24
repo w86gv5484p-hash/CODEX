@@ -218,8 +218,10 @@ function alerts() {
 function partState(p) {
   const mine = parts[p.id] || {};
   const status = mine.status || p.status;
-  const listed = mine.partNo && supply.partNumbers?.includes(mine.partNo.trim().toUpperCase());
-  return { status, partNo: mine.partNo || "", memo: mine.memo || "", listed };
+  const no = (mine.partNo || "").trim().toUpperCase();
+  const listed = !!no && supply.partNumbers?.includes(no);
+  const cataloged = !!no && !listed && supply.catalogNumbers?.includes(no);
+  return { status, partNo: mine.partNo || "", memo: mine.memo || "", listed, cataloged };
 }
 
 function partsView() {
@@ -234,7 +236,7 @@ function partsView() {
     if (!rows.length) return "";
     return `<div class="part-cat"><h3>${esc(cat.category)}</h3><div class="list">${rows.map(({ p, s }) => `
       <div class="part" data-act="part" data-id="${p.id}" role="button" tabindex="0">
-        <div><div class="name">${esc(p.name)}</div><div class="sub">${s.partNo ? `品番 ${esc(s.partNo)}` : "品番未登録"}${s.listed ? " ・ <span style='color:var(--ok)'>公式の継続供給リストに掲載</span>" : ""}${s.memo ? ` ・ ${esc(s.memo)}` : ""}</div></div>
+        <div><div class="name">${esc(p.name)}</div><div class="sub">${s.partNo ? `品番 ${esc(s.partNo)}` : "品番未登録"}${s.listed ? " ・ <span style='color:var(--ok)'>公式の継続供給リストに掲載</span>" : s.cataloged ? " ・ <span style='color:var(--soon)'>カタログ記載・継続供給リスト外</span>" : ""}${s.memo ? ` ・ ${esc(s.memo)}` : ""}</div></div>
         <span class="pill ${STATUS[s.status].cls}">${STATUS[s.status].label}</span>
       </div>`).join("")}</div></div>`;
   }).join("");
@@ -251,7 +253,7 @@ function partsView() {
   <div class="section"><div class="eyebrow">Official</div><h2 class="section-title">メーカーの供給状況（毎日自動確認）</h2></div>
   <div class="card">
     <p class="small" style="margin-top:0">ホンダは2025年に初代NSX向けの「Honda Heritage Parts」（復刻純正部品）と「Honda Restoration Service」を開始しています。以下の公式ページを1日1回確認し、内容が変わると記録します。
-    ${supply.partNumbers?.length ? `<br>公式リストから取得した品番：<b>${supply.partNumbers.length}件</b>` : ""}</p>
+    ${supply.partNumbers?.length ? `<br>継続供給中リストの品番：<b>${supply.partNumbers.length.toLocaleString()}件</b>${supply.catalogNumbers?.length ? ` ・ パーツカタログ記載：${supply.catalogNumbers.length.toLocaleString()}件` : ""}` : ""}</p>
     ${sources || `<p class="small muted">自動確認はまだ実行されていません（GitHub Actions の「Refresh NSX parts supply」が毎朝実行します）。</p>`}
     ${changes ? `<h3 style="margin-top:14px">最近の変化</h3><ul class="small" style="padding-left:18px;margin:0">${changes}</ul>` : ""}
     <p class="small muted" style="margin-bottom:0">最終確認：${esc(supply.checkedAt?.replace("T", " ") || "—")}。最終的な在庫・価格・廃番はホンダ販売店でご確認ください。</p>
@@ -316,7 +318,7 @@ function openPart(id) {
     <div class="form">
       <label class="field">販売状況<select id="f-status">${Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${s.status === k ? "selected" : ""}>${v.label}</option>`).join("")}</select></label>
       <label class="field">ホンダ純正品番（例：15400-PLM-A01）<input type="text" id="f-no" value="${esc(s.partNo)}" autocapitalize="characters"></label>
-      ${s.partNo ? `<p class="small" style="margin:0">${s.listed ? "✓ 公式の継続供給中部品番号リストに掲載されています。" : supply.partNumbers?.length ? "公式の継続供給中部品番号リストには見つかりませんでした（廃番または表記違いの可能性）。" : "公式リストのデータがまだありません。"}</p>` : ""}
+      ${s.partNo ? `<p class="small" style="margin:0">${s.listed ? "✓ 公式の継続供給中部品番号リストに掲載されています。" : s.cataloged ? "パーツカタログには載っていますが、継続供給中部品番号リストにはありません（販売終了の可能性。販売店で確認してください）。" : supply.partNumbers?.length ? "公式の継続供給中部品番号リストにもパーツカタログにも見つかりませんでした（表記違いの可能性）。" : "公式リストのデータがまだありません。"}</p>` : ""}
       <label class="field">メモ（価格・購入先・交換日など）<textarea id="f-memo" rows="3">${esc(s.memo)}</textarea></label>
       <div class="toolbar"><button class="btn primary" id="f-save">保存</button>${parts[id] ? `<button class="btn" id="f-reset">初期値に戻す</button>` : ""}</div>
     </div>`;
