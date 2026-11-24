@@ -243,8 +243,16 @@ function partState(p) {
   const no = (mine.partNo || "").trim().toUpperCase();
   const listed = !!no && supply.partNumbers?.includes(no);
   const cataloged = !!no && !listed && supply.catalogNumbers?.includes(no);
-  return { status, partNo: mine.partNo || "", memo: mine.memo || "", listed, cataloged };
+  const official = (p.numbers || []).map(n => ({ ...n, listed: !!supply.partNumbers?.includes(n.no) }));
+  return { status, partNo: mine.partNo || "", memo: mine.memo || "", listed, cataloged, official };
 }
+
+// 公式品番の表（ダイアログ用）
+const numberRows = (list, title) => list?.length ? `<div><div class="small muted" style="margin-bottom:4px">${title}</div><div class="list">${list.map(n => `
+  <div class="part" style="cursor:default;align-items:flex-start"><div>${n.label ? `<div class="small" style="color:var(--red);font-weight:700">${esc(n.label)}</div>` : ""}
+    <div class="name" style="font-family:var(--display);letter-spacing:.06em;font-size:17px">${esc(n.no)}</div>
+    <div class="sub">${esc(n.name)}${n.orig ? ` ・ 元の品番 ${esc(n.orig)}` : ""}</div></div>
+    ${supply.partNumbers?.includes(n.no) ? `<span class="pill st-ok">供給中</span>` : ""}</div>`).join("")}</div></div>` : "";
 
 function partsView() {
   const q = partQuery.trim().toLowerCase();
@@ -253,12 +261,12 @@ function partsView() {
     const rows = cat.items.map(p => ({ p, s: partState(p) })).filter(({ p, s }) => {
       counts.all++; counts[s.status]++;
       if (partFilter !== "all" && s.status !== partFilter) return false;
-      return !q || (p.name + s.partNo + s.memo).toLowerCase().includes(q);
+      return !q || (p.name + s.partNo + s.memo + (p.numbers || []).map(n => n.no + n.name).join(" ")).toLowerCase().includes(q);
     });
     if (!rows.length) return "";
     return `<div class="part-cat"><h3>${esc(cat.category)}</h3><div class="list">${rows.map(({ p, s }) => `
       <div class="part" data-act="part" data-id="${p.id}" role="button" tabindex="0">
-        <div><div class="name">${esc(p.name)}</div><div class="sub">${s.partNo ? `品番 ${esc(s.partNo)}` : "品番未登録"}${s.listed ? " ・ <span style='color:var(--ok)'>公式の継続供給リストに掲載</span>" : s.cataloged ? " ・ <span style='color:var(--soon)'>カタログ記載・継続供給リスト外</span>" : ""}${s.memo ? ` ・ ${esc(s.memo)}` : ""}</div></div>
+        <div><div class="name">${esc(p.name)}</div><div class="sub">${s.partNo ? `品番 ${esc(s.partNo)}` : s.official.length ? `品番 <b style="color:var(--text);font-family:var(--display);letter-spacing:.05em">${esc(s.official[0].no)}</b>${s.official.length > 1 ? ` ほか${s.official.length - 1}件` : ""}` : p.candidates?.length ? `品番候補 ${p.candidates.length}件` : "品番なし"}${s.listed ? " ・ <span style='color:var(--ok)'>公式の継続供給リストに掲載</span>" : s.cataloged ? " ・ <span style='color:var(--soon)'>カタログ記載・継続供給リスト外</span>" : ""}${s.memo ? ` ・ ${esc(s.memo)}` : ""}</div></div>
         <span class="pill ${STATUS[s.status].cls}">${STATUS[s.status].label}</span>
       </div>`).join("")}</div></div>`;
   }).join("");
@@ -269,6 +277,7 @@ function partsView() {
   const changes = (supply.changes || []).slice(0, 8).map(c => `<li><b>${esc(c.date)}</b> ${esc(c.source)}：${esc(c.summary)}</li>`).join("");
   return `${banner("tail", "Parts &amp; Supply", "パーツリスト・部品供給状況", "項目ごとの主要パーツと、ホンダ公式の供給状況（毎日確認）。", "01-02")}
   <p class="lead">項目ごとに整理した主要パーツです。タップすると、品番・販売状況（販売中／復刻あり／廃番／要確認）・メモを登録できます。品番を登録すると、毎日確認しているホンダ公式「継続供給中部品番号リスト」と自動で照合します。</p>
+  ${data.partsNote ? `<p class="small muted" style="margin-top:-6px">※ ${esc(data.partsNote)}</p>` : ""}
   <div class="toolbar"><input type="text" placeholder="部品名・品番で検索" value="${esc(partQuery)}" data-act="search" aria-label="部品を検索"></div>
   <div class="chips">${chips}</div>
   ${cats || `<p class="muted">該当する部品はありません。</p>`}
@@ -343,8 +352,11 @@ function openPart(id) {
   const s = partState(p);
   $dlgBody.innerHTML = `<h3>${esc(p.name)}</h3>
     <div class="form">
+      ${numberRows(s.official, "ホンダ純正品番（1991年式MT向けの推定・現在の品番）")}
+      ${numberRows(p.candidates, "品番の候補（適合を確認してください）")}
+      ${p.note ? `<p class="small" style="margin:0;color:var(--muted)">${esc(p.note)}</p>` : ""}
       <label class="field">販売状況<select id="f-status">${Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${s.status === k ? "selected" : ""}>${v.label}</option>`).join("")}</select></label>
-      <label class="field">ホンダ純正品番（例：15400-PLM-A01）<input type="text" id="f-no" value="${esc(s.partNo)}" autocapitalize="characters"></label>
+      <label class="field">自分で使う品番（上と違う品番を使う場合に入力）<input type="text" id="f-no" value="${esc(s.partNo)}" autocapitalize="characters"></label>
       ${s.partNo ? `<p class="small" style="margin:0">${s.listed ? "✓ 公式の継続供給中部品番号リストに掲載されています。" : s.cataloged ? "パーツカタログには載っていますが、継続供給中部品番号リストにはありません（販売終了の可能性。販売店で確認してください）。" : supply.partNumbers?.length ? "公式の継続供給中部品番号リストにもパーツカタログにも見つかりませんでした（表記違いの可能性）。" : "公式リストのデータがまだありません。"}</p>` : ""}
       <label class="field">メモ（価格・購入先・交換日など）<textarea id="f-memo" rows="3">${esc(s.memo)}</textarea></label>
       <div class="toolbar"><button class="btn primary" id="f-save">保存</button>${parts[id] ? `<button class="btn" id="f-reset">初期値に戻す</button>` : ""}</div>
