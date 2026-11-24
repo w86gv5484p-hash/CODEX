@@ -62,7 +62,7 @@ const blank = { fixtures: [], callups: [], players: [], checkedAt: null };
 const feedFiles = {
   jfa: "jfa", roster: "players", clubs: "clubs", ranking: "ranking", lineups: "lineups", profiles: "profiles",
   portraits: "portraits", squad: "current-squad", clubReports: "current-clubs", healthReports: "current-health", fpl: "fpl",
-  biographies: "player-biographies", jfaProfiles: "jfa-profiles",
+  biographies: "player-biographies", jfaProfiles: "jfa-profiles", injuryNews: "injury-news",
 };
 const feeds = Object.fromEntries(Object.keys(feedFiles).map(key => [key, blank]));
 let failedFeeds = new Set();
@@ -484,13 +484,38 @@ function healthResults() {
   return reports.length ? reportsMarkup(reports) : emptyState("この条件で確認できた報告はありません。掲載がなくても、選手の状態は判断できません。", sources.jfa);
 }
 
+function injuryNews(playerId) {
+  const items = Array.isArray(feeds.injuryNews.items) ? feeds.injuryNews.items : [];
+  return items.filter(item => (!playerId || item.playerId === playerId)
+    && /^https:\/\/news\.google\.com\//.test(item.url ?? ""));
+}
+
+function newsMarkup(items, showPlayer = true) {
+  return `<div class="panel news-list">${items.map(item => `
+    <a class="news-item" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">
+      <span class="news-meta">${showPlayer ? `<strong>${esc(item.playerName)}</strong>` : ""}<time datetime="${esc(item.date)}">${shortDate(item.date)}</time><span>${esc(item.publisher)}</span></span>
+      <span class="news-title">${esc(item.title)}</span>
+      ${icon("external", 14)}
+    </a>`).join("")}</div>`;
+}
+
+function newsSection() {
+  const items = injuryNews();
+  const days = feeds.injuryNews.windowDays ?? 14;
+  return `<section class="news-section">${sectionHeading("負傷関連の報道")}
+    <p class="roster-note">直近${days}日の報道見出しを自動で集めています（1日3回更新）。見出しだけで判断した未確認の情報で、上の確認済みの報告とは別に表示しています。詳しくは各記事で確認してください。</p>
+    ${items.length ? newsMarkup(items) : emptyState("直近の負傷関連の報道は見つかっていません。")}
+  </section>`;
+}
+
 function healthPage() {
   return `${viewHeading("負傷・復帰", "公表された負傷や復帰に関する情報を掲載します。復帰時期は、出典に明記された場合に表示します。")}
     <div class="controls"><select id="health-filter" aria-label="報告の種類で絞り込む">
       <option value="all">すべての報告</option><option value="injury">負傷</option><option value="return">復帰・見込み</option>
     </select></div>
     <p class="roster-note">日付は発表または確認の日付です。復帰見込みは予定で、実戦復帰を確認できた場合は別に表示します。</p>
-    <div id="health-results" aria-live="polite">${healthResults()}</div>`;
+    <div id="health-results" aria-live="polite">${healthResults()}</div>
+    ${newsSection()}`;
 }
 
 function updateStatus() {
@@ -565,7 +590,8 @@ function showPlayerDetails(player, context) {
       <a class="panel-link" href="#matches/${matchId(context.match)}">フォーメーションに戻る ${icon("arrow", 14)}</a></div>` : ""}
     ${biographySection(player, profile)}
     <div class="dialog-section"><h3>クラブ活動</h3>${clubReports.length ? reportsMarkup(clubReports) : "<p>掲載できるクラブ活動の報告はありません。</p>"}</div>
-    <div class="dialog-section"><h3>負傷・復帰</h3>${medicalReports.length ? reportsMarkup(medicalReports) : "<p>掲載できる負傷・復帰の報告はありません。</p>"}</div>`);
+    <div class="dialog-section"><h3>負傷・復帰</h3>${medicalReports.length ? reportsMarkup(medicalReports) : "<p>掲載できる負傷・復帰の報告はありません。</p>"}</div>
+    ${injuryNews(player.id).length ? `<div class="dialog-section"><h3>負傷関連の報道（自動収集・未確認）</h3>${newsMarkup(injuryNews(player.id), false)}</div>` : ""}`);
 }
 
 function showDetails(page, id, participantId) {

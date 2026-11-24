@@ -1,4 +1,202 @@
 {
-  "checkedAt": null,
-  "reports": []
+  "checkedAt": "2026-11-24T00:22:32+00:00",
+  "reports": [
+    {
+      "playerId": "kaoru-mitoma",
+      "playerName": "三笘 薫",
+      "date": "2026-11-24",
+      "club": "ブライトン",
+      "clubAsOf": "2026-11-24",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "type": "club",
+      "scope": "season",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "ブライトンでリーグ戦0分出場、0得点、0アシスト。",
+      "minutes": 0,
+      "goals": 0,
+      "assists": 0
+    },
+    {
+      "playerId": "kaoru-mitoma",
+      "playerName": "三笘 薫",
+      "date": "2026-11-24",
+      "club": "ブライトン",
+      "clubAsOf": "2026-11-24",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "type": "injury",
+      "title": "公式FPLに負傷情報",
+      "summary": "FPL掲載の原文は「Hamstring injury - Expected back 2 Dec」です。"
+    },
+    {
+      "playerId": "hidemasa-morita",
+      "playerName": "守田 英正",
+      "date": "2026-11-24",
+      "club": "Hull City",
+      "clubAsOf": "2026-11-24",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "type": "club",
+      "scope": "season",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "Hull Cityでリーグ戦106分出場、0得点、0アシスト。",
+      "minutes": 106,
+      "goals": 0,
+      "assists": 0
+    },
+    {
+      "playerId": "hidemasa-morita",
+      "playerName": "守田 英正",
+      "date": "2026-11-24",
+      "club": "Hull City",
+      "clubAsOf": "2026-11-24",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "type": "injury",
+      "title": "公式FPLに負傷情報",
+      "summary": "FPL掲載の原文は「Groin injury - Unknown return date」です。"
+    },
+    {
+      "playerId": "zion-suzuki",
+      "playerName": "鈴木 彩艶",
+      "date": "2026-11-24",
+      "club": "アストン・ヴィラ",
+      "clubAsOf": "2026-11-24",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "type": "club",
+      "scope": "season",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "アストン・ヴィラでリーグ戦900分出場、0得点、0アシスト。",
+      "minutes": 900,
+      "goals": 0,
+      "assists": 0
+    },
+    {
+      "playerId": "ao-tanaka",
+      "playerName": "田中 碧",
+      "date": "2026-11-24",
+      "club": "リーズ・ユナイテッド",
+      "clubAsOf": "2026-11-24",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "type": "club",
+      "scope": "season",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "リーズ・ユナイテッドでリーグ戦718分出場、0得点、2アシスト。",
+      "minutes": 718,
+      "goals": 0,
+      "assists": 2
+    },
+    {
+      "playerId": "daizen-maeda",
+      "playerName": "前田 大然",
+      "date": "2026-11-24",
+      "club": "イプスウィッチ・タウン",
+      "clubAsOf": "2026-11-24",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "type": "club",
+      "scope": "season",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "イプスウィッチ・タウンでリーグ戦565分出場、1得点、0アシスト。",
+      "minutes": 565,
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "playerId": "daichi-kamada",
+      "playerName": "鎌田 大地",
+      "date": "2026-11-24",
+      "club": "クリスタル・パレス",
+      "clubAsOf": "2026-11-24",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "type": "club",
+      "scope": "season",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "クリスタル・パレスでリーグ戦967分出場、1得点、3アシスト。",
+      "minutes": 967,
+      "goals": 1,
+      "assists": 3
+    },
+    {
+      "playerId": "takehiro-tomiyasu",
+      "playerName": "冨安 健洋",
+      "date": "2026-11-24",
+      "club": "クリスタル・パレス",
+      "clubAsOf": "2026-11-24",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "type": "club",
+      "scope": "season",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "クリスタル・パレスでリーグ戦189分出場、0得点、0アシスト。",
+      "minutes": 189,
+      "goals": 0,
+      "assists": 0
+    },
+    {
+      "playerId": "takehiro-tomiyasu",
+      "playerName": "冨安 健洋",
+      "date": "2026-11-24",
+      "club": "クリスタル・パレス",
+      "clubAsOf": "2026-11-24",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "type": "injury",
+      "title": "公式FPLに負傷情報",
+      "summary": "FPL掲載の原文は「Calf injury - Expected back 29 Nov」です。"
+    },
+    {
+      "playerId": "tatsuhiro-sakamoto",
+      "playerName": "坂元 達裕",
+      "date": "2026-11-24",
+      "club": "Coventry City",
+      "clubAsOf": "2026-11-24",
+      "league": "プレミアリーグ",
+      "source": {
+        "label": "プレミアリーグ公式FPLデータ",
+        "url": "https://fantasy.premierleague.com/api/bootstrap-static/"
+      },
+      "type": "club",
+      "scope": "season",
+      "title": "2026/27 プレミアリーグの累計",
+      "summary": "Coventry Cityでリーグ戦488分出場、2得点、0アシスト。",
+      "minutes": 488,
+      "goals": 2,
+      "assists": 0
+    }
+  ]
 }
