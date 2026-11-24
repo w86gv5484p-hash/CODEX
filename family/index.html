@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>家族のスケジュール</title>
+  <meta name="description" content="拓朗・五月・琥珀・生成の家族4人で共有するスケジュール帳">
+  <meta name="theme-color" content="#c98f07">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="家族予定">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon-180.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./config.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div id="deco" aria-hidden="true"></div>
+    <div class="brand">
+      <span id="motif" class="motif" aria-hidden="true"></span>
+      <div>
+        <div class="ym"><span id="year"></span><b id="month"></b></div>
+        <div id="season" class="season"></div>
+      </div>
+    </div>
+    <div id="weather" class="weather" aria-label="週間天気予報"></div>
+  </header>
+
+  <nav class="bar">
+    <div class="tabs" role="tablist">
+      <button data-view="month">月</button>
+      <button data-view="week">週</button>
+      <button data-view="day">日</button>
+    </div>
+    <div class="nav">
+      <button id="prev" class="round" aria-label="前へ">‹</button>
+      <button id="today" class="pill">今日</button>
+      <button id="next" class="round" aria-label="次へ">›</button>
+    </div>
+    <button id="settings-btn" class="round" aria-label="設定">⚙︎</button>
+  </nav>
+  <div class="sub">
+    <div id="period" class="period"></div>
+    <div id="filters" class="filters"></div>
+  </div>
+
+  <main id="view"></main>
+
+  <button id="status" class="status"></button>
+  <div class="fabs">
+    <button id="photo-btn" class="fab photo" aria-label="写真から取り込み"><span>📷</span><small>写真から</small></button>
+    <button id="add" class="fab add" aria-label="予定を追加"><span>＋</span><small>予定</small></button>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <!-- 予定の編集 -->
+  <dialog id="editor">
+    <form id="evform" method="dialog">
+      <h2 id="ed-title">予定を追加</h2>
+      <input name="title" class="big" placeholder="予定の内容（例：歯医者、サッカー練習）" maxlength="200" autocomplete="off">
+      <label class="lbl">だれの予定？</label>
+      <div id="whopick" class="whopick"></div>
+      <div class="row2">
+        <label>日付<input type="date" name="date" required></label>
+        <label>終わりの日（連日の時）<input type="date" name="endDate"></label>
+      </div>
+      <label class="switch"><input type="checkbox" name="allDay"><span>終日</span></label>
+      <div id="times" class="row2">
+        <label>開始<input type="time" name="start" step="300"></label>
+        <label>終了<input type="time" name="end" step="300"></label>
+      </div>
+      <label>場所<input name="place" placeholder="任意" autocomplete="off"></label>
+      <label>メモ<textarea name="note" rows="2" placeholder="持ち物、連絡事項など"></textarea></label>
+      <p id="ed-meta" class="meta"></p>
+      <div class="actions">
+        <button type="button" id="ed-delete" class="btn danger">削除</button>
+        <span class="grow"></span>
+        <button type="button" id="ed-cancel" class="btn ghost">キャンセル</button>
+        <button type="submit" class="btn primary">保存</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- 写真から取り込み -->
+  <dialog id="photo" class="wide">
+    <div class="dlg">
+      <div class="dlg-head"><h2>写真から予定を取り込む</h2><button id="ph-close" class="round" aria-label="閉じる">×</button></div>
+      <div id="ph-step-pick">
+        <p class="hint">学校のおたより、習い事の予定表、カレンダー、メモなどを撮影してください。文字を読み取って予定の候補を作ります。登録する前に内容を確認・修正できます。</p>
+        <div class="pickers">
+          <label class="picker"><input id="ph-camera" type="file" accept="image/*" capture="environment" hidden><span>📸</span>カメラで撮る</label>
+          <label class="picker"><input id="ph-library" type="file" accept="image/*" hidden><span>🖼️</span>写真を選ぶ</label>
+        </div>
+        <p class="hint small">コツ：明るい場所で、紙をまっすぐ正面から撮ると読み取りやすくなります。写真はこの端末の中で読み取り、外部には送りません。</p>
+      </div>
+      <div id="ph-step-work" hidden>
+        <div class="phwrap">
+          <img id="ph-preview" alt="取り込んだ写真">
+          <div class="phmain">
+            <div id="ph-progress" class="progress"><div class="track"><div id="ph-bar"></div></div><span id="ph-label">準備中…</span></div>
+            <div id="ph-results"></div>
+          </div>
+        </div>
+        <details id="ph-raw" hidden><summary>読み取った文字</summary><textarea id="ph-rawtext" rows="6"></textarea></details>
+        <div class="actions">
+          <button type="button" id="ph-retry" class="btn ghost">別の写真にする</button>
+          <span class="grow"></span>
+          <span id="ph-actions" hidden><button type="button" id="ph-import" class="btn primary">登録する</button></span>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 設定 -->
+  <dialog id="settings">
+    <div class="dlg">
+      <h2>設定</h2>
+      <p id="st-first" class="hint first">ようこそ！まずはあなたの名前を選んでください。予定の「だれが更新したか」の表示に使います。</p>
+      <label class="lbl">わたしは</label>
+      <div id="st-me" class="whopick"></div>
+      <label class="lbl">天気の地域</label>
+      <div class="coderow"><select id="st-city"></select><button type="button" id="st-geo" class="btn sm">現在地を使う</button></div>
+      <label class="lbl">週の始まり</label>
+      <select id="st-week"><option value="0">日曜日</option><option value="1">月曜日</option></select>
+      <label class="lbl">家族との同期</label>
+      <div id="st-sync"></div>
+      <div class="actions"><span class="grow"></span><button type="button" id="st-done" class="btn primary">OK</button></div>
+    </div>
+  </dialog>
+
+  <dialog id="confirm">
+    <form method="dialog" class="dlg">
+      <p id="confirm-text"></p>
+      <div class="actions"><span class="grow"></span><button value="no" class="btn ghost">やめる</button><button value="yes" class="btn danger">削除する</button></div>
+    </form>
+  </dialog>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

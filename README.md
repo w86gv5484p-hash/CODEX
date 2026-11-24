@@ -81,3 +81,9 @@ Windows では `py -3 scripts/run_local.py --open` を使います。ポート�
 - `refresh-nsx-data` — refresh the NSX parts-supply data in `nsx/data/`.
 
 To add a skill, ask Claude「skill-creator で○○のスキルを作って」and keep it in `.claude/skills/<name>/`.
+
+---
+
+# 家族のスケジュール
+
+`family/` フォルダーにある、家族4人（拓朗・五月・琥珀・生成）で共有するスケジュール帳です。GitHub Pages で公開すると `https://<ユーザー名>.github.io/<リポジトリ名>/family/` で開けます。月・週・日の表示、写真からの予定の取り込み、右上の週間天気、月ごとに変わる季節のデザインがあります。家族で同期するための Firebase の設定手順は [family/README.md](family/README.md) を参照してください。
