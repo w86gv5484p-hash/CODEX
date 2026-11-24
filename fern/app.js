@@ -192,8 +192,8 @@ const openPests = plantId => state.pests.filter(p => p.status !== "resolved" && 
 const pestInfo = id => state.guide?.pests.find(p => p.id === id);
 const pestLabel = p => (p.pestId === "other" ? p.otherName || "その他" : pestInfo(p.pestId)?.name || p.otherName || "害虫");
 const sortedPlants = () => [...state.plants].sort((a, b) => a.name.localeCompare(b.name, "ja"));
-// 展示番号：登録した順に No.01, No.02 …
-const plantNo = id => { const i = [...state.plants].sort((a, b) => (a.created || 0) - (b.created || 0)).findIndex(p => p.id === id); return `No.${pad(i + 1)}`; };
+// 展示番号：登録した順に N.01, N.02 …
+const plantNo = id => { const i = [...state.plants].sort((a, b) => (a.created || 0) - (b.created || 0)).findIndex(p => p.id === id); return `N.${pad(i + 1)}`; };
 // 品種名の（）内の学名をイタリックで添える
 const speciesHtml = s => { const m = String(s || "").match(/^(.*?)（(.+)）$/); return m ? `${esc(m[1])} <span class="lat">${esc(m[2])}</span>` : esc(s); };
 const WALL_ID = "__wall";
@@ -243,10 +243,10 @@ function renderPlants() {
   const pests = openPests().length;
   $main.innerHTML = `
     <section class="wall"><div class="wall-bg empty" id="wall-bg"></div>
-      <div class="wall-txt"><p class="kicker">Staghorn Fern Gallery</p><h1 class="title">Laboratorio<br><i>del</i> Cervo</h1>
+      <div class="wall-txt"><p class="kicker">Galleria di Platycerium</p><h1 class="title">Laboratorio<br><i>del</i> Cervo</h1>
         <p class="sub">${plants.length}株を展示中 · 写真 ${state.photos.length}枚</p></div>
       <button class="wall-edit" id="wall-edit">背景の写真</button></section>
-    <div class="head" style="margin-top:22px"><div><p class="kicker">Collection</p><h2>展示室</h2></div>
+    <div class="head" style="margin-top:22px"><div><p class="kicker">Collezione</p><h2>展示室</h2></div>
       <button class="btn primary" id="add-plant"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>株を追加</button></div>
     ${plants.length ? `
     <div class="summary">
@@ -380,8 +380,8 @@ function renderPlant(id) {
 
     <section class="section"><h2>成長のアーカイブ <small>${photos.length}枚</small></h2>
       ${photos.length >= 2 ? `<div class="compare">
-        <figure><div class="mat"><img data-full="${esc(oldest.id)}" alt="最初の写真"></div><figcaption><b>Before</b>${jp(oldest.date)}</figcaption></figure>
-        <figure><div class="mat"><img data-full="${esc(newest.id)}" alt="最新の写真"></div><figcaption><b>Now</b>${jp(newest.date)}（${daysBetween(oldest.date, newest.date)}日後）</figcaption></figure>
+        <figure><div class="mat"><img data-full="${esc(oldest.id)}" alt="最初の写真"></div><figcaption><b>Prima</b>${jp(oldest.date)}</figcaption></figure>
+        <figure><div class="mat"><img data-full="${esc(newest.id)}" alt="最新の写真"></div><figcaption><b>Ora</b>${jp(newest.date)}（${daysBetween(oldest.date, newest.date)}日後）</figcaption></figure>
       </div>` : ""}
       ${photos.length ? Object.entries(months).map(([m, list]) => `<div class="month"><h3>${m.slice(0, 4)}年${Number(m.slice(5))}月</h3><div class="thumbs">
         ${list.map(ph => `<button class="thumb" data-photo="${esc(ph.id)}" aria-label="${jp(ph.date)}の写真">${imgSlot(ph.id)}<span class="d">${jpShort(ph.date)}</span>${ph.pestId ? `<span class="tag">害虫</span>` : ""}</button>`).join("")}
@@ -491,7 +491,7 @@ function renderWater() {
   const plants = sortedPlants().map(p => ({ p, w: waterState(p) })).sort((a, b) => a.w.rank - b.w.rank || (b.w.days ?? 0) - (a.w.days ?? 0));
   const due = plants.filter(x => x.w.cls === "due");
   $main.innerHTML = `
-    <div class="head"><div><p class="kicker">Watering</p><h1>水やり</h1><p class="muted small">${due.length ? `${due.length}株が水やりの目安を迎えています` : "目安を過ぎた株はありません"}</p></div>
+    <div class="head"><div><p class="kicker">Annaffiatura</p><h1>水やり</h1><p class="muted small">${due.length ? `${due.length}株が水やりの目安を迎えています` : "目安を過ぎた株はありません"}</p></div>
       ${due.length > 1 ? `<button class="btn water sm" id="all">目安の${due.length}株に記録</button>` : ""}</div>
     ${plants.length ? `<div class="list">${plants.map(({ p, w }) => {
       const doneToday = w.last === today;
@@ -529,7 +529,7 @@ function renderPests() {
   const done = state.pests.filter(p => p.status === "resolved").sort((a, b) => (b.resolved || b.found).localeCompare(a.resolved || a.found));
   const list = pestFilter === "open" ? open : done;
   $main.innerHTML = `
-    <div class="head"><div><p class="kicker">Pests &amp; Care</p><h1>害虫・病気</h1><p class="muted small">発見から駆除までを株ごとに記録します</p></div>
+    <div class="head"><div><p class="kicker">Parassiti e Cure</p><h1>害虫・病気</h1><p class="muted small">発見から駆除までを株ごとに記録します</p></div>
       ${state.plants.length ? `<button class="btn primary" id="add-pest"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>記録</button>` : ""}</div>
     <div class="seg" role="tablist"><button data-f="open" class="${pestFilter === "open" ? "on" : ""}">対応中・経過観察 ${open.length}</button><button data-f="done" class="${pestFilter === "done" ? "on" : ""}">解決済み ${done.length}</button></div>
     ${list.length ? list.map(pestCard).join("") : `<div class="empty"><p>${pestFilter === "open" ? "対応中の害虫はありません。葉の裏・付け根・成長点まわりを定期的に確認しましょう。" : "解決済みの記録はまだありません。"}</p>
@@ -640,7 +640,7 @@ function renderGuide(anchor) {
   if (!g) { $main.innerHTML = `<p class="muted">ガイドを読み込めませんでした。通信できる場所でもう一度開いてください。</p>`; return; }
   const list = arr => `<ul>${arr.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`;
   $main.innerHTML = `
-    <div class="head"><div><p class="kicker">Care Guide</p><h1>育成ガイド</h1><p class="muted small">育成のポイントと、主な病害虫の対策</p></div></div>
+    <div class="head"><div><p class="kicker">Guida alla Coltivazione</p><h1>育成ガイド</h1><p class="muted small">育成のポイントと、主な病害虫の対策</p></div></div>
     <div class="note">${esc(g.note)}</div>
     <section><h2 style="margin-bottom:10px">育成のポイント</h2>
       ${g.points.map(p => `<details class="acc" id="g-${esc(p.id)}"><summary><b>${esc(p.title)}</b><span>${esc(p.summary)}</span></summary><div class="in">${list(p.body)}</div></details>`).join("")}
@@ -671,7 +671,7 @@ async function renderSettings() {
   } catch { /* 取得できない環境 */ }
   const persisted = await navigator.storage?.persisted?.().catch(() => false);
   $main.innerHTML = `
-    <div class="head"><div><p class="kicker">Archive</p><h1>データの保存</h1><p class="muted small">記録はこの端末の中だけに保存されています</p></div></div>
+    <div class="head"><div><p class="kicker">Archivio</p><h1>データの保存</h1><p class="muted small">記録はこの端末の中だけに保存されています</p></div></div>
     <div class="card-box"><h2>バックアップを書き出す</h2>
       <p>株・写真・水やり・害虫の記録をすべて1つのファイルにまとめます。機種変更の前や、定期的（月1回など）に書き出してクラウドやパソコンに保存してください。</p>
       <p class="muted small">株 ${state.plants.length} · 写真 ${state.photos.length}枚 · お手入れ ${state.logs.length}件 · 害虫 ${state.pests.length}件</p>
