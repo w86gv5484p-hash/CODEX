@@ -75,16 +75,9 @@ Windows では `py -3 scripts/run_local.py --open` を使います。ポート�
 
 ## Claude Code skills
 
-`.claude/skills/` holds project skills shared with everyone using Claude Code here.
+`.claude/skills/` holds project skills shared with everyone using Claude Code here. Each skill stays inside one section of the repo; when another section needs it, call it by name (for example `/refresh-nsx-data`).
 - `skill-creator` — create, test and improve skills (`/skill-creator`).
-- `refresh-data` — refresh generated data in `data/` and `nsx/data/`.
-
-To add a skill, ask Claude "skill-creator で ○○ のスキルを作って" and keep it in `.claude/skills/<name>/`.
-
-## Claude Code skills
-
-`.claude/skills/` holds project skills shared with everyone using Claude Code here.
-- `skill-creator` — create, test and improve skills.
-- `refresh-data` — refresh generated data in `data/` and `nsx/data/`.
+- `refresh-samurai-data` — refresh the Japan national team data in `data/` and `assets/portraits/`.
+- `refresh-nsx-data` — refresh the NSX parts-supply data in `nsx/data/`.
 
 To add a skill, ask Claude「skill-creator で○○のスキルを作って」and keep it in `.claude/skills/<name>/`.
