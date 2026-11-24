@@ -20,9 +20,57 @@
 2. **プロジェクトを作成** → 名前（例：`family-calendar`）を入れて進みます。Google アナリティクスは **オフ** で構いません。
 3. 左のメニューの **構築 → Authentication → 始める** → **ログイン方法** タブで **匿名** を選び、**有効にする** をオンにして保存します。
 4. **構築 → Firestore Database → データベースの作成** → ロケーションは `asia-northeast1 (Tokyo)` → **本番環境モード** で作成します。
-5. Firestore の **ルール** タブを開き、中身をすべて消して、このフォルダーの [`firestore.rules`](./firestore.rules) の内容を貼り付けて **公開** します。
+5. Firestore の **ルール** タブを開き、最初から入っている文字を **すべて消して**、下の枠の中身をそのまま貼り付けて **公開** します。
+
+   ```
+   rules_version = '2';
+   service cloud.firestore {
+     match /databases/{database}/documents {
+       match /families/{family}/events/{eventId} {
+         allow read, delete: if request.auth != null && family.size() >= 12;
+         allow create, update: if request.auth != null && family.size() >= 12
+           && request.resource.data.title is string
+           && request.resource.data.title.size() <= 200
+           && request.resource.data.date is string;
+       }
+     }
+   }
+   ```
+
 6. 左上の歯車 **プロジェクトの設定** → 下の **マイアプリ** で `</>`（ウェブ）を押し、アプリ名（例：`family`）を入れて **登録** します。Firebase Hosting はチェック不要です。
-7. 表示された `const firebaseConfig = { ... }` の `{ ... }` の部分を、`config.js` の `window.FAMCAL_FIREBASE = null;` の `null` と置き換えます。
+7. 次の画面に、このような部分が表示されます（`npm を使用` が選ばれていたら、`<script> タグを使用` に切り替えても同じものが出ます）。
+
+   ```
+   const firebaseConfig = {
+     apiKey: "AIza……",
+     authDomain: "family-calendar-xxxx.firebaseapp.com",
+     projectId: "family-calendar-xxxx",
+     storageBucket: "family-calendar-xxxx.firebasestorage.app",
+     messagingSenderId: "123456789012",
+     appId: "1:123456789012:web:abcdef……"
+   };
+   ```
+
+   **`const firebaseConfig = {` から最後の `};` までをコピー** します（その上下の `import` や `initializeApp` の行はいりません）。
+   - いちばん簡単な方法：コピーしたものを Claude とのチャットにそのまま貼り付けてください。Claude がアプリに組み込みます。
+   - 自分で入れる方法：GitHub で [`family/config.js`](./config.js) を開き、右上の鉛筆マーク（Edit）を押します。`▼▼▼ ここから ▼▼▼` と `▲▲▲ ここまで ▲▲▲` のあいだにある `const firebaseConfig = null;` の1行を消し、そこにコピーしたものを貼り付けます。右上の **Commit changes…** → もう一度 **Commit changes** を押すと、数分でアプリに反映されます。
+
+   貼り付けたあとの `config.js` は次のような形になります。
+
+   ```js
+   // ▼▼▼ ここから ▼▼▼
+   const firebaseConfig = {
+     apiKey: "AIza……",
+     authDomain: "family-calendar-xxxx.firebaseapp.com",
+     projectId: "family-calendar-xxxx",
+     storageBucket: "family-calendar-xxxx.firebasestorage.app",
+     messagingSenderId: "123456789012",
+     appId: "1:123456789012:web:abcdef……"
+   };
+   // ▲▲▲ ここまで ▲▲▲
+
+   window.FAMCAL_FIREBASE = firebaseConfig;
+   ```
 8. 公開されたページを開き、⚙︎（設定）→ **家族との同期 → 新しく作る** を押します。**招待リンクをコピー** して LINE などで家族に送り、家族はそのリンクを開くだけで同じ予定表につながります。
 
 `config.js` の値は公開されても問題のない識別子です。予定を読み書きできるのは家族コード（招待リンクに含まれる長いコード）を知っている端末だけなので、招待リンクは家族以外に送らないでください。
