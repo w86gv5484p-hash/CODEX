@@ -118,47 +118,76 @@ async function exifDate(file) {
   } catch { /* EXIF なし */ }
   return null;
 }
-async function resize(blob, max, quality) {
-  const url = URL.createObjectURL(blob);
-  try {
+// 画像を読み込む。iPhone の Safari では img.decode() が大きな写真で失敗することがあるため onload を使い、
+// だめなら createImageBitmap を試す。
+function loadImage(blob) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(blob);
     const img = new Image();
+    img.onload = () => { URL.revokeObjectURL(url); resolve({ src: img, w: img.naturalWidth, h: img.naturalHeight }); };
+    img.onerror = async () => {
+      URL.revokeObjectURL(url);
+      try { const bmp = await createImageBitmap(blob); resolve({ src: bmp, w: bmp.width, h: bmp.height }); }
+      catch { reject(new Error("この形式の画像は開けませんでした")); }
+    };
     img.src = url;
-    await img.decode();
-    const s = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
-    const w = Math.round(img.naturalWidth * s), h = Math.round(img.naturalHeight * s);
-    const c = document.createElement("canvas");
-    c.width = w; c.height = h;
-    c.getContext("2d").drawImage(img, 0, 0, w, h);
-    return await new Promise((res, rej) => c.toBlob(b => (b ? res(b) : rej(new Error("画像を変換できませんでした"))), "image/jpeg", quality));
-  } finally { URL.revokeObjectURL(url); }
+  });
+}
+async function resize(blob, max, quality) {
+  const { src, w: iw, h: ih } = await loadImage(blob);
+  if (!iw || !ih) throw new Error("画像の大きさを読み取れませんでした");
+  const s = Math.min(1, max / Math.max(iw, ih));
+  const c = document.createElement("canvas");
+  c.width = Math.max(1, Math.round(iw * s)); c.height = Math.max(1, Math.round(ih * s));
+  try {
+    c.getContext("2d").drawImage(src, 0, 0, c.width, c.height);
+    return await new Promise((res, rej) => c.toBlob(b => (b ? res(b) : rej(new Error("画像を変換できませんでした（メモリ不足の可能性）"))), "image/jpeg", quality));
+  } finally {
+    // iPhone はキャンバスの合計メモリに上限があるため、使い終わったらすぐ解放する
+    c.width = 0; c.height = 0;
+    src.close?.();
+  }
+}
+// iPhone の Safari は IndexedDB に Blob をそのまま保存・表示できないことがあるため、ArrayBuffer にして保存する
+const packBlob = async b => ({ type: b.type || "image/jpeg", buf: await b.arrayBuffer() });
+const unpackBlob = x => (!x ? null : x instanceof Blob ? x : new Blob([x.buf], { type: x.type || "image/jpeg" }));
+async function saveImage(id, full, thumb) {
+  await save("blobs", { id, full: await packBlob(full), thumb: await packBlob(thumb) });
+}
+async function loadImageRecord(id) {
+  const r = await getOne("blobs", id);
+  return r ? { full: unpackBlob(r.full), thumb: unpackBlob(r.thumb) } : null;
 }
 async function addPhotos(files, plantId, pestId = null) {
   let n = 0;
-  for (const file of files) {
+  const failed = [];
+  for (const [i, file] of files.entries()) {
+    if (files.length > 1) toast(`写真を取り込んでいます（${i + 1}/${files.length}）…`);
     try {
       const date = (await exifDate(file)) || iso(new Date(file.lastModified || Date.now()));
       const full = await resize(file, 1600, 0.82);
       const thumb = await resize(full, 420, 0.72);
       const id = uid();
-      await save("blobs", { id, full, thumb });
+      await saveImage(id, full, thumb);
       await save("photos", { id, plantId, pestId, date, memo: "", created: Date.now() });
       n++;
-    } catch (e) { console.error(e); toast(`読み込めない写真がありました（${esc(file.name)}）`); }
+    } catch (e) { console.error(e); failed.push(e?.message || String(e)); }
   }
+  if (failed.length) toast(`${failed.length}枚の写真を取り込めませんでした：${esc(failed[0])}`);
   if (n && navigator.storage?.persist) navigator.storage.persist().catch(() => {});
   return n;
 }
 async function thumb(photoId) {
   if (!photoId) return null;
   if (thumbURL.has(photoId)) return thumbURL.get(photoId);
-  const b = await getOne("blobs", photoId);
-  const url = b ? URL.createObjectURL(b.thumb) : null;
+  const b = await loadImageRecord(photoId);
+  const url = b?.thumb ? URL.createObjectURL(b.thumb) : null;
   thumbURL.set(photoId, url);
   return url;
 }
 async function fullURL(photoId) {
-  const b = await getOne("blobs", photoId);
-  return b ? URL.createObjectURL(b.full) : null;
+  const b = await loadImageRecord(photoId);
+  return b?.full ? URL.createObjectURL(b.full) : null;
 }
 // data-thumb 属性を持つ要素に、描画後にサムネイルを読み込む
 async function fillThumbs(root = document) {
@@ -268,9 +297,9 @@ function renderPlants() {
   fillThumbs($main);
   (async () => {
     // 背景：設定した写真 → なければ一番新しい株の写真 → なければスポットライトの壁
-    const own = await getOne("blobs", WALL_ID);
+    const own = await loadImageRecord(WALL_ID);
     const latest = [...state.photos].sort((a, b) => (b.date + b.created).localeCompare(a.date + a.created))[0];
-    const blob = own?.full || (latest && (await getOne("blobs", latest.id))?.full);
+    const blob = own?.full || (latest && (await loadImageRecord(latest.id))?.full);
     const el = document.getElementById("wall-bg");
     if (blob && el) { el.classList.remove("empty"); el.innerHTML = `<img src="${URL.createObjectURL(blob)}" alt="">`; }
   })();
@@ -278,8 +307,8 @@ function renderPlants() {
 
 function wallForm() {
   (async () => {
-    const own = await getOne("blobs", WALL_ID);
-    const url = own ? URL.createObjectURL(own.thumb) : null;
+    const own = await loadImageRecord(WALL_ID);
+    const url = own?.thumb ? URL.createObjectURL(own.thumb) : null;
     const body = openDialog(`
       <div class="form"><h2>ギャラリーの背景</h2>
         <p class="muted small" style="margin:0">一覧の上に大きく表示する写真です。飾っている壁や部屋の写真がおすすめです。この端末の中だけに保存されます。</p>
@@ -292,9 +321,9 @@ function wallForm() {
       if (!file) return;
       try {
         const full = await resize(file, 2000, 0.84);
-        await save("blobs", { id: WALL_ID, full, thumb: await resize(full, 640, 0.75) });
+        await saveImage(WALL_ID, full, await resize(full, 640, 0.75));
         closeDialog(); route(); toast("背景を設定しました");
-      } catch { toast("この写真は読み込めませんでした"); }
+      } catch (e) { console.error(e); toast(`この写真は読み込めませんでした：${esc(e?.message || e)}`); }
     };
     body.querySelector("#wdel")?.addEventListener("click", async () => { await del("blobs", WALL_ID); closeDialog(); route(); toast("背景を元に戻しました"); });
   })();
@@ -693,10 +722,10 @@ async function exportBackup() {
   toast("書き出しています…");
   const photos = [];
   for (const ph of state.photos) {
-    const b = await getOne("blobs", ph.id);
+    const b = await loadImageRecord(ph.id);
     if (b) photos.push({ ...ph, full: await blobToDataURL(b.full), thumb: await blobToDataURL(b.thumb) });
   }
-  const wallBlob = await getOne("blobs", WALL_ID);
+  const wallBlob = await loadImageRecord(WALL_ID);
   const wall = wallBlob ? { full: await blobToDataURL(wallBlob.full), thumb: await blobToDataURL(wallBlob.thumb) } : null;
   const data = { app: "fern-log", version: 1, exported: new Date().toISOString(), plants: state.plants, logs: state.logs, pests: state.pests, photos, wall };
   const name = `cervo-backup-${todayIso().replaceAll("-", "")}.json`;
@@ -723,11 +752,11 @@ $fileBackup.onchange = async () => {
     for (const l of data.logs || []) await save("logs", l);
     for (const p of data.pests || []) await save("pests", p);
     for (const { full, thumb: th, ...meta } of data.photos || []) {
-      await save("blobs", { id: meta.id, full: await (await fetch(full)).blob(), thumb: await (await fetch(th)).blob() });
+      await saveImage(meta.id, await (await fetch(full)).blob(), await (await fetch(th)).blob());
       await save("photos", meta);
       thumbURL.delete(meta.id);
     }
-    if (data.wall) await save("blobs", { id: WALL_ID, full: await (await fetch(data.wall.full)).blob(), thumb: await (await fetch(data.wall.thumb)).blob() });
+    if (data.wall) await saveImage(WALL_ID, await (await fetch(data.wall.full)).blob(), await (await fetch(data.wall.thumb)).blob());
     route(); updateBadges(); toast("読み込みました");
   } catch (e) { console.error(e); toast(`読み込めませんでした：${esc(e.message)}`); }
 };
