@@ -1,0 +1,55 @@
+name: Claude Code
+
+# Issue / PR のコメントやレビューで「@claude」と書くと Claude が応答します。
+# 公開リポジトリなので、リポジトリのオーナー・メンバー・コラボレーターの
+# 書き込みだけで動くように制限しています。
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened, assigned]
+
+jobs:
+  claude:
+    if: |
+      (
+        (github.event_name == 'issue_comment' &&
+          contains(github.event.comment.body, '@claude') &&
+          contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
+        (github.event_name == 'pull_request_review_comment' &&
+          contains(github.event.comment.body, '@claude') &&
+          contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
+        (github.event_name == 'pull_request_review' &&
+          contains(github.event.review.body, '@claude') &&
+          contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.review.author_association)) ||
+        (github.event_name == 'issues' &&
+          (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')) &&
+          contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association))
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          # どちらか一方をリポジトリの Secrets に登録してください。
+          #   CLAUDE_CODE_OAUTH_TOKEN : Claude Pro / Max のサブスクリプションで使う場合
+          #   ANTHROPIC_API_KEY       : Anthropic API キーで使う場合（従量課金）
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
