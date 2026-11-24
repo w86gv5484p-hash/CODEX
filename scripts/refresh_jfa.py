@@ -17,7 +17,7 @@ from urllib.parse import urljoin, urlsplit
 from urllib.request import Request, urlopen
 
 JFA = "https://www.jfa.jp"
-SCHEDULE = f"{JFA}/samuraiblue/schedule_result/"
+SCHEDULE = f"{JFA}/samuraiblue/schedule_result/"  # kept for links shown in the app
 NEWS = f"{JFA}/samuraiblue/news/"
 RESULTS = "https://raw.githubusercontent.com/martj42/international_results/master/results.csv"
 RESULTS_SOURCE = {
@@ -216,7 +216,8 @@ def parse_schedule_table(table, url, year, today):
             return cells[index] if index is not None and index < len(cells) else Node("")
 
         date_cell = cell("date").text() or values[0]
-        match_date = parse_date(date_cell, year)
+        # Tournament spans such as "12/23(木)- 2028/1/21(金)" start on the first date.
+        match_date = parse_date(re.split(r"(?<=\))\s*[-–~〜]", date_cell)[0], year)
         if not match_date or not today - timedelta(days=365) <= match_date <= today + timedelta(days=550):
             continue
 
@@ -227,7 +228,10 @@ def parse_schedule_table(table, url, year, today):
             opponent = next((value for value in values[1:] if re.match(r"^(?:vs\.?\s+|[^ /]{2,24}代表$)", value, re.I)), "")
         opponent = re.sub(r"^(?:SAMURAI BLUE|日本代表|日本)?\s*(?:vs\.?|対)\s*", "", opponent, flags=re.I)
         opponent = re.sub(r"\s*代表$", "", opponent).strip()
-        if not opponent or len(opponent) > 45 or opponent in {"日本", "未定", "調整中", "-", "TBD"}:
+        if opponent in {"未定", "調整中", "TBD"}:
+            opponent = "対戦相手未定"
+        opponent = re.sub(r"\s*、\s*", "、", opponent)
+        if not opponent or len(opponent) > 45 or opponent in {"日本", "-"}:
             continue
 
         score = SCORE.match(cell("result").text())
@@ -264,24 +268,22 @@ def read_schedule(html, url, year, today):
     return fixtures
 
 
+def schedule_url(year):
+    return f"{JFA}/samuraiblue/schedule_result/{year}.html"
+
+
 def fetch_schedule(today):
-    root = fetch(SCHEDULE)
-    fixtures = read_schedule(root, SCHEDULE, today.year, today)
-    urls = {}
-    for link in Document(root).root.find("a"):
-        url = official_url(SCHEDULE, link.attrs.get("href"))
-        if not url:
-            continue
-        match = re.fullmatch(r"/samuraiblue/schedule_result/(20\d{2})(?:\.html|/)?", urlsplit(url).path)
-        if match:
-            year = int(match[1])
-            if year in {today.year, today.year + 1}:
-                urls[url] = year
-    for url, year in urls.items():
+    # The undated index page is a 2018 archive; the live fixtures are on the yearly pages.
+    fixtures = []
+    errors = []
+    for year in (today.year, today.year + 1):
+        url = schedule_url(year)
         try:
             fixtures.extend(read_schedule(fetch(url), url, year, today))
         except (OSError, ValueError) as error:
-            print(f"JFA 年別日程 {year}: {error}", file=sys.stderr)
+            errors.append(f"{year}: {error}")
+    for error in errors:
+        print(f"JFA 年別日程 {error}", file=sys.stderr)
     if not fixtures:
         raise ValueError("JFAの日程表から試合行を確認できませんでした")
     return fixtures
@@ -346,9 +348,33 @@ def prioritized_fixtures(previous, official, results, today):
     for item in records.values():
         key = item["date"], item["opponent"]
         rank = 2 * (item["status"] == "completed") + item["id"].startswith("jfa-")
-        if key not in by_match or rank >= by_match[key][0]:
+        if key in by_match:
+            loser, winner = (by_match[key][1], item) if rank >= by_match[key][0] else (item, by_match[key][1])
+            if loser["id"] != winner["id"]:
+                winner["aliases"] = sorted({*winner.get("aliases", []), loser["id"], *loser.get("aliases", [])})
+            by_match[key] = max(rank, by_match[key][0]), winner
+        else:
             by_match[key] = rank, item
-    return sorted((item for _, item in by_match.values()), key=lambda item: (item["date"], item["id"]))
+    merged = [item for _, item in by_match.values()]
+    # JFA lists Japan time; the public results list local dates, so one match can differ by a day.
+    by_day = {
+        (item["opponent"], date.fromisoformat(item["date"])): item
+        for item in merged if item["id"].startswith("jfa-")
+    }
+    kept = []
+    for item in merged:
+        twin = None if item["id"].startswith("jfa-") else next(
+            (by_day.get((item["opponent"], date.fromisoformat(item["date"]) + timedelta(days=shift))) for shift in (-1, 1)
+             if (item["opponent"], date.fromisoformat(item["date"]) + timedelta(days=shift)) in by_day),
+            None,
+        )
+        if twin is None:
+            kept.append(item)
+        else:
+            # Keep the public-data id so saved lineups and withdrawals still find this match.
+            twin["aliases"] = sorted({*twin.get("aliases", []), item["id"], *item.get("aliases", [])})
+    merged = kept
+    return sorted(merged, key=lambda item: (item["date"], item["id"]))
 
 
 def main():

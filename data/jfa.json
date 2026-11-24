@@ -1,17 +1,17 @@
 {
-  "checkedAt": "2026-11-23T01:33:44Z",
+  "checkedAt": "2026-11-24T00:03:59Z",
   "feeds": {
     "schedule": {
-      "status": "unavailable",
-      "checkedAt": null
+      "status": "ok",
+      "checkedAt": "2026-11-24T00:03:59Z"
     },
     "callups": {
       "status": "ok",
-      "checkedAt": "2026-11-23T01:33:44Z"
+      "checkedAt": "2026-11-24T00:03:59Z"
     },
     "results": {
       "status": "ok",
-      "checkedAt": "2026-11-23T01:33:44Z"
+      "checkedAt": "2026-11-24T00:03:59Z"
     }
   },
   "fixtures": [
@@ -120,160 +120,245 @@
       }
     },
     {
-      "id": "result-2026-03-28-scotland",
-      "date": "2026-03-28",
+      "id": "jfa-match-2026-03-29-スコットランド",
+      "date": "2026-03-29",
       "opponent": "スコットランド",
-      "competition": "国際親善試合",
-      "venue": "Glasgow / Scotland",
+      "competition": "KIRIN WORLD CHALLENGE 2026",
       "status": "completed",
-      "score": "1–0",
       "source": {
-        "label": "International football results（公開データ）",
-        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
-      }
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2026.html"
+      },
+      "score": "1–0",
+      "venue": "グラスゴー(スコットランド)/ハムデン・パーク",
+      "aliases": [
+        "result-2026-03-28-scotland"
+      ]
     },
     {
-      "id": "result-2026-03-31-england",
-      "date": "2026-03-31",
+      "id": "jfa-match-2026-04-01-イングランド",
+      "date": "2026-04-01",
       "opponent": "イングランド",
-      "competition": "国際親善試合",
-      "venue": "London / England",
+      "competition": "KIRIN WORLD CHALLENGE 2026",
       "status": "completed",
-      "score": "1–0",
       "source": {
-        "label": "International football results（公開データ）",
-        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
-      }
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2026.html"
+      },
+      "score": "1–0",
+      "venue": "ロンドン(イングランド)/ウェンブリー・スタジアム",
+      "aliases": [
+        "result-2026-03-31-england"
+      ]
     },
     {
-      "id": "result-2026-05-31-iceland",
+      "id": "jfa-match-2026-05-31-アイスランド",
       "date": "2026-05-31",
       "opponent": "アイスランド",
-      "competition": "国際親善試合",
-      "venue": "Tokyo / Japan",
+      "competition": "キリンチャレンジカップ2026 ひとつになるから強くなる。",
       "status": "completed",
+      "source": {
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2026.html"
+      },
       "score": "1–0",
-      "source": {
-        "label": "International football results（公開データ）",
-        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
-      }
+      "venue": "東京/国立競技場",
+      "aliases": [
+        "result-2026-05-31-iceland"
+      ]
     },
     {
-      "id": "result-2026-06-14-netherlands",
-      "date": "2026-06-14",
+      "id": "jfa-match-2026-06-15-オランダ",
+      "date": "2026-06-15",
       "opponent": "オランダ",
-      "competition": "FIFAワールドカップ",
-      "venue": "Arlington / United States",
+      "competition": "FIFAワールドカップ2026",
       "status": "completed",
+      "source": {
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2026.html"
+      },
       "score": "2–2",
-      "source": {
-        "label": "International football results（公開データ）",
-        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
-      }
+      "venue": "ダラス(アメリカ)/Dallas Stadium",
+      "aliases": [
+        "result-2026-06-14-netherlands"
+      ]
     },
     {
-      "id": "result-2026-06-20-tunisia",
-      "date": "2026-06-20",
+      "id": "jfa-match-2026-06-21-チュニジア",
+      "date": "2026-06-21",
       "opponent": "チュニジア",
-      "competition": "FIFAワールドカップ",
-      "venue": "Guadalupe / Mexico",
+      "competition": "FIFAワールドカップ2026",
       "status": "completed",
+      "source": {
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2026.html"
+      },
       "score": "4–0",
-      "source": {
-        "label": "International football results（公開データ）",
-        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
-      }
+      "venue": "モンテレイ(メキシコ)/Estadio Monterrey",
+      "aliases": [
+        "result-2026-06-20-tunisia"
+      ]
     },
     {
-      "id": "result-2026-06-25-sweden",
-      "date": "2026-06-25",
+      "id": "jfa-match-2026-06-26-スウェーデン",
+      "date": "2026-06-26",
       "opponent": "スウェーデン",
-      "competition": "FIFAワールドカップ",
-      "venue": "Arlington / United States",
+      "competition": "FIFAワールドカップ2026",
       "status": "completed",
+      "source": {
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2026.html"
+      },
       "score": "1–1",
-      "source": {
-        "label": "International football results（公開データ）",
-        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
-      }
+      "venue": "ダラス(アメリカ)/Dallas Stadium",
+      "aliases": [
+        "result-2026-06-25-sweden"
+      ]
     },
     {
-      "id": "result-2026-06-29-brazil",
-      "date": "2026-06-29",
+      "id": "jfa-match-2026-06-30-ブラジル",
+      "date": "2026-06-30",
       "opponent": "ブラジル",
-      "competition": "FIFAワールドカップ",
-      "venue": "Houston / United States",
+      "competition": "FIFAワールドカップ2026",
       "status": "completed",
-      "score": "1–2",
       "source": {
-        "label": "International football results（公開データ）",
-        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
-      }
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2026.html"
+      },
+      "score": "1–2",
+      "venue": "ヒューストン(アメリカ)/ヒューストンスタジアム",
+      "aliases": [
+        "result-2026-06-29-brazil"
+      ]
     },
     {
-      "id": "result-2026-09-28-venezuela",
+      "id": "jfa-match-2026-09-24-ウルグアイ",
+      "date": "2026-09-24",
+      "opponent": "ウルグアイ",
+      "competition": "キリンチャレンジカップ2026",
+      "status": "completed",
+      "source": {
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2026.html"
+      },
+      "score": "3–1",
+      "venue": "宮城/キューアンドエースタジアムみやぎ"
+    },
+    {
+      "id": "jfa-match-2026-09-28-ベネズエラ",
       "date": "2026-09-28",
       "opponent": "ベネズエラ",
-      "competition": "国際親善試合",
-      "venue": "Hiroshima / Japan",
+      "competition": "キリンチャレンジカップ2026",
       "status": "completed",
-      "score": "2–1",
       "source": {
-        "label": "International football results（公開データ）",
-        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
-      }
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2026.html"
+      },
+      "score": "2–1",
+      "venue": "広島/エディオンピースウイング広島",
+      "aliases": [
+        "result-2026-09-28-venezuela"
+      ]
     },
     {
-      "id": "result-2026-10-01-ecuador",
+      "id": "jfa-match-2026-10-01-エクアドル",
       "date": "2026-10-01",
       "opponent": "エクアドル",
-      "competition": "キリンカップ",
-      "venue": "Yokohama / Japan",
+      "competition": "キリンカップサッカー2026",
       "status": "completed",
-      "score": "0–0",
       "source": {
-        "label": "International football results（公開データ）",
-        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
-      }
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2026.html"
+      },
+      "score": "0–0",
+      "venue": "神奈川/横浜国際総合競技場",
+      "aliases": [
+        "result-2026-10-01-ecuador"
+      ]
     },
     {
-      "id": "result-2026-10-05-new-zealand",
+      "id": "jfa-match-2026-10-05-ニュージーランド",
       "date": "2026-10-05",
       "opponent": "ニュージーランド",
-      "competition": "キリンカップ",
-      "venue": "Tokyo / Japan",
+      "competition": "キリンカップサッカー2026",
       "status": "completed",
-      "score": "2–1",
       "source": {
-        "label": "International football results（公開データ）",
-        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
-      }
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2026.html"
+      },
+      "score": "2–1",
+      "venue": "東京/国立競技場",
+      "aliases": [
+        "result-2026-10-05-new-zealand"
+      ]
     },
     {
-      "id": "result-2026-11-14-brazil",
+      "id": "jfa-match-2026-11-14-ブラジル",
       "date": "2026-11-14",
       "opponent": "ブラジル",
-      "competition": "The Kallang Football Series",
-      "venue": "Kallang / Singapore",
+      "competition": "MIZUHO BLUE CHALLENGE THE KALLANG FOOTBALL SERIES SINGAPORE",
       "status": "completed",
-      "score": "3–2",
       "source": {
-        "label": "International football results（公開データ）",
-        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
-      }
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2026.html"
+      },
+      "score": "3–2",
+      "venue": "カラン(シンガポール)/シンガポールナショナルスタジアム",
+      "aliases": [
+        "result-2026-11-14-brazil"
+      ]
     },
     {
-      "id": "result-2026-11-17-paraguay",
+      "id": "jfa-match-2026-11-17-パラグアイ",
       "date": "2026-11-17",
       "opponent": "パラグアイ",
-      "competition": "The Kallang Football Series",
-      "venue": "Kallang / Singapore",
+      "competition": "MIZUHO BLUE CHALLENGE THE KALLANG FOOTBALL SERIES SINGAPORE",
       "status": "completed",
-      "score": "1–2",
       "source": {
-        "label": "International football results（公開データ）",
-        "url": "https://github.com/martj42/international_results/blob/master/results.csv"
-      }
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2026.html"
+      },
+      "score": "1–2",
+      "venue": "カラン(シンガポール)/シンガポールナショナルスタジアム",
+      "aliases": [
+        "result-2026-11-17-paraguay"
+      ]
+    },
+    {
+      "id": "jfa-match-2027-03-25-対戦相手未定",
+      "date": "2027-03-25",
+      "opponent": "対戦相手未定",
+      "competition": "キリンチャレンジカップ2027",
+      "status": "scheduled",
+      "source": {
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2027.html"
+      },
+      "venue": "広島/エディオンピースウイング広島"
+    },
+    {
+      "id": "jfa-match-2027-03-30-対戦相手未定",
+      "date": "2027-03-30",
+      "opponent": "対戦相手未定",
+      "competition": "キリンチャレンジカップ2027",
+      "status": "scheduled",
+      "source": {
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2027.html"
+      },
+      "venue": "東京/国立競技場"
+    },
+    {
+      "id": "jfa-match-2027-12-23-インドネシア、タイ、カタール",
+      "date": "2027-12-23",
+      "opponent": "インドネシア、タイ、カタール",
+      "competition": "AFC アジアカップ サウジアラビア 2027",
+      "status": "scheduled",
+      "source": {
+        "label": "JFA 試合日程・結果",
+        "url": "https://www.jfa.jp/samuraiblue/schedule_result/2027.html"
+      },
+      "venue": "サウジアラビア"
     }
   ],
   "callups": [

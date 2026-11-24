@@ -1,6 +1,18 @@
 {
-  "checkedAt": "2026-11-19T13:20:00Z",
+  "checkedAt": "2026-11-24T00:30:00Z",
   "reports": [
+    {
+      "playerId": "kento-shiogai",
+      "playerName": "塩貝 健人",
+      "date": "2026-11-23",
+      "type": "injury",
+      "title": "左太もも裏に重度の筋損傷",
+      "summary": "VfLヴォルフスブルクは11月23日、11月21日のホルシュタイン・キール戦で途中出場後に交代した塩貝が左太もも裏に重度の筋損傷を負い、当面の間プレーできないと発表しました。復帰時期は示されていません。",
+      "source": {
+        "label": "東スポWEB（ヴォルフスブルク公式発表の報道）",
+        "url": "https://www.tokyo-sports.co.jp/articles/-/410941"
+      }
+    },
     {
       "playerId": "takehiro-tomiyasu",
       "playerName": "冨安 健洋",

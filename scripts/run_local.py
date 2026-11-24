@@ -28,7 +28,7 @@ APP_FILES = {
         "data/jfa.json", "data/players.json", "data/clubs.json",
         "data/ranking.json", "data/lineups.json", "data/profiles.json", "data/portraits.json",
         "data/current-squad.json", "data/current-clubs.json", "data/current-health.json", "data/fpl.json",
-        "data/player-biographies.json",
+        "data/player-biographies.json", "data/jfa-profiles.json",
     )
 }
 MATCH_INTERVAL = 3 * 60 * 60

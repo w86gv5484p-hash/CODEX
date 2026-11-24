@@ -2,7 +2,8 @@ name: Refresh Japan fixtures and call-ups
 
 on:
   schedule:
-    - cron: "17 */3 * * *"
+    # 1日3回（日本時間 6:47 / 12:47 / 18:47）
+    - cron: "47 21,3,9 * * *"
   workflow_dispatch:
 
 permissions:
@@ -30,12 +31,13 @@ jobs:
           ranking_status=0
           python scripts/refresh_jfa.py || jfa_status=$?
           python scripts/update_ranking.py || ranking_status=$?
+          python scripts/update_jfa_profiles.py || true
           if ((jfa_status != 0 && ranking_status != 0)); then
             exit 1
           fi
       - name: Save refreshed records
         run: |
-          git add -- data/jfa.json data/ranking.json
+          git add -- data/jfa.json data/ranking.json data/jfa-profiles.json
           if git diff --cached --quiet; then
             exit 0
           fi
