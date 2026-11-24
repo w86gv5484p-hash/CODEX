@@ -62,7 +62,7 @@ const blank = { fixtures: [], callups: [], players: [], checkedAt: null };
 const feedFiles = {
   jfa: "jfa", roster: "players", clubs: "clubs", ranking: "ranking", lineups: "lineups", profiles: "profiles",
   portraits: "portraits", squad: "current-squad", clubReports: "current-clubs", healthReports: "current-health", fpl: "fpl",
-  biographies: "player-biographies",
+  biographies: "player-biographies", jfaProfiles: "jfa-profiles",
 };
 const feeds = Object.fromEntries(Object.keys(feedFiles).map(key => [key, blank]));
 let failedFeeds = new Set();
@@ -159,7 +159,7 @@ function squadPlayers() {
   const matches = [...upcoming, ...recent];
   return (squad.players ?? []).map(player => {
     const withdrawal = squad.withdrawals?.find(item => item.playerId === player.id);
-    const match = withdrawal && matches.find(item => item.id === withdrawal.matchId);
+    const match = withdrawal && matches.find(item => isMatch(item, withdrawal.matchId));
     const matchLabel = match ? local(match.opponent) + "戦" : withdrawal?.matchDate ? shortDate(withdrawal.matchDate) + "の試合" : "対象試合";
     return { ...player, callup: player.callup || squad.title, source: player.source ?? squad.source, clubAsOf: squad.publishedAt,
       status: withdrawal ? `${matchLabel}のみ不参加（${withdrawal.reason}）` : player.status, statusSource: withdrawal?.source };
@@ -203,12 +203,16 @@ function allReports() {
     .filter(report => !knownIds.has(report.playerId))].sort(byLatest);
 }
 
+function isMatch(match, id) {
+  return Boolean(id) && (match.id === id || (match.aliases ?? []).includes(id));
+}
+
 function matchId(match) {
   return encodeURIComponent(match.id);
 }
 
 function findLineup(match) {
-  return feeds.lineups.lineups?.find(lineup => lineup.matchId === match.id
+  return feeds.lineups.lineups?.find(lineup => isMatch(match, lineup.matchId)
     || (lineup.date === match.date && local(lineup.opponent) === local(match.opponent)));
 }
 
@@ -269,7 +273,7 @@ function matchList(matches) {
     <a class="match-item" href="#matches/${matchId(match)}">
       <time class="item-date" datetime="${esc(match.date)}">${shortDate(match.date)}</time>
       <span class="item-opponent">日本 vs ${esc(local(match.opponent))}<small>${esc(local(match.competition))}</small></span>
-      <span class="item-score">${esc(match.status === "completed" ? match.score || "結果" : match.time || "詳細")}${icon("arrow", 14)}</span>
+      <span class="item-score${match.status === "completed" && match.score || match.time ? "" : " item-score-text"}">${esc(match.status === "completed" ? match.score || "結果" : match.time || "詳細")}${icon("arrow", 14)}</span>
     </a>`).join("")}</div>`;
 }
 
@@ -532,6 +536,13 @@ function biographySection(player, profile) {
   </section>`;
 }
 
+function jfaProfileLink(player) {
+  const url = feeds.jfaProfiles.profiles?.find(item => item.id === player.id)?.url ?? "";
+  if (!/^https:\/\/www\.jfa\.jp\/samuraiblue\/member\/[a-z_]+\.html$/.test(url)) return "";
+  return `<a class="jfa-profile-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">
+    <span><strong>JFA公式プロフィール</strong><small>公式写真・代表歴を見る</small></span>${icon("external", 16)}</a>`;
+}
+
 function showPlayerDetails(player, context) {
   const profile = feeds.profiles.profiles?.find(item => item.id === player.id);
   const portrait = portraitFor(player);
@@ -546,6 +557,7 @@ function showPlayerDetails(player, context) {
       ${player.callup ? `<p>${esc(player.callup)}</p>` : ""}
       ${player.status ? `<p>${esc(player.status)} ${externalLink(player.statusSource)}</p>` : ""}
       ${player.source ? `<p>${externalLink(player.source)}</p>` : ""}</div></div>
+    ${jfaProfileLink(player)}
     ${portrait ? `<p class="portrait-credit">写真 ${esc(portrait.attribution)} · ${externalLink(portrait.source)} · ${externalLink({ label: portrait.license, url: portrait.licenseUrl })}</p>` : '<p class="portrait-credit">確認できた写真はありません。</p>'}
     ${context ? `<div class="dialog-section lineup-context"><h3>日本 vs ${esc(local(context.match.opponent))} の先発</h3>
       <p>${esc(dateLabel(context.match.date))}${context.participant.number ? ` · 背番号 ${esc(context.participant.number)}` : ""}${context.participant.role ? ` · ${esc(context.participant.role)}` : ""}</p>
@@ -559,7 +571,7 @@ function showPlayerDetails(player, context) {
 function showDetails(page, id, participantId) {
   if (page === "matches") {
     const { upcoming, recent } = fixtures();
-    const match = [...upcoming, ...recent].find(item => item.id === id);
+    const match = [...upcoming, ...recent].find(item => isMatch(item, id));
     if (!match) return false;
     const lineup = findLineup(match);
     const participant = lineup?.players.find(player => player.id === participantId);

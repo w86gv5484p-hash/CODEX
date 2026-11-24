@@ -437,3 +437,17 @@ dialog .portrait-credit { margin-top: 10px; color: var(--muted); font-size: 10px
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* Official JFA profile link (JFA photos are linked, not copied) */
+.jfa-profile-link {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin-top: 14px; padding: 12px 14px; border-radius: 14px;
+  background: linear-gradient(120deg, #1d3c9c, #13286a); border: 1px solid #ffffff22; color: white;
+  transition: filter .15s;
+}
+.jfa-profile-link:hover { filter: brightness(1.15); }
+.jfa-profile-link span { display: grid; gap: 2px; }
+.jfa-profile-link strong { font-size: 14px; }
+.jfa-profile-link small { color: #c9d6f5; font-size: 11px; }
+.item-score.item-score-text { font-family: inherit; font-size: 12px; color: var(--blue-bright); letter-spacing: 0; }
+.item-score.item-score-text svg { display: inline; color: inherit; }

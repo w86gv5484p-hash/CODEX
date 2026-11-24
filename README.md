@@ -19,7 +19,7 @@ Windows では `py -3 scripts/run_local.py --open` を使います。ポート�
 1. アプリのファイルを GitHub リポジトリの既定ブランチ `main` へ反映し、GitHub Actions を有効にします。
 2. GitHub リポジトリの **Settings → Pages** で **Build and deployment → Source → GitHub Actions** を選びます。
 3. **Actions → Deploy site to GitHub Pages → Run workflow** を実行します。成功すると、Pages の設定画面にスマートフォンでも開ける URL が表示されます。
-4. **Refresh Japan fixtures and call-ups** を手動実行し、アプリの「更新情報」で JFA の試合日程と招集発表が取得できたか確認します。以後は原則3時間ごとに自動更新します。
+4. **Refresh Japan fixtures and call-ups** を手動実行し、アプリの「更新情報」で JFA の試合日程と招集発表が取得できたか確認します。以後は1日3回（日本時間 6:47・12:47・18:47 ごろ）自動更新します。GitHub の混雑状況により、数分〜数十分遅れることがあります。
 
 ### ホーム画面に追加（アプリとして使う）
 

@@ -1,6 +1,6 @@
 // オフラインでも直近のデータを表示するための Service Worker。
 // データと画面は通信を優先し、失敗したときだけ保存済みの内容を返します。
-const CACHE = "samurai-watch-v2";
+const CACHE = "samurai-watch-v3";
 const CORE = [
   "./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest",
   "./assets/favicon.svg", "./assets/hero.webp", "./assets/editorial.webp",
