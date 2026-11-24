@@ -12,6 +12,7 @@ import io
 import json
 import re
 import sys
+import unicodedata
 import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
@@ -22,6 +23,16 @@ OUT = ROOT / "nsx" / "data" / "supply.json"
 JST = timezone(timedelta(hours=9))
 UA = "Mozilla/5.0 (compatible; nsx-care-app/1.0)"
 PART_RE = re.compile(r"\b\d{5}-[A-Z0-9]{3}-[A-Z0-9]{3,4}\b")
+# PDF の表では区切りがスペースや別のダッシュになっている場合があるため、資料からはゆるく読み取って正規化する
+LOOSE_RE = re.compile(r"(?<![0-9A-Z])(\d{5})[ \-‐–—]{0,2}([A-Z0-9]{3})[ \-‐–—]{0,2}([A-Z0-9]{3,4})(?![0-9A-Z])")
+DIAG: dict[str, dict] = {}
+
+
+def find_parts(text: str) -> set[str]:
+    text = unicodedata.normalize("NFKC", text).upper()
+    found = set(PART_RE.findall(text))
+    found |= {f"{a}-{b}-{c}" for a, b, c in LOOSE_RE.findall(text) if any(ch.isalpha() for ch in b + c)}
+    return found
 DOC_RE = re.compile(r"""href=["']([^"']+\.(?:pdf|csv|xlsx))["']""", re.I)
 
 SOURCES = [
@@ -70,14 +81,18 @@ def document_parts(url: str) -> set[str]:
     raw = fetch(url)
     lower = url.lower()
     if lower.endswith(".csv"):
-        return set(PART_RE.findall(decode(raw)))
+        return find_parts(decode(raw))
     if lower.endswith(".pdf"):
         try:
             from pypdf import PdfReader
         except ImportError:
             return set()
         reader = PdfReader(io.BytesIO(raw))
-        return set(PART_RE.findall(" ".join(page.extract_text() or "" for page in reader.pages)))
+        text = " ".join(page.extract_text() or "" for page in reader.pages)
+        found = find_parts(text)
+        DIAG[url] = {"bytes": len(raw), "pages": len(reader.pages), "textChars": len(text.strip()),
+                     "found": len(found), "sample": re.sub(r"\s+", " ", text)[:600]}
+        return found
     if lower.endswith(".xlsx"):
         try:
             from openpyxl import load_workbook
@@ -87,7 +102,7 @@ def document_parts(url: str) -> set[str]:
         found: set[str] = set()
         for sheet in book.worksheets:
             for row in sheet.iter_rows(values_only=True):
-                found.update(PART_RE.findall(" ".join(str(v) for v in row if v is not None)))
+                found |= find_parts(" ".join(str(v) for v in row if v is not None))
         return found
     return set()
 
@@ -176,6 +191,7 @@ def main() -> int:
         "partNumbers": sorted(parts),
         "catalogNumbers": sorted(catalog),
         "changes": changes[:40],
+        "diagnostics": DIAG,
     }
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", "utf-8")
     print(f"checked {len(SOURCES)} sources, ok={ok_count}, supply list={len(parts)}, catalog={len(catalog)}")
