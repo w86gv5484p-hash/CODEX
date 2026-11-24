@@ -5,7 +5,7 @@ on:
     branches: [main]
   workflow_dispatch:
   workflow_run:
-    workflows: [Refresh Japan fixtures and call-ups, Refresh club activity, Refresh player portraits]
+    workflows: [Refresh Japan fixtures and call-ups, Refresh club activity, Refresh player portraits, Refresh NSX parts supply]
     types: [completed]
 
 permissions:
@@ -34,7 +34,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/
-          for path in *.css *.js *.webmanifest robots.txt assets data; do
+          for path in *.css *.js *.webmanifest robots.txt assets data nsx; do
             if [[ -e "$path" ]]; then
               cp -R -- "$path" _site/
             fi
