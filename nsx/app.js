@@ -66,6 +66,7 @@ function maintStatus(item) {
 // ---------- データ ----------
 let data = null;
 let supply = { partNumbers: [], sources: [], changes: [] };
+let photos = {};
 let loadedFor = "";
 
 async function loadData() {
@@ -77,11 +78,25 @@ async function loadData() {
   };
   data = await get("vehicle.json");
   try { supply = await get("supply.json"); } catch { /* 供給データがなくても他の画面は使える */ }
+  try { photos = await get("photos.json"); } catch { photos = {}; }
   loadedFor = day;
 }
 
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const maintItems = () => [...data.maintenance, ...custom];
+
+
+// ---------- 写真 ----------
+const pic = (key, attrs = "") => photos[key]
+  ? `<img src="./img/${photos[key].file}" alt="${esc(photos[key].caption)}" loading="lazy" decoding="async" ${attrs}>` : "";
+const shortCredit = key => photos[key] ? `Photo: ${esc(photos[key].author)} / ${esc(photos[key].license)}` : "";
+const banner = (key, eyebrow, title, text, num = "") => `
+  <section class="banner" data-photo="${key}">${pic(key, 'loading="eager"')}
+    ${num ? `<span class="num">${num}</span>` : ""}
+    <div class="banner-body"><div class="eyebrow">${eyebrow}</div><h1>${title}</h1><p>${text}</p></div>
+    <span class="credit">${shortCredit(key)}</span>
+  </section>`;
+const GALLERY = ["museum-red", "front-1991", "countryside", "engine", "cockpit", "rear-1991", "road-red", "profile", "black", "silver-front", "tail", "countryside-rear"];
 
 // ---------- 画面 ----------
 const views = { home, alerts, parts: partsView, faults, info };
@@ -113,13 +128,11 @@ function alertBanner() {
   if (over.length || soon.length) {
     const list = [...over, ...soon].map(({ i, s }) =>
       `<li><b>${esc(i.name)}</b>：${s.state === "over" ? `${-s.daysLeft}日超過` : `あと${s.daysLeft}日`}（期限 ${jp(s.due)}）</li>`).join("");
-    return `<div class="alert-banner ${over.length ? "over" : "soon"}" role="alert"><div><strong>交換時期のお知らせ</strong><ul>${list}</ul></div></div>`;
+    return `<div class="alert-banner ${over.length ? "over" : "soon"}" role="alert"><span class="ico">!</span><div><strong>交換時期のお知らせ</strong><ul>${list}</ul></div></div>`;
   }
-  if (unset.length === items.length) return `<div class="alert-banner soon"><div><strong>まず交換日を入力してください</strong>「交換時期」タブで前回の交換日を入れると、期限の1か月半前からここにお知らせします。</div></div>`;
-  return `<div class="alert-banner ok"><div><strong>交換時期が近い項目はありません</strong>${unset.length ? `<span class="small muted">未入力：${unset.map(x => esc(x.i.name)).join("、")}</span>` : ""}</div></div>`;
+  if (unset.length === items.length) return `<div class="alert-banner soon"><span class="ico">i</span><div><strong>まず交換日を入力してください</strong>「交換時期」タブで前回の交換日を入れると、期限の1か月半前からここにお知らせします。</div></div>`;
+  return `<div class="alert-banner ok"><span class="ico">✓</span><div><strong>交換時期が近い項目はありません</strong>${unset.length ? `<span class="small muted">未入力：${unset.map(x => esc(x.i.name)).join("、")}</span>` : ""}</div></div>`;
 }
-
-const SILHOUETTE = `<svg class="silhouette" viewBox="0 0 400 150" aria-hidden="true"><path d="M10 112c22-3 40-20 70-33 30-13 75-27 120-27 50 0 105 12 150 38 14 8 30 14 40 22v16H10z" fill="#1d5a45"/><path d="M118 74c26-14 60-22 96-22l-40 24z" fill="#9fd8c0" opacity=".75"/><path d="M175 76l40-24c30 2 56 10 76 22z" fill="#9fd8c0" opacity=".55"/><rect x="312" y="96" width="34" height="5" rx="2" fill="#e9f0ec" opacity=".7"/><circle cx="95" cy="118" r="22" fill="#08130f" stroke="#cfd8d3" stroke-width="5"/><circle cx="315" cy="118" r="22" fill="#08130f" stroke="#cfd8d3" stroke-width="5"/></svg>`;
 
 function home() {
   const photo = store.get("photo", null);
@@ -130,26 +143,46 @@ function home() {
   const latest = supply.changes?.[0];
   return `
   <section class="hero">
-    ${photo ? `<img class="photo" src="${photo}" alt="愛車の写真">` : SILHOUETTE}
-    <div class="shade"></div>
-    <button class="btn ghost small photo-btn" data-act="photo">${photo ? "写真を変更" : "愛車の写真を設定"}</button>
-    <div class="meta"><h1>HONDA NSX</h1><p>${esc(data.vehicle.code)} ・ ${esc(data.vehicle.modelYear)}</p></div>
+    ${photo ? `<img src="${photo}" alt="愛車の写真">` : pic("hero", 'loading="eager" fetchpriority="high"')}
+    <button class="btn ghost small photo-btn" data-act="photo">${photo ? "写真を変更" : "📷 愛車の写真にする"}</button>
+    <div class="hero-body">
+      <p class="hero-mark"><span>NSX</span></p>
+      <p class="hero-sub">NEW SPORTSCAR e<b>X</b>PERIMENTAL</p>
+      <div class="hero-tags"><span class="tag red">1991</span><span class="tag">NA1</span><span class="tag">C30A V6 DOHC VTEC</span><span class="tag">280PS</span><span class="tag">ALL ALUMINUM</span></div>
+    </div>
+    ${photo ? "" : `<span class="credit">${shortCredit("hero")}</span>`}
   </section>
   ${alertBanner()}
   <div class="stats">
-    <div class="stat"><b style="color:var(--over)">${count("over")}</b><span>超過</span></div>
-    <div class="stat"><b style="color:var(--soon)">${count("soon")}</b><span>まもなく</span></div>
-    <div class="stat"><b style="color:var(--ok)">${count("ok")}</b><span>良好</span></div>
-    <div class="stat"><b>${done}<small class="muted" style="font-size:13px">/${chk}</small></b><span>点検済</span></div>
+    <div class="stat" style="--c:var(--over)"><b style="color:var(--over)">${count("over")}</b><span>超過</span></div>
+    <div class="stat" style="--c:var(--soon)"><b style="color:var(--soon)">${count("soon")}</b><span>まもなく</span></div>
+    <div class="stat" style="--c:var(--ok)"><b style="color:var(--ok)">${count("ok")}</b><span>良好</span></div>
+    <div class="stat" style="--c:var(--silver)"><b>${done}<small class="muted" style="font-size:14px">/${chk}</small></b><span>点検済</span></div>
   </div>
-  <div class="grid two">
-    <a class="card" href="#parts" style="text-decoration:none;color:inherit"><h3>部品供給状況</h3>
-      <p class="small muted" style="margin:0">${supply.checkedAt ? `公式ページ確認：${esc(supply.checkedAt.replace("T", " "))}` : "公式ページの自動確認はまだ実行されていません。"}<br>
-      ${latest ? `最新の変化：${esc(latest.date)} ${esc(latest.source)} — ${esc(latest.summary)}` : "変化の記録はまだありません。"}</p></a>
-    <a class="card" href="#faults" style="text-decoration:none;color:inherit"><h3>典型的な不具合と整備</h3>
-      <p class="small muted" style="margin:0">NA1初期型でよく知られる${data.faults.length}件の不具合と、${chk}項目の点検チェックリスト。</p></a>
+
+  <div class="section"><div class="eyebrow">Gallery</div><h2 class="section-title">初代NSX フォトギャラリー</h2>
+    <div class="gallery">${GALLERY.map(k => `<figure data-photo="${k}">${pic(k)}<figcaption>${esc(photos[k]?.caption)}</figcaption></figure>`).join("")}</div>
   </div>
-  <p class="updates">データ更新日 ${esc(data.updated)} ・ この画面は1日1回最新データを取得します（最終取得 ${esc(loadedFor)}）。</p>`;
+
+  <div class="section"><div class="eyebrow">Menu</div><h2 class="section-title">メンテナンスと車両情報</h2>
+  <div class="grid two" style="margin-top:12px">
+    <a class="feature" href="#alerts">${pic("road-red")}<span class="go">→</span><div class="body"><div class="eyebrow">Maintenance</div><h3>交換タイミングアラート</h3><p>オイル・フルード・タイヤの交換日を記録し、1か月半前にお知らせ。</p></div></a>
+    <a class="feature" href="#parts">${pic("tail")}<span class="go">→</span><div class="body"><div class="eyebrow">Parts</div><h3>パーツ・部品供給状況</h3><p>${supply.checkedAt ? `公式ページ確認 ${esc(supply.checkedAt.slice(0, 10))}` : "ホンダ公式ページを毎日確認"}${latest ? ` ・ 最新の変化 ${esc(latest.date)}` : ""}</p></div></a>
+    <a class="feature" href="#faults">${pic("engine")}<span class="go">→</span><div class="body"><div class="eyebrow">Troubles</div><h3>典型的な不具合と整備</h3><p>NA1初期型で知られる${data.faults.length}件と、${chk}項目の点検チェック。</p></div></a>
+    <a class="feature" href="#info">${pic("countryside")}<span class="go">→</span><div class="body"><div class="eyebrow">History</div><h3>スペック・歴史・開発秘話</h3><p>C30Aの数値から、セナが関わった開発の経緯まで。</p></div></a>
+  </div></div>
+
+  <div class="section"><div class="eyebrow">Details</div><h2 class="section-title">ディテール</h2>
+    <div class="mosaic" style="margin-top:12px">
+      <figure class="tile wide" data-photo="front-1991">${pic("front-1991")}<figcaption>${esc(photos["front-1991"]?.caption)}</figcaption></figure>
+      <figure class="tile" data-photo="interior">${pic("interior")}<figcaption>インテリア</figcaption></figure>
+      <figure class="tile" data-photo="front-trunk">${pic("front-trunk")}<figcaption>フロントフード内</figcaption></figure>
+      <figure class="tile" data-photo="museum-rear">${pic("museum-rear")}<figcaption>リアクォーター</figcaption></figure>
+      <figure class="tile" data-photo="black-front">${pic("black-front")}<figcaption>ブラック</figcaption></figure>
+      <figure class="tile wide" data-photo="silver-side">${pic("silver-side")}<figcaption>${esc(photos["silver-side"]?.caption)}</figcaption></figure>
+    </div>
+  </div>
+  <p class="updates">データ更新日 ${esc(data.updated)} ・ 1日1回最新データを取得します（最終取得 ${esc(loadedFor)}）。写真は Wikimedia Commons の自由ライセンス画像です（車両情報 → 写真クレジット）。</p>`;
 }
 
 function alerts() {
@@ -158,9 +191,9 @@ function alerts() {
     const st = MAINT_STATE[s.state];
     const hist = maint[item.id]?.history || [];
     const isCustom = custom.some(c => c.id === item.id);
-    return `<article class="card">
-      <div class="maint-head"><h3 style="margin:0">${esc(item.name)} <span class="muted small">${intervalText(item.months)}</span></h3><span class="pill ${st.cls}">${st.label}</span></div>
-      ${s.state !== "unset" ? `<div class="bar"><span style="width:${Math.round(s.ratio * 100)}%;background:${st.color}"></span></div>
+    return `<article class="card maint-card" style="--c:${st.color}">
+      <div class="maint-head"><h3>${esc(item.name)} <span class="muted small">${intervalText(item.months)}</span></h3><span class="pill ${st.cls}">${st.label}</span></div>
+      ${s.state !== "unset" ? `<div class="days" style="color:${st.color}">${Math.abs(s.daysLeft)}<small>${s.daysLeft >= 0 ? "日後に交換" : "日超過"}</small></div><div class="bar"><span style="width:${Math.round(s.ratio * 100)}%;background:${st.color}"></span></div>
       <dl class="kv"><dt>前回交換</dt><dd>${jp(s.last)}</dd><dt>次回交換</dt><dd>${jp(s.due)}（${s.daysLeft >= 0 ? `あと${s.daysLeft}日` : `${-s.daysLeft}日超過`}）</dd><dt>アラート開始</dt><dd>${jp(s.alertFrom)}（1か月半前）</dd></dl>` : `<p class="small muted" style="margin:8px 0 0">前回の交換日を入力してください。</p>`}
       <p class="small muted" style="margin:8px 0 0">${esc(item.note || "")}</p>
       <div class="maint-row">
@@ -174,8 +207,7 @@ function alerts() {
   }).join("");
   const notif = "Notification" in window && Notification.permission === "default"
     ? `<button class="btn small" data-act="notify">アプリを開いたときに通知する</button>` : "";
-  return `<h1>交換タイミングアラート</h1>
-  <p class="lead">交換した日を入力すると、そこを基準日に次回交換日を計算し、<b>その1か月半前</b>からアラートを表示します。</p>
+  return `${banner("road-red", "Maintenance", "交換タイミングアラート", "交換した日を入力すると次回交換日を計算し、<b>その1か月半前</b>からお知らせします。", "05")}
   ${alertBanner()}
   <div class="maint">${cards}</div>
   <div class="toolbar" style="margin-top:16px"><button class="btn" data-act="add-custom">＋ 交換項目を追加（タイミングベルトなど）</button>${notif}
@@ -211,12 +243,12 @@ function partsView() {
   const sources = (supply.sources || []).map(s => `<div class="source"><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)} ↗</a><br>
     <span class="muted">${s.ok ? "取得成功" : "取得失敗（前回の内容を保持）"} ・ 内容の最終変化 ${esc(s.changedAt || "—")}${s.documents?.length ? ` ・ 添付資料 ${s.documents.length}件` : ""}</span></div>`).join("");
   const changes = (supply.changes || []).slice(0, 8).map(c => `<li><b>${esc(c.date)}</b> ${esc(c.source)}：${esc(c.summary)}</li>`).join("");
-  return `<h1>パーツリスト・部品供給状況</h1>
+  return `${banner("tail", "Parts &amp; Supply", "パーツリスト・部品供給状況", "項目ごとの主要パーツと、ホンダ公式の供給状況（毎日確認）。", "01-02")}
   <p class="lead">項目ごとに整理した主要パーツです。タップすると、品番・販売状況（販売中／復刻あり／廃番／要確認）・メモを登録できます。品番を登録すると、毎日確認しているホンダ公式「継続供給中部品番号リスト」と自動で照合します。</p>
   <div class="toolbar"><input type="text" placeholder="部品名・品番で検索" value="${esc(partQuery)}" data-act="search" aria-label="部品を検索"></div>
   <div class="chips">${chips}</div>
   ${cats || `<p class="muted">該当する部品はありません。</p>`}
-  <h2>メーカーの供給状況（毎日自動確認）</h2>
+  <div class="section"><div class="eyebrow">Official</div><h2 class="section-title">メーカーの供給状況（毎日自動確認）</h2></div>
   <div class="card">
     <p class="small" style="margin-top:0">ホンダは2025年に初代NSX向けの「Honda Heritage Parts」（復刻純正部品）と「Honda Restoration Service」を開始しています。以下の公式ページを1日1回確認し、内容が変わると記録します。
     ${supply.partNumbers?.length ? `<br>公式リストから取得した品番：<b>${supply.partNumbers.length}件</b>` : ""}</p>
@@ -227,14 +259,13 @@ function partsView() {
 }
 
 function faults() {
-  return `<h1>典型的な不具合と整備リスト</h1>
-  <p class="lead">1991年式NA1でよく知られる不具合です。点検・整備した項目にチェックを入れると、日付とともに記録されます。</p>
+  return `${banner("engine", "Troubles &amp; Service", "典型的な不具合と整備リスト", "1991年式NA1で知られる不具合。点検した項目にチェックすると日付が記録されます。", "03-04")}
   ${data.faults.map(f => {
     const done = f.checks.filter((_, i) => checks[`${f.id}:${i}`]).length;
     return `<article class="card fault">
       <div class="fault-head"><h3>${esc(f.title)}</h3><span class="sev sev-${f.severity}">重要度 ${f.severity}</span></div>
       <p><b>症状</b>${esc(f.symptom)}</p><p><b>原因</b>${esc(f.cause)}</p>
-      <div class="progress">整備チェック ${done}/${f.checks.length}</div>
+      <div class="progress">整備チェック ${done}/${f.checks.length}<div class="bar"><span style="width:${done / f.checks.length * 100}%;background:var(--ok)"></span></div></div>
       <ul class="checks">${f.checks.map((c, i) => {
         const key = `${f.id}:${i}`, when = checks[key];
         return `<li><label><input type="checkbox" data-act="check" data-key="${key}" ${when ? "checked" : ""}><span class="${when ? "done" : ""}">${esc(c)}${when ? `<span class="when">✓ ${jp(parse(when))} 実施</span>` : ""}</span></label></li>`;
@@ -245,23 +276,39 @@ function faults() {
 }
 
 function info() {
-  const sub = [["specs", "基本スペック"], ["history", "車両の歴史"], ["dev", "開発経緯・開発者"]];
+  const sub = [["specs", "基本スペック"], ["history", "車両の歴史"], ["dev", "開発経緯・開発者"], ["credits", "写真クレジット"]];
+  const figure = (key, cls = "") => key && photos[key] ? `<figure class="${cls}" data-photo="${key}">${pic(key)}</figure>` : "";
   let body = "";
+  const heads = { specs: ["engine", "Specifications", "車両の基本スペック", "1991年式 NA1 のカタログ値。", "06"], history: ["countryside", "History", "車両の歴史", "1984年の開発開始から、現在のヘリテージ活動まで。", "07"], dev: ["cockpit", "Development", "開発経緯・開発者来歴", "「人間中心のスーパースポーツ」が生まれるまで。", "08"], credits: ["museum-red", "Credits", "写真クレジット", "このアプリの写真は Wikimedia Commons の自由ライセンス画像です。", ""] };
   if (infoTab === "specs") {
-    body = data.specs.map(g => `<div class="card" style="margin-bottom:12px"><h3>${esc(g.group)}</h3><table class="spec-table">${g.items.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join("")}</table></div>`).join("")
-      + `<p class="small muted">${esc(data.specsNote)}</p>`;
+    body = `<div class="big-numbers"><div><b>280<small>PS</small></b><span>最高出力（MT）</span></div><div><b>2,977<small>cc</small></b><span>C30A V6</span></div><div><b>1,350<small>kg</small></b><span>車両重量（MT）</span></div></div>
+      <div class="grid two">${data.specs.map(g => `<div class="card spec-card">${data.specImages?.[g.group] ? `<div class="spec-img" data-photo="${data.specImages[g.group]}">${pic(data.specImages[g.group])}<h3>${esc(g.group)}</h3></div>` : `<h3 style="padding:16px 16px 0">${esc(g.group)}</h3>`}<table class="spec-table">${g.items.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join("")}</table></div>`).join("")}</div>
+      <p class="small muted">${esc(data.specsNote)}</p>`;
   } else if (infoTab === "history") {
-    body = `<div class="card"><ol class="timeline">${data.history.map(h => `<li class="${h.title === "あなたの年式" ? "mine" : ""}"><div class="date">${esc(h.date)}</div><strong>${esc(h.title)}</strong><p>${esc(h.text)}</p></li>`).join("")}</ol></div>`;
-  } else {
+    body = `<div class="card"><ol class="timeline">${data.history.map(h => `<li class="${h.title === "あなたの年式" ? "mine" : ""}"><div class="date">${esc(h.date)}</div><strong>${esc(h.title)}</strong><p>${esc(h.text)}</p>${figure(h.img)}</li>`).join("")}</ol></div>`;
+  } else if (infoTab === "dev") {
     const d = data.development;
-    body = `<h2 style="margin-top:0">開発経緯</h2><div class="grid two">${d.concept.map(c => `<div class="card"><h3>${esc(c.title)}</h3><p class="small" style="margin:0">${esc(c.text)}</p></div>`).join("")}</div>
-      <h2>開発者・関係者の来歴</h2><div class="grid">${d.people.map(p => `<div class="card person"><div class="avatar">${esc(p.name.slice(0, 1))}</div><div><h3 style="margin:0">${esc(p.name)}</h3><div class="small" style="color:var(--gold)">${esc(p.role)}</div><p class="small" style="margin:4px 0 0">${esc(p.text)}</p></div></div>`).join("")}</div>
+    body = `<div class="grid two">${d.concept.map(c => `<div class="card concept">${figure(c.img)}<div class="txt"><h3>${esc(c.title)}</h3><p class="small" style="margin:0">${esc(c.text)}</p></div></div>`).join("")}</div>
+      <div class="section"><div class="eyebrow">People</div><h2 class="section-title">開発者・関係者の来歴</h2></div>
+      <div class="grid">${d.people.map(p => `<div class="card person"><div class="avatar">${esc(p.name.slice(0, 1))}</div><div><h3 style="margin:0">${esc(p.name)}</h3><div class="small" style="color:var(--red)">${esc(p.role)}</div><p class="small" style="margin:4px 0 0">${esc(p.text)}</p></div></div>`).join("")}</div>
       <p class="small muted">${esc(d.note)}</p>`;
+  } else {
+    body = `<div class="mosaic">${Object.keys(photos).map(k => `<figure class="tile" data-photo="${k}">${pic(k)}<figcaption>${esc(photos[k].caption)}</figcaption></figure>`).join("")}</div>
+      <ul class="credits" style="margin-top:16px;padding-left:18px">${Object.values(photos).map(p => `<li>${esc(p.caption)} — ${esc(p.author)}、<a href="${esc(p.source)}" target="_blank" rel="noopener">${esc(p.title)}</a>（${esc(p.license)}）</li>`).join("")}</ul>
+      <p class="small muted">いずれも Wikimedia Commons で公開されている CC0 / CC BY / CC BY-SA の画像を縮小して使用しています。ホンダの公式画像ではありません。</p>`;
   }
-  return `<h1>車両情報</h1><div class="subtabs">${sub.map(([k, l]) => `<button class="chip ${infoTab === k ? "on" : ""}" data-act="info" data-k="${k}">${l}</button>`).join("")}</div>${body}`;
+  return `${banner(...heads[infoTab])}<div class="subtabs">${sub.map(([k, l]) => `<button class="chip ${infoTab === k ? "on" : ""}" data-act="info" data-k="${k}">${l}</button>`).join("")}</div>${body}`;
 }
 
 // ---------- 操作 ----------
+function openPhoto(key) {
+  const p = photos[key]; if (!p) return;
+  $dlg.classList.add("photo");
+  $dlgBody.innerHTML = `<img src="./img/${p.file}" alt="${esc(p.caption)}"><div class="cap"><b>${esc(p.caption)}</b>Photo: ${esc(p.author)} ・ ${esc(p.license)} ・ <a href="${esc(p.source)}" target="_blank" rel="noopener">Wikimedia Commons</a></div>`;
+  $dlg.showModal();
+}
+$dlg.addEventListener("close", () => $dlg.classList.remove("photo"));
+
 function openPart(id) {
   const p = data.parts.flatMap(c => c.items).find(x => x.id === id);
   const s = partState(p);
@@ -345,7 +392,8 @@ function notifyDue() {
 }
 
 $main.addEventListener("click", e => {
-  const el = e.target.closest("[data-act]"); if (!el) return;
+  const el = e.target.closest("[data-act]");
+  if (!el) { const ph = e.target.closest("[data-photo]"); if (ph && !e.target.closest("a")) openPhoto(ph.dataset.photo); return; }
   const { act, id, k } = el.dataset;
   if (act === "record") {
     const v = $main.querySelector(`[data-date="${id}"]`).value;
@@ -366,7 +414,7 @@ $main.addEventListener("click", e => {
   else if (act === "photo") setPhoto();
   else if (act === "part") openPart(id);
   else if (act === "filter") { partFilter = k; render(); }
-  else if (act === "info") { infoTab = k; render(); }
+  else if (act === "info") { infoTab = k; render(); scrollTo(0, 0); }
   else if (act === "reset-checks") { if (confirm("整備チェックをすべて外しますか？")) { checks = {}; store.set("checks", checks); render(); } }
 });
 $main.addEventListener("change", e => {
