@@ -1,0 +1,146 @@
+{
+ "hero": {
+  "file": "hero.webp",
+  "title": "Honda E-NA1 NSX (22022010312).jpg",
+  "author": "先従隗始",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_E-NA1_NSX_(22022010312).jpg",
+  "caption": "1991年式 NSX（トヨタ博物館）"
+ },
+ "museum-red": {
+  "file": "museum-red.webp",
+  "title": "1991 Honda NSX (NA1) Coupe.jpg",
+  "author": "Coolalabright",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:1991_Honda_NSX_(NA1)_Coupe.jpg",
+  "caption": "1991年式 NSX クーペ"
+ },
+ "front-1991": {
+  "file": "front-1991.webp",
+  "title": "Honda E-NA1 NSX (22022010314).jpg",
+  "author": "先従隗始",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_E-NA1_NSX_(22022010314).jpg",
+  "caption": "NA1 フロント"
+ },
+ "rear-1991": {
+  "file": "rear-1991.webp",
+  "title": "Honda E-NA1 NSX (22022010325).jpg",
+  "author": "先従隗始",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_E-NA1_NSX_(22022010325).jpg",
+  "caption": "NA1 リア"
+ },
+ "road-red": {
+  "file": "road-red.webp",
+  "title": "1991 Honda NSX NSXX @ UWA Car Park 3,Crawley.jpg",
+  "author": "ZidaneHartono",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:1991_Honda_NSX_NSXX_@_UWA_Car_Park_3,Crawley.jpg",
+  "caption": "NA1 走行シーン"
+ },
+ "countryside": {
+  "file": "countryside.webp",
+  "title": "Honda E-NA1 NSX (23052110302).jpg",
+  "author": "先従隗始",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_E-NA1_NSX_(23052110302).jpg",
+  "caption": "日本の田園を走るNA1"
+ },
+ "countryside-rear": {
+  "file": "countryside-rear.webp",
+  "title": "Honda E-NA1 NSX (23052110303).jpg",
+  "author": "先従隗始",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_E-NA1_NSX_(23052110303).jpg",
+  "caption": "NA1 リアビュー"
+ },
+ "front-trunk": {
+  "file": "front-trunk.webp",
+  "title": "Honda E-NA1 NSX (24041411096).jpg",
+  "author": "先従隗始",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_E-NA1_NSX_(24041411096).jpg",
+  "caption": "フロントフード内（スペアタイヤ・ブレーキフルードタンク）"
+ },
+ "engine": {
+  "file": "engine.webp",
+  "title": "Honda E-NA1 NSX (24041411101).jpg",
+  "author": "先従隗始",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_E-NA1_NSX_(24041411101).jpg",
+  "caption": "C30A DOHC VTEC エンジン"
+ },
+ "cockpit": {
+  "file": "cockpit.webp",
+  "title": "Honda E-NA1 NSX (24041411100).jpg",
+  "author": "先従隗始",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_E-NA1_NSX_(24041411100).jpg",
+  "caption": "コクピット（5MT）"
+ },
+ "interior": {
+  "file": "interior.webp",
+  "title": "Honda E-NA1 NSX (22022010322).jpg",
+  "author": "先従隗始",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_E-NA1_NSX_(22022010322).jpg",
+  "caption": "インテリア・ダッシュボード"
+ },
+ "tail": {
+  "file": "tail.webp",
+  "title": "Acura NSX (15447843737).jpg",
+  "author": "ilikewaffles11",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Acura_NSX_(15447843737).jpg",
+  "caption": "テールランプ"
+ },
+ "profile": {
+  "file": "profile.webp",
+  "title": "Acura NSX (53098872250).jpg",
+  "author": "Guyon",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Acura_NSX_(53098872250).jpg",
+  "caption": "サイドプロファイル"
+ },
+ "black": {
+  "file": "black.webp",
+  "title": "Honda E-NA1 NSX (23110313234).jpg",
+  "author": "先従隗始",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_E-NA1_NSX_(23110313234).jpg",
+  "caption": "ブラックのNA1（日本自動車博物館）"
+ },
+ "silver-front": {
+  "file": "silver-front.webp",
+  "title": "1991 Honda NSX 2.jpg",
+  "author": "Calreyn88",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:1991_Honda_NSX_2.jpg",
+  "caption": "シルバーのNA1"
+ },
+ "black-front": {
+  "file": "black-front.webp",
+  "title": "1991 Honda NSX 3.jpg",
+  "author": "Calreyn88",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:1991_Honda_NSX_3.jpg",
+  "caption": "ブラックのNA1"
+ },
+ "silver-side": {
+  "file": "silver-side.webp",
+  "title": "Honda E-NA1 NSX (23052111461).jpg",
+  "author": "先従隗始",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_E-NA1_NSX_(23052111461).jpg",
+  "caption": "シルバーのNA1 サイド"
+ },
+ "museum-rear": {
+  "file": "museum-rear.webp",
+  "title": "Honda E-NA1 NSX (24010610243).jpg",
+  "author": "先従隗始",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_E-NA1_NSX_(24010610243).jpg",
+  "caption": "NA1 リアクォーター"
+ }
+}

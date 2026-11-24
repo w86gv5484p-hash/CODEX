@@ -1,0 +1,43 @@
+name: Refresh NSX parts supply
+
+on:
+  schedule:
+    # 1日1回（日本時間 5:23 ごろ）
+    - cron: "23 20 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-source-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install document readers
+        run: pip install --quiet pypdf openpyxl
+      - name: Check Honda official pages
+        run: python scripts/update_nsx_supply.py
+      - name: Save refreshed records
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add nsx/data/supply.json
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git commit -m "Update NSX parts supply status"
+          git pull --rebase
+          git push

@@ -1,0 +1,17 @@
+{
+  "name": "NSX CARE 1991 NA1",
+  "short_name": "NSX CARE",
+  "description": "1991年式 Honda NSX（NA1）の交換時期アラートと整備・部品情報。",
+  "lang": "ja",
+  "start_url": "./#home",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0a0c",
+  "theme_color": "#0a0a0c",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
