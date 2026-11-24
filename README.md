@@ -75,7 +75,7 @@ Windows では `py -3 scripts/run_local.py --open` を使います。ポート�
 
 ---
 
-# ビカク日記（ビカクシダ成長記録アプリ）
+# Laboratorio del Cervo（ビカクシダ成長記録アプリ）
 
 `fern/` フォルダーにある、育てているビカクシダの成長を記録する個人用アプリです。GitHub Pages で公開すると `https://<ユーザー名>.github.io/<リポジトリ名>/fern/` で開けます。スマートフォンではホーム画面に追加して使えます。ローカルでは `python3 -m http.server` をリポジトリのルートで起動し、`http://127.0.0.1:8000/fern/` を開きます。
 

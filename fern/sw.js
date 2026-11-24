@@ -1,5 +1,5 @@
 // オフラインでも開ける Service Worker（通信優先、失敗時に保存済みを返す）。記録は IndexedDB にあり、ここでは扱いません。
-const CACHE = "fern-log-v2";
+const CACHE = "fern-log-v3";
 const CORE = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./icon.svg", "./icon-180.png", "./data/guide.json"];
 
 self.addEventListener("install", e => {

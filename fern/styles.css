@@ -1,4 +1,4 @@
-/* ビカク日記 — 暗い壁にスポットライトで株を飾る「ギャラリー」がテーマ。写真が主役。 */
+/* Laboratorio del Cervo — 暗い壁にスポットライトで株を飾る「ギャラリー」がテーマ。写真が主役。 */
 :root {
   color-scheme: dark;
   --wall: #161617; --wall2: #1d1d1f; --stone: #26262a; --rail: #050505;
@@ -295,3 +295,9 @@ dialog .card-box { background: #141415; }
 .meter i { display: block; height: 100%; background: var(--brass); }
 .wall-preview { aspect-ratio: 16 / 9; border-radius: 4px; overflow: hidden; background: #0c0c0d; margin-bottom: 10px; }
 .wall-preview img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- アプリ名 Laboratorio del Cervo（欧文のロゴタイプ） ---------- */
+.brand b { font-family: var(--serif); font-size: 19px; letter-spacing: .08em; font-weight: 600; }
+.wall-txt h1.title { font-family: var(--serif); font-weight: 500; font-size: clamp(46px, 13.5vw, 84px); letter-spacing: .03em; line-height: .98; margin-top: 8px; }
+.wall-txt h1.title i { font-weight: 500; color: var(--brass); }
+.wall-txt .kicker { text-shadow: 0 1px 8px rgba(0, 0, 0, .9); }
