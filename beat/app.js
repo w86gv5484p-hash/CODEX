@@ -119,6 +119,13 @@ const termsHtml = () => `<ol class="terms-list">${TERMS.map(([h, t]) => `<li><b>
 
 function requireAgreement() {
   if (store.get("terms", "") === TERMS_VERSION) return Promise.resolve();
+  // 古いアプリ内ブラウザー（iOS 15.3 以前など）は <dialog> に対応していない。その場合は確認ダイアログで同意を求める。
+  if (typeof $terms.showModal !== "function") {
+    const text = TERMS.map(([h, t], i) => `${i + 1}. ${h}\n${t}`).join("\n\n");
+    while (!confirm(`ご利用の前に（利用上の注意）\n\n${text}\n\n内容に同意して使い始めますか？`)) { /* 同意するまで進めない */ }
+    store.set("terms", TERMS_VERSION);
+    return Promise.resolve();
+  }
   return new Promise(resolve => {
     document.getElementById("terms-body").innerHTML = `<div class="eyebrow">Before you start</div><h2>ご利用の前に</h2>${termsHtml()}
       <label class="agree"><input type="checkbox" id="t-ok"> 上記を読み、内容に同意します</label>
