@@ -1,7 +1,7 @@
 {
-  "name": "PP1 CARE（非公式オーナーノート）",
-  "short_name": "PP1 CARE",
-  "description": "PP1型 軽オープンスポーツ（1991〜1996年）の非公式メモアプリ。記録は端末内だけに保存します。",
+  "name": "BEAT CARE（非公式オーナーノート）",
+  "short_name": "BEAT CARE",
+  "description": "BEAT（PP1型・1991〜1996年）の非公式メモアプリ。記録は端末内だけに保存します。",
   "lang": "ja",
   "start_url": "./#home",
   "scope": "./",

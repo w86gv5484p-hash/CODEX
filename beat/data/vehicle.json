@@ -412,33 +412,53 @@
           "price": "25,488円",
           "priceAt": "2018年3月",
           "src": "https://www.automesseweb.jp/2018/03/18/49794",
-          "srcLabel": "AUTO MESSE WEB（2018年3月18日）"
+          "srcLabel": "AUTO MESSE WEB（2018年3月18日）",
+          "cms": [
+            "13210P36000"
+          ]
         },
         {
           "id": "oil-filter",
           "name": "オイルフィルター",
           "status": "check",
-          "note": "社外品も流通。純正品番は販売店で確認してください。"
+          "note": "社外品も流通しています。",
+          "cms": [
+            "15400PM3004"
+          ]
         },
         {
           "id": "timing-belt",
           "name": "タイミングベルト",
           "status": "check",
-          "note": "品番・交換周期・在庫は販売店で確認してください。"
+          "note": "CMSNLの品番はタイミングベルトキット。交換周期は整備記録・販売店で確認してください。",
+          "cms": [
+            "06141P36305",
+            "06141P36306"
+          ]
         },
         {
           "id": "spark-plug",
           "name": "スパークプラグ（3本）",
           "status": "supply",
-          "note": "汎用品（市販品）が使えるため、ホンダ品番は設定していません。"
+          "note": "CMSNLのリストにホンダ品番（名称にNGK BKR6E-11／BKR7E-11の記載）があります。同等の市販品も流通しています。",
+          "cms": [
+            "980795614E",
+            "980795714E"
+          ]
         },
         {
           "id": "ht-cord",
           "name": "ハイテンションコード／イグニッションセンターコード",
           "status": "repro",
-          "note": "再販対象として報道。品番は未確認。",
+          "note": "再販対象として報道。",
           "src": "https://response.jp/article/2019/12/31/330289.html",
-          "srcLabel": "レスポンス（2019年12月31日）"
+          "srcLabel": "レスポンス（2019年12月31日）",
+          "cms": [
+            "32723P36000",
+            "32701P36000",
+            "32702P36000",
+            "32703P36000"
+          ]
         }
       ]
     },
@@ -459,31 +479,41 @@
           "price": "8,100円",
           "priceAt": "2018年3月",
           "src": "https://www.automesseweb.jp/2018/03/18/49794",
-          "srcLabel": "AUTO MESSE WEB（2018年3月18日）"
+          "srcLabel": "AUTO MESSE WEB（2018年3月18日）",
+          "note": "この品番はCMSNLのBEATパーツリストには見当たりませんでした（2026年11月25日確認）。"
         },
         {
           "id": "intake-mani",
           "name": "インテークマニホールド",
           "status": "repro",
-          "note": "2018年1月26日に再販開始と報道。品番は未確認。",
+          "note": "2018年1月26日に再販開始と報道。",
           "src": "https://car.watch.impress.co.jp/docs/news/1103295.html",
-          "srcLabel": "Car Watch（2018年1月26日）"
+          "srcLabel": "Car Watch（2018年1月26日）",
+          "cms": [
+            "17100P36000"
+          ]
         },
         {
           "id": "exhaust-mani",
           "name": "エキゾーストマニホールド",
           "status": "repro",
-          "note": "2018年1月26日に再販開始と報道。品番は未確認。",
+          "note": "2018年1月26日に再販開始と報道。",
           "src": "https://car.watch.impress.co.jp/docs/news/1103295.html",
-          "srcLabel": "Car Watch（2018年1月26日）"
+          "srcLabel": "Car Watch（2018年1月26日）",
+          "cms": [
+            "18100P36000"
+          ]
         },
         {
           "id": "fuel-joint-hose",
           "name": "フューエルジョイントホース",
           "status": "repro",
-          "note": "再販対象として報道。品番は未確認。",
+          "note": "再販対象として報道。",
           "src": "https://response.jp/article/2019/12/31/330289.html",
-          "srcLabel": "レスポンス（2019年12月31日）"
+          "srcLabel": "レスポンス（2019年12月31日）",
+          "cms": [
+            "17707SS1930"
+          ]
         },
         {
           "id": "fuel-return-tube",
@@ -491,15 +521,21 @@
           "status": "repro",
           "note": "2020年2月に再販予定と報道。発売済みかは未確認。",
           "src": "https://response.jp/article/2019/12/31/330289.html",
-          "srcLabel": "レスポンス（2019年12月31日）"
+          "srcLabel": "レスポンス（2019年12月31日）",
+          "cms": [
+            "16724P36000"
+          ]
         },
         {
           "id": "pressure-regulator",
           "name": "プレッシャーレギュレーター ASSY",
           "status": "repro",
-          "note": "再販対象として報道。品番は未確認。",
+          "note": "再販対象として報道。",
           "src": "https://response.jp/article/2019/12/31/330289.html",
-          "srcLabel": "レスポンス（2019年12月31日）"
+          "srcLabel": "レスポンス（2019年12月31日）",
+          "cms": [
+            "16740P36000"
+          ]
         },
         {
           "id": "purge-hose",
@@ -518,22 +554,37 @@
         {
           "id": "water-pump",
           "name": "ウォーターポンプ",
-          "status": "check"
+          "status": "check",
+          "cms": [
+            "19200P36000"
+          ]
         },
         {
           "id": "radiator",
           "name": "ラジエーター",
-          "status": "check"
+          "status": "check",
+          "cms": [
+            "19010P36004"
+          ]
         },
         {
           "id": "coolant-hose",
           "name": "冷却水ホース類",
-          "status": "check"
+          "status": "check",
+          "cms": [
+            "19501P36000",
+            "19502P36000",
+            "19503P36000",
+            "19504P36000"
+          ]
         },
         {
           "id": "thermostat",
           "name": "サーモスタット",
-          "status": "check"
+          "status": "check",
+          "cms": [
+            "19300P36003"
+          ]
         }
       ]
     },
@@ -545,30 +596,44 @@
           "id": "clutch-release",
           "name": "クラッチレリーズ",
           "status": "repro",
-          "note": "2018年1月26日に再販開始と報道。品番は未確認。",
+          "note": "記事の「クラッチレリーズ」がレリーズベアリングを指すかは未確認です（品番はCMSNLのレリーズベアリング）。",
           "src": "https://car.watch.impress.co.jp/docs/news/1103295.html",
-          "srcLabel": "Car Watch（2018年1月26日）"
+          "srcLabel": "Car Watch（2018年1月26日）",
+          "cms": [
+            "22810P37013",
+            "22810P37015"
+          ]
         },
         {
           "id": "mission-case",
           "name": "トランスミッションケース",
           "status": "repro",
-          "note": "2018年1月26日に再販開始と報道。品番は未確認。",
+          "note": "2018年1月26日に再販開始と報道。",
           "src": "https://car.watch.impress.co.jp/docs/news/1103295.html",
-          "srcLabel": "Car Watch（2018年1月26日）"
+          "srcLabel": "Car Watch（2018年1月26日）",
+          "cms": [
+            "21200P37000"
+          ]
         },
         {
           "id": "countershaft",
           "name": "カウンターシャフト",
           "status": "repro",
-          "note": "2018年1月26日に再販開始と報道。品番は未確認。",
+          "note": "2018年1月26日に再販開始と報道。",
           "src": "https://car.watch.impress.co.jp/docs/news/1103295.html",
-          "srcLabel": "Car Watch（2018年1月26日）"
+          "srcLabel": "Car Watch（2018年1月26日）",
+          "cms": [
+            "23220P37000"
+          ]
         },
         {
           "id": "clutch-disc",
           "name": "クラッチディスク／カバー",
-          "status": "check"
+          "status": "check",
+          "cms": [
+            "22200P36010",
+            "22300P36000"
+          ]
         }
       ]
     },
@@ -588,13 +653,20 @@
           ],
           "note": "価格は記事に記載なし（廃番前の2倍弱とのこと）。品番は記事の記載どおり。",
           "src": "https://www.automesseweb.jp/2018/03/18/49794",
-          "srcLabel": "AUTO MESSE WEB（2018年3月18日）"
+          "srcLabel": "AUTO MESSE WEB（2018年3月18日）",
+          "cms": [
+            "45018ST5003"
+          ]
         },
         {
           "id": "brake-pad",
           "name": "ブレーキパッド（前後）",
           "status": "check",
-          "note": "社外品も流通。"
+          "note": "社外品も流通。",
+          "cms": [
+            "45022SD5040",
+            "43022SS1000"
+          ]
         }
       ]
     },
@@ -606,17 +678,25 @@
           "id": "rear-damper",
           "name": "リアダンパーユニット",
           "status": "repro",
-          "note": "2019年5月から再販と報道（12部品で構成）。品番は未確認。",
+          "note": "2019年5月から再販と報道（12部品で構成）。",
           "src": "https://response.jp/article/2019/12/31/330289.html",
-          "srcLabel": "レスポンス（2019年12月31日）"
+          "srcLabel": "レスポンス（2019年12月31日）",
+          "cms": [
+            "52611SS1023",
+            "52612SS1023"
+          ]
         },
         {
           "id": "rear-lower-arm",
           "name": "リヤーロアーアーム",
           "status": "repro",
-          "note": "2018年1月26日に再販開始と報道。品番は未確認。",
+          "note": "2018年1月26日に再販開始と報道。",
           "src": "https://car.watch.impress.co.jp/docs/news/1103295.html",
-          "srcLabel": "Car Watch（2018年1月26日）"
+          "srcLabel": "Car Watch（2018年1月26日）",
+          "cms": [
+            "52350SS1000",
+            "52360SS1000"
+          ]
         },
         {
           "id": "rack-end",
@@ -624,7 +704,10 @@
           "status": "repro",
           "note": "2020年2月に再販予定と報道。発売済みかは未確認。",
           "src": "https://response.jp/article/2019/12/31/330289.html",
-          "srcLabel": "レスポンス（2019年12月31日）"
+          "srcLabel": "レスポンス（2019年12月31日）",
+          "cms": [
+            "53010SS1000"
+          ]
         },
         {
           "id": "wheel-14",
@@ -632,9 +715,11 @@
           "status": "repro",
           "price": "13,500円",
           "priceAt": "2017年8月",
-          "note": "品番は未確認。",
           "src": "https://web.motormagazine.co.jp/_ct/17108440",
-          "srcLabel": "Webモーターマガジン（2017年8月10日）"
+          "srcLabel": "Webモーターマガジン（2017年8月10日）",
+          "cms": [
+            "42700SS1003"
+          ]
         },
         {
           "id": "wheel-13",
@@ -642,7 +727,10 @@
           "status": "repro",
           "note": "記事により表記（12×4.5J／13×4 1/2J）が異なります。品番・価格は販売店で確認。",
           "src": "https://web.motormagazine.co.jp/_ct/17108440",
-          "srcLabel": "Webモーターマガジン（2017年8月10日）"
+          "srcLabel": "Webモーターマガジン（2017年8月10日）",
+          "cms": [
+            "42700SS1901"
+          ]
         }
       ]
     },
@@ -663,7 +751,10 @@
           "price": "842円",
           "priceAt": "2017年8月",
           "src": "https://www.automesseweb.jp/2018/03/18/49794",
-          "srcLabel": "AUTO MESSE WEB（2018年3月18日）"
+          "srcLabel": "AUTO MESSE WEB（2018年3月18日）",
+          "cms": [
+            "34101SD5013"
+          ]
         },
         {
           "id": "heater-blower",
@@ -671,7 +762,6 @@
           "status": "repro",
           "price": "29,700円",
           "priceAt": "2017年8月",
-          "note": "品番は未確認。",
           "src": "https://web.motormagazine.co.jp/_ct/17108440",
           "srcLabel": "Webモーターマガジン（2017年8月10日）"
         }
@@ -694,29 +784,41 @@
           "price": "583円",
           "priceAt": "2018年3月",
           "src": "https://www.automesseweb.jp/2018/03/18/49794",
-          "srcLabel": "AUTO MESSE WEB（2018年3月18日）"
+          "srcLabel": "AUTO MESSE WEB（2018年3月18日）",
+          "cms": [
+            "72245SL4000"
+          ]
         },
         {
           "id": "trunk-lid",
           "name": "トランクリッド",
           "status": "repro",
-          "note": "2018年1月26日に再販開始と報道。品番は未確認。",
+          "note": "2018年1月26日に再販開始と報道。",
           "src": "https://car.watch.impress.co.jp/docs/news/1103295.html",
-          "srcLabel": "Car Watch（2018年1月26日）"
+          "srcLabel": "Car Watch（2018年1月26日）",
+          "cms": [
+            "68500SS1J00ZZ"
+          ]
         },
         {
           "id": "bonnet-wire",
           "name": "フロントボンネットワイヤー COMP",
           "status": "repro",
-          "note": "2018年6月29日に再販と報道。品番は未確認。",
+          "note": "2018年6月29日に再販と報道。",
           "src": "https://response.jp/article/2019/12/31/330289.html",
-          "srcLabel": "レスポンス（2019年12月31日）"
+          "srcLabel": "レスポンス（2019年12月31日）",
+          "cms": [
+            "74130SS1003"
+          ]
         },
         {
           "id": "soft-top",
           "name": "幌（ソフトトップ）",
           "status": "check",
-          "note": "純正の在庫・社外品は販売店や専門店で確認してください。"
+          "note": "純正の在庫・社外品は販売店や専門店で確認してください。",
+          "cms": [
+            "86000SS1023ZA"
+          ]
         },
         {
           "id": "weatherstrip",
@@ -742,7 +844,10 @@
           "price": "2,160円",
           "priceAt": "2018年3月",
           "src": "https://www.automesseweb.jp/2018/03/18/49794",
-          "srcLabel": "AUTO MESSE WEB（2018年3月18日）"
+          "srcLabel": "AUTO MESSE WEB（2018年3月18日）",
+          "cms": [
+            "72125SS1003ZA"
+          ]
         },
         {
           "id": "seatbelt",
@@ -758,12 +863,15 @@
           "id": "trunk-mat",
           "name": "トランクマット",
           "status": "repro",
-          "note": "再販対象として報道。品番は未確認。",
+          "note": "再販対象として報道。",
           "src": "https://response.jp/article/2019/12/31/330289.html",
-          "srcLabel": "レスポンス（2019年12月31日）"
+          "srcLabel": "レスポンス（2019年12月31日）",
+          "cms": [
+            "84531SS1000ZA"
+          ]
         }
       ]
     }
   ],
-  "partsNote": "品番と価格は、報道記事（AUTO MESSE WEB 2018年3月、Webモーターマガジン 2017年8月）に掲載されたものだけを載せています。いずれも記事掲載時点の情報で、現在の販売状況・価格は確認できていません。品番の欄が空の部品は、出典で品番を確認できなかったものです。「再販あり」はメーカーの純正部品再販（BEATparts）の対象と報道された部品です。ホンダ公式の部品リストは、この作業環境からは取得できませんでした。注文前に必ずホンダ販売店で品番と在庫を確認してください。"
+  "partsNote": "主要パーツの品番と販売状況（在庫あり・取り寄せ可・後継品番あり・廃番）は、海外の部品販売店 CMSNL のBEAT（PP1）パーツリストを2026年11月25日に確認したものです。これは1店舗のサイト上の表示で、ホンダの公式な供給状況ではありません。国内のホンダ販売店では扱いが異なる場合があります。「再販と報道」は、2017〜2020年にメーカーの純正部品再販の対象と報道された部品です（記事掲載時点の情報）。ホンダ公式の再販ページ（BEATparts）は2026年11月25日時点で表示されませんでした。注文前に必ずホンダ販売店で品番と在庫を確認してください。"
 }

@@ -1,7 +1,8 @@
 // オフラインでも直近の内容を表示する Service Worker（通信優先、失敗時に保存済みを返す）。
-const CACHE = "pp1-care-v2";
+const CACHE = "beat-care-v4";
 const CORE = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./icon.svg",
-  "./data/vehicle.json", "./data/supply.json", "./img/hero.svg"];
+  "./data/vehicle.json", "./data/supply.json", "./img/hero.svg",
+  "./data/photos.json", "./data/parts-catalog.json", "./img/hero.webp"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
