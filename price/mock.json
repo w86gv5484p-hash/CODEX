@@ -1,0 +1,11 @@
+{
+  "_note": "架空の製品によるサンプルデータです。実在の商品・店舗・価格ではありません。JAN の 20〜29 で始まるコードは店舗内用で、実在の製品には割り当てられません。",
+  "offers": [
+    { "store": "rakuten", "title": "【サンプル】ワイヤレスイヤホン X100 ブラック", "shop": "サンプル家電 楽天市場店", "url": "https://www.rakuten.co.jp/", "price": 12980, "shippingFee": 0, "pointRate": 10, "points": null, "janCode": "2001234000017", "inStock": true },
+    { "store": "rakuten", "title": "【サンプル】ワイヤレスイヤホン X100 ブラック 国内正規品", "shop": "サンプルストア楽天", "url": "https://www.rakuten.co.jp/", "price": 12480, "shippingFee": null, "pointRate": 1, "points": null, "janCode": "2001234000017", "inStock": true },
+    { "store": "yahoo", "title": "【サンプル】ワイヤレスイヤホン X100 ブラック", "shop": "サンプル電機 Yahoo!店", "url": "https://shopping.yahoo.co.jp/", "price": 12800, "shippingFee": 0, "pointRate": null, "points": 640, "pointsLabel": "ストアポイント（PayPay期間限定）", "janCode": "2001234000017", "inStock": true },
+    { "store": "yahoo", "title": "【サンプル】ワイヤレスイヤホン X100 ホワイト", "shop": "サンプル電機 Yahoo!店", "url": "https://shopping.yahoo.co.jp/", "price": 11980, "shippingFee": 0, "pointRate": null, "points": 120, "pointsLabel": "ストアポイント（PayPay期間限定）", "janCode": "2001234000024", "inStock": true },
+    { "store": "amazon", "title": "【サンプル】ワイヤレスイヤホン X100 ブラック", "shop": "Amazon.co.jp", "url": "https://www.amazon.co.jp/", "price": 13200, "shippingFee": null, "pointRate": null, "points": 132, "pointsLabel": "Amazonポイント", "janCode": "2001234000017", "inStock": true },
+    { "store": "official", "title": "【サンプル】ワイヤレスイヤホン X100 ブラック（公式）", "shop": "サンプルメーカー公式ストア", "url": "https://example.com/", "price": 14300, "shippingFee": 0, "pointRate": 3, "points": null, "janCode": "2001234000017", "inStock": true }
+  ]
+}

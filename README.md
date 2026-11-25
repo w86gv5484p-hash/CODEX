@@ -119,3 +119,44 @@ To add a skill, ask Claude「skill-creator で○○のスキルを作って」(
 安全のため、1か月に体重の5%を超えるペース、1日1,000kcalを超える赤字、目標 BMI 18.5未満には警告を出し、推奨ペース（月3%）の目標日にワンタップで変えられます。食事で減らす量は、摂取量が基礎代謝（男性1,500kcal・女性1,200kcal を下限）を下回らず、消費の30%以内に抑えます。「できる量」の合計で足りない場合は不足分と、届く目標日（月5%より速くはしない）を示します。
 
 計算は `diet/plan.js`、食品と食事のおすすめは `diet/meals.js` にあります。食品の栄養価は一般的な目安で、`diet/meals.js` の `CATALOG` を編集すると変わります。テストは `node --test scripts/test_diet_plan.mjs` で実行します。入力と記録はその端末のブラウザー（localStorage）だけに保存され、外部には送信しません。持病のある方、服薬中の方、妊娠中・授乳中の方は医師に相談してから始めてください。
+
+---
+
+# 安値世界一（最安値比較）
+
+`price/` フォルダーにある、楽天市場・Amazon・Yahoo!ショッピング・公式ショップで売られている同じ製品を比べ、**実質価格**がいちばん安いお店を判定する個人用アプリです。
+
+**実質価格 ＝ 表示価格（税込） − クーポン ＋ 送料 − 獲得ポイントの円換算**
+
+| 画面 | 内容 |
+| --- | --- |
+| 比較 | 製品名かJANコードで検索し、実質価格の安い順に並べます。JANコードで検索すると、JANが一致する商品だけを比べ、不一致・不明の商品は「比較から外した候補」に回します（チェックで戻せます）。公式ショップの価格は手入力します。 |
+| 還元設定 | SPU・お買い物マラソン・日曜日キャンペーンなど、自分が今使えるポイントアップとクーポンを、期間・上限つきで登録します。期間外のものは自動で計算から外れます。1ポイントの価値（円）と、ポイント計算の基準（税込／税抜）もストアごとに変えられます。 |
+| 使い方 | 計算方法と注意点。 |
+
+## 起動のしかた
+
+- **APIキーなしで試す**：GitHub Pages の `https://<ユーザー名>.github.io/<リポジトリ名>/price/` か、ローカルで開くと、架空の製品のサンプルデータで動きます。
+- **実際の価格で使う**：APIキーはブラウザーや公開リポジトリに置けないため、パソコンでローカルサーバーを起動します。Python 3.10 以降で、追加パッケージは不要です。
+
+```sh
+python3 scripts/price_server.py --open      # http://127.0.0.1:8010/price/ が開きます
+```
+
+APIキーは環境変数か、`price.keys.example.json` をコピーした `price.keys.json`（`.gitignore` 済み）に書きます。キーがあるストアだけ取得し、無いストアは「未設定」と表示します。
+
+| ストア | 使うAPI（2026年11月時点） | 必要なキー |
+| --- | --- | --- |
+| 楽天市場 | [楽天市場商品検索API 2026-07-01版](https://webservice.rakuten.co.jp/documentation/ichiba-item-search)（`openapi.rakuten.co.jp`。旧 `app.rakuten.co.jp` は2026年5月14日に停止） | `RAKUTEN_APP_ID`、`RAKUTEN_ACCESS_KEY`（任意で `RAKUTEN_REFERER`、`RAKUTEN_AFFILIATE_ID`） |
+| Yahoo!ショッピング | [商品検索API v3](https://developer.yahoo.co.jp/webapi/shopping/v3/itemsearch.html) | `YAHOO_CLIENT_ID` |
+| Amazon | [Creators API](https://affiliate-program.amazon.com/creatorsapi/docs/en-us/api-reference/operations/search-items)（PA-API 5.0 は廃止） | `AMAZON_CREDENTIAL_ID`、`AMAZON_CREDENTIAL_SECRET`、`AMAZON_PARTNER_TAG` |
+| 公式ショップ | 共通APIが無く、自動取得は規約で禁止されることが多いため行いません。画面から手入力します。 | — |
+
+## APIで取れないこと（画面に「不明」と表示）
+
+- 楽天：送料の金額（「送料込み／送料別」だけ）、24時間以内に終わるポイント倍率、クーポン。JANコード検索は無いため、JANもキーワードとして検索します。
+- Yahoo!：「条件付き送料無料」「設定なし」の送料の金額。ポイントは PayPay ポイント（期間限定）のストア付与分（`lyLimitedBonusAmount`）を使います。
+- Amazon：送料（Creators API の OffersV2 は配送情報を返しません）。「還元設定」のプライム会員（初期値オン）で送料 0 円として計算し、出品者が Amazon.co.jp 以外の商品には「送料がかかる場合あり」と表示します。ポイントは日本のみの `loyaltyPoints` を使います。
+- 共通：会員ランク・支払方法・エントリーで変わる還元。これらは「還元設定」に入れてください。
+
+計算は `price/pricing.js`、各社APIの取得と変換は `scripts/price_server.py` にあります。テストは `node --test scripts/test_price_calc.mjs` と `python3 -m unittest scripts/test_price_server.py` で実行します。還元設定と手入力の価格は、その端末のブラウザー（localStorage）だけに保存されます。
