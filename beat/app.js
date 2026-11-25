@@ -1,4 +1,4 @@
-// PP1 CARE — 軽オープンスポーツ PP1型（1991〜1996年）のオーナー向け非公式メモアプリ。
+// BEAT CARE — 軽オープンスポーツ BEAT（PP1型・1991〜1996年）のオーナー向け非公式メモアプリ。
 // NSX CARE（../nsx/）と同じ構成で、車種データだけを差し替えている。
 //
 // 第三者が使う前提の安全策：
@@ -8,7 +8,7 @@
 // - 公開者の個人情報（名前・連絡先・自分の車の記録）はアプリにもデータにも含めない。
 
 const TERMS_VERSION = "2026-11-25";
-const KEY = "pp1care.";
+const KEY = "pp1care."; // 旧名 PP1 CARE 時代の保存データをそのまま使うため、キーは変えない
 
 const $main = document.getElementById("main");
 const $dlg = document.getElementById("dlg");
@@ -78,6 +78,7 @@ function maintStatus(item) {
 
 // ---------- データ ----------
 let data = null;
+let photos = {};
 let supply = { sources: [], changes: [] };
 let loadedFor = "";
 
@@ -89,6 +90,7 @@ async function loadData() {
     return res.json();
   };
   data = await get("vehicle.json");
+  try { photos = await get("photos.json"); } catch { photos = {}; }
   try { supply = await get("supply.json"); } catch { /* 供給データがなくても他の画面は使える */ }
   loadedFor = day;
 }
@@ -98,17 +100,22 @@ const safeUrl = u => /^https:\/\//.test(u || "") ? u : "";
 const ext = (url, label) => safeUrl(url) ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>` : esc(label);
 const maintItems = () => [...data.maintenance, ...custom];
 
-// 写真は使わず、オリジナルのイラスト（実車写真・メーカー画像ではない）を表示する。
+// 写真は Wikimedia Commons の自由ライセンス画像（CC0 / CC BY / CC BY-SA）を縮小して同梱している。
+// メーカーの公式画像は使わない。写真が読めないときはオリジナルのイラストを出す。
 const art = (cls = "") => `<img class="art ${cls}" src="./img/hero.svg" alt="" aria-hidden="true">`;
-const banner = (eyebrow, title, text, num = "") => `
-  <section class="banner">${art()}
+const pic = (key, attrs = "") => photos[key]
+  ? `<img src="./img/${esc(photos[key].file)}" alt="${esc(photos[key].caption)}" loading="lazy" decoding="async" ${attrs}>` : art();
+const shortCredit = key => photos[key] ? `Photo: ${esc(photos[key].author)} / ${esc(photos[key].license)}` : "";
+const GALLERY = ["open-front", "front", "night-rear", "cockpit", "open-side", "museum-red", "meters", "rear", "silver", "seats", "version-c", "night-front"];
+const banner = (key, eyebrow, title, text, num = "") => `
+  <section class="banner" data-photo="${key}">${pic(key, 'loading="eager"')}
     ${num ? `<span class="num">${num}</span>` : ""}
     <div class="banner-body"><div class="eyebrow">${eyebrow}</div><h1>${title}</h1><p>${text}</p></div>
   </section>`;
 
 // ---------- 利用上の注意（初回に同意を求める） ----------
 const TERMS = [
-  ["非公式のアプリです", "このアプリは個人が作成した非公式のものです。本田技研工業株式会社、株式会社ホンダアクセス、ホンダ販売店ほか、いかなる企業・団体とも関係がなく、承認も受けていません。「ホンダ」「Honda」「ビート」「BEAT」等は各権利者の商標であり、車種を説明する目的でのみ記載しています。"],
+  ["非公式のアプリです", "このアプリ（BEAT CARE）は個人が作成した非公式のものです。アプリ名の「BEAT」は対象の車種を示すためだけに使っており、メーカーの製品・サービスではありません。本田技研工業株式会社、株式会社ホンダアクセス、ホンダ販売店ほか、いかなる企業・団体とも関係がなく、承認も受けていません。「ホンダ」「Honda」「ビート」「BEAT」等は各権利者の商標であり、車種を説明する目的でのみ記載しています。"],
   ["情報の正確性は保証しません", "諸元・歴史・部品の情報は、出典として示した公開資料・報道・百科事典をもとにまとめたもので、誤り・古い情報・個体差を含む可能性があります。「要確認」「報道」「Wikipedia記載」などの表示は、その情報の確かさを示す目安です。"],
   ["整備は自己責任で、専門家に確認してください", "交換時期は一般的な目安で、メーカー指定値ではありません。点検リストは一般的な経年点検の例です。整備・修理・部品の購入や取り付けは、必ずホンダ販売店や整備工場に確認のうえ、利用者ご自身の判断と責任で行ってください。このアプリの利用により生じたいかなる損害についても、作成者は責任を負いません。"],
   ["記録は端末の中だけに保存されます", "入力した交換日・点検・メモ・写真は、お使いのブラウザー（この端末）の中だけに保存され、作成者を含め誰にも送信されません。アプリは外部のサーバー（解析・広告・外部フォント等）と通信しません。ブラウザーのデータを消去すると記録も消えるため、必要に応じて「データを書き出す」で保存してください。"],
@@ -147,7 +154,7 @@ let partQuery = "";
 function render() {
   const [tab, sub] = (location.hash.slice(1) || "home").split("/");
   const view = views[tab] ? tab : "home";
-  if (view === "info" && sub && ["specs", "history", "dev", "terms"].includes(sub)) infoTab = sub;
+  if (view === "info" && sub && ["specs", "history", "dev", "credits", "terms"].includes(sub)) infoTab = sub;
   document.querySelectorAll(".tabs a").forEach(a => a.classList.toggle("active", a.dataset.tab === view));
   $main.innerHTML = views[view]();
   updateBadge();
@@ -184,21 +191,37 @@ function home() {
   const latest = supply.changes?.[0];
   return `
   <section class="hero">
-    ${photo ? `<img src="${photo}" alt="愛車の写真">` : art("hero-art")}
+    ${photo ? `<img src="${photo}" alt="愛車の写真">` : pic("hero", 'loading="eager" fetchpriority="high"')}
     <button class="btn ghost small photo-btn" data-act="photo">${photo ? "写真を変更" : "📷 愛車の写真にする"}</button>
     <div class="hero-body">
-      <p class="hero-mark"><span>PP1</span></p>
+      <p class="hero-mark"><span>BEAT</span></p>
       <p class="hero-sub">MIDSHIP <b>AMUSEMENT</b> · OWNER'S NOTE</p>
       <div class="hero-tags"><span class="tag red">1991–1996</span><span class="tag">E-PP1</span><span class="tag">E07A MTREC</span><span class="tag">64PS / 8,100rpm</span><span class="tag">MR · 5MT</span></div>
     </div>
+    ${photo ? "" : `<span class="credit">${shortCredit("hero")}</span>`}
   </section>
-  <p class="small muted" style="margin:10px 2px 0">非公式のオーナー向けメモアプリです。記録はこの端末の中だけに保存されます。${photo ? "" : "イラストはイメージで、実車の写真ではありません。"}</p>
+  <p class="small muted" style="margin:10px 2px 0">非公式のオーナー向けメモアプリです。記録はこの端末の中だけに保存されます。${photo ? "" : "写真は Wikimedia Commons の自由ライセンス画像で、メーカーの公式画像ではありません。"}</p>
   ${alertBanner()}
   <div class="stats">
     <div class="stat" style="--c:var(--over)"><b style="color:var(--over)">${count("over")}</b><span>超過</span></div>
     <div class="stat" style="--c:var(--soon)"><b style="color:var(--soon)">${count("soon")}</b><span>まもなく</span></div>
     <div class="stat" style="--c:var(--ok)"><b style="color:var(--ok)">${count("ok")}</b><span>良好</span></div>
     <div class="stat" style="--c:var(--silver)"><b>${done}<small class="muted" style="font-size:14px">/${chk}</small></b><span>点検済</span></div>
+  </div>
+
+  <div class="section"><div class="eyebrow">Gallery</div><h2 class="section-title">PP1型 BEAT</h2>
+    <div class="gallery">${GALLERY.filter(k => photos[k]).map(k => `<figure data-photo="${k}">${pic(k)}<figcaption>${esc(photos[k].caption)}</figcaption></figure>`).join("")}</div>
+    <p class="small muted" style="margin:6px 2px 0">タップで拡大・撮影者とライセンスを表示。<a href="#info/credits">写真クレジット一覧</a></p>
+  </div>
+  <div class="section"><div class="eyebrow">Detail</div><h2 class="section-title">ディテール</h2>
+    <div class="mosaic" style="margin-top:12px">
+      <figure class="tile wide" data-photo="open-rear">${pic("open-rear")}<figcaption>${esc(photos["open-rear"]?.caption)}</figcaption></figure>
+      <figure class="tile" data-photo="trunk">${pic("trunk")}<figcaption>${esc(photos["trunk"]?.caption)}</figcaption></figure>
+      <figure class="tile" data-photo="front-hood">${pic("front-hood")}<figcaption>${esc(photos["front-hood"]?.caption)}</figcaption></figure>
+      <figure class="tile" data-photo="side">${pic("side")}<figcaption>${esc(photos["side"]?.caption)}</figcaption></figure>
+      <figure class="tile" data-photo="museum-white">${pic("museum-white")}<figcaption>${esc(photos["museum-white"]?.caption)}</figcaption></figure>
+      <figure class="tile wide" data-photo="custom">${pic("custom")}<figcaption>${esc(photos["custom"]?.caption)}</figcaption></figure>
+    </div>
   </div>
 
   <div class="section"><div class="eyebrow">Menu</div><h2 class="section-title">メンテナンスと車両情報</h2>
@@ -233,7 +256,7 @@ function alerts() {
   }).join("");
   const notif = "Notification" in window && Notification.permission === "default"
     ? `<button class="btn small" data-act="notify">アプリを開いたときに通知する</button>` : "";
-  return `${banner("Maintenance", "交換タイミングアラート", "交換した日を入力すると次回交換日を計算し、<b>その1か月半前</b>からお知らせします。周期は一般的な目安です。", "01")}
+  return `${banner("open-side", "Maintenance", "交換タイミングアラート", "交換した日を入力すると次回交換日を計算し、<b>その1か月半前</b>からお知らせします。周期は一般的な目安です。", "01")}
   ${alertBanner()}
   <div class="maint">${cards}</div>
   <div class="toolbar" style="margin-top:16px"><button class="btn" data-act="add-custom">＋ 交換項目を追加（タイミングベルトなど）</button>${notif}
@@ -271,7 +294,7 @@ function partsView() {
     `<button class="chip ${partFilter === k ? "on" : ""}" data-act="filter" data-k="${k}">${k === "all" ? "すべて" : STATUS[k].label} ${counts[k]}</button>`).join("");
   const sources = (supply.sources || []).map(s => `<div class="source">${ext(s.url, s.label)}<br><span class="muted">${esc(s.kind || "")}${s.date ? ` ・ ${esc(s.date)}` : ""}</span></div>`).join("");
   const changes = (supply.changes || []).map(c => `<li><b>${esc(c.date)}</b> ${esc(c.summary)}（${ext(c.url, c.source)}）</li>`).join("");
-  return `${banner("Parts", "パーツと再販部品", "主要パーツの一覧と、メーカーによる純正部品の再販（2017年〜）の報道まとめ。", "02")}
+  return `${banner("trunk", "Parts", "パーツと再販部品", "主要パーツの一覧と、メーカーによる純正部品の再販（2017年〜）の報道まとめ。", "02")}
   <p class="lead">カテゴリー別の主要パーツです。<b>品番</b>は出典で確認できたものだけを載せ、<b>販売状況</b>は「販売中／再販あり／廃番／要確認」で示します。タップすると出典と、自分用のメモ（端末内だけに保存）を見られます。</p>
   <div class="legend small"><span class="pill st-ok">販売中</span> 汎用品など入手できるもの <span class="pill st-repro">再販あり</span> メーカー再販の対象と報道 <span class="pill st-over">廃番</span> 販売終了を確認 <span class="pill st-unset">要確認</span> 情報なし・販売店で確認</div>
   <p class="small muted" style="margin-top:-6px">※ ${esc(data.partsNote)}</p>
@@ -288,7 +311,7 @@ function partsView() {
 }
 
 function faults() {
-  return `${banner("Inspection", "経年点検チェック", "30年以上経った車で確認したい項目。点検した項目にチェックすると日付が記録されます。", "03")}
+  return `${banner("front-hood", "Inspection", "経年点検チェック", "30年以上経った車で確認したい項目。点検した項目にチェックすると日付が記録されます。", "03")}
   <p class="small muted">※ ${esc(data.faultsNote)}</p>
   ${data.faults.map(f => {
     const done = f.checks.filter((_, i) => checks[`${f.id}:${i}`]).length;
@@ -307,8 +330,8 @@ function faults() {
 }
 
 function info() {
-  const sub = [["specs", "基本スペック"], ["history", "車両の歴史"], ["dev", "開発の特徴"], ["terms", "利用上の注意"]];
-  const heads = { specs: ["Specifications", "車両の基本スペック", "メーカー公式ファクトブック（1991年5月）の主要諸元。", "04"], history: ["History", "車両の歴史", "1991年の発売から、純正部品の再販まで。", "05"], dev: ["Development", "開発の特徴", "メーカー発表資料にもとづく技術の特徴と、関係者に関する情報。", "06"], terms: ["Terms", "利用上の注意", "ご利用の前に必ずお読みください。", ""] };
+  const sub = [["specs", "基本スペック"], ["history", "車両の歴史"], ["dev", "開発の特徴"], ["credits", "写真クレジット"], ["terms", "利用上の注意"]];
+  const heads = { credits: ["museum-red", "Credits", "写真クレジット", "このアプリの写真は Wikimedia Commons の自由ライセンス画像です。", ""], specs: ["meters", "Specifications", "車両の基本スペック", "メーカー公式ファクトブック（1991年5月）の主要諸元。", "04"], history: ["museum-white", "History", "車両の歴史", "1991年の発売から、純正部品の再販まで。", "05"], dev: ["cockpit", "Development", "開発の特徴", "メーカー発表資料にもとづく技術の特徴と、関係者に関する情報。", "06"], terms: ["night-front", "Terms", "利用上の注意", "ご利用の前に必ずお読みください。", ""] };
   let body = "";
   if (infoTab === "specs") {
     body = `<div class="big-numbers"><div><b>64<small>PS</small></b><span>最高出力 / 8,100rpm</span></div><div><b>656<small>cc</small></b><span>E07A 直列3気筒</span></div><div><b>760<small>kg</small></b><span>車両重量</span></div></div>
@@ -324,14 +347,26 @@ function info() {
       <div class="section"><div class="eyebrow">People</div><h2 class="section-title">関係者について</h2></div>
       <div class="grid">${d.people.map(p => `<div class="card person"><div class="avatar">${esc(p.name.slice(0, 1))}</div><div><h3 style="margin:0">${esc(p.name)}</h3><div class="small" style="color:var(--red)">${esc(p.role)}</div><p class="small" style="margin:4px 0 0">${esc(p.text)}</p></div></div>`).join("")}</div>
       <p class="small muted">${esc(d.note)}</p>`;
+  } else if (infoTab === "credits") {
+    body = `<div class="mosaic">${Object.keys(photos).map(k => `<figure class="tile" data-photo="${k}">${pic(k)}<figcaption>${esc(photos[k].caption)}</figcaption></figure>`).join("")}</div>
+      <ul class="credits" style="margin-top:16px;padding-left:18px">${Object.values(photos).map(p => `<li>${esc(p.caption)} — ${esc(p.author)}、${ext(p.source, p.title)}（${esc(p.license)}）</li>`).join("")}</ul>
+      <p class="small muted">いずれも Wikimedia Commons で公開されている CC0 / CC BY 2.0 / CC BY-SA 4.0 の画像を、幅1280px以下に縮小・WebP変換して使用しています（変更点はこの縮小・形式変換のみ）。ライセンス本文は各リンク先をご覧ください。メーカーの公式画像ではなく、写っている車両・ナンバー・人物とこのアプリは関係ありません。</p>`;
   } else {
     body = `<div class="card">${termsHtml()}</div>
-      <p class="small muted">トップのイラストはこのアプリ用に描いたイメージで、実車の写真やメーカーの画像・ロゴではありません。</p>`;
+      <p class="small muted">写真は Wikimedia Commons の自由ライセンス画像です（「写真クレジット」参照）。メーカーの画像・ロゴは使用していません。</p>`;
   }
   return `${banner(...heads[infoTab])}<div class="subtabs">${sub.map(([k, l]) => `<button class="chip ${infoTab === k ? "on" : ""}" data-act="info" data-k="${k}">${l}</button>`).join("")}</div>${body}`;
 }
 
 // ---------- 操作 ----------
+function openPhoto(key) {
+  const p = photos[key]; if (!p) return;
+  $dlg.classList.add("photo");
+  $dlgBody.innerHTML = `<img src="./img/${esc(p.file)}" alt="${esc(p.caption)}"><div class="cap"><b>${esc(p.caption)}</b>Photo: ${esc(p.author)} ・ ${esc(p.license)} ・ ${ext(p.source, "Wikimedia Commons")}</div>`;
+  $dlg.showModal();
+}
+$dlg.addEventListener("close", () => $dlg.classList.remove("photo"));
+
 function openPart(id) {
   const p = data.parts.flatMap(c => c.items).find(x => x.id === id);
   if (!p) return;
@@ -393,8 +428,8 @@ function setPhoto() {
 }
 
 function exportData() {
-  const blob = new Blob([JSON.stringify({ app: "pp1-care", exported: new Date().toISOString(), maint, custom, checks, parts }, null, 2)], { type: "application/json" });
-  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `pp1-care-${iso(today())}.json` });
+  const blob = new Blob([JSON.stringify({ app: "beat-care", exported: new Date().toISOString(), maint, custom, checks, parts }, null, 2)], { type: "application/json" });
+  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `beat-care-${iso(today())}.json` });
   a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
@@ -420,11 +455,11 @@ function importData() {
       const file = input.files[0];
       if (!file || file.size > 2_000_000) throw new Error();
       const d = JSON.parse(await file.text());
-      if (d.app !== "pp1-care") throw new Error();
+      if (!["beat-care", "pp1-care"].includes(d.app)) throw new Error(); // 旧名 PP1 CARE の書き出しも読める
       ({ maint, custom, checks, parts } = sanitize(d));
       Object.entries({ maint, custom, checks, parts }).forEach(([k, v]) => store.set(k, v));
       render(); alert("読み込みました。");
-    } catch { alert("PP1 CARE の書き出しファイルではありません。"); }
+    } catch { alert("BEAT CARE の書き出しファイルではありません。"); }
   };
   input.click();
 }
@@ -441,12 +476,12 @@ function notifyDue() {
   const due = maintItems().filter(i => ["soon", "over"].includes(maintStatus(i).state));
   if (!due.length || store.get("notified", "") === iso(today())) return;
   store.set("notified", iso(today()));
-  new Notification("PP1 CARE 交換時期のお知らせ", { body: due.map(i => i.name).join("、") + " の交換時期です。", icon: "./icon-192.png" });
+  new Notification("BEAT CARE 交換時期のお知らせ", { body: due.map(i => i.name).join("、") + " の交換時期です。", icon: "./icon-192.png" });
 }
 
 $main.addEventListener("click", e => {
   const el = e.target.closest("[data-act]");
-  if (!el) return;
+  if (!el) { const ph = e.target.closest("[data-photo]"); if (ph && !e.target.closest("a")) openPhoto(ph.dataset.photo); return; }
   const { act, id, k } = el.dataset;
   if (act === "record") {
     const v = $main.querySelector(`[data-date="${CSS.escape(id)}"]`).value;

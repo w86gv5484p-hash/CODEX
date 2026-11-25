@@ -270,7 +270,7 @@ dialog .form { display: grid; gap: 12px; margin-top: 10px; }
 .ro-note { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; margin: 12px 0; padding: 10px 14px; border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 10px; background: var(--panel); font-size: 13px; color: var(--muted); }
 .ro-note b { color: var(--gold); font-weight: 700; letter-spacing: .04em; }
 
-/* ---------- PP1 CARE（第三者向け・外部フォントなし・イエローのアクセント） ---------- */
+/* ---------- BEAT CARE（第三者向け・外部フォントなし・イエローのアクセント） ---------- */
 :root { --red: #f5c400; --red-deep: #a88600; --display: "Arial Narrow", "Helvetica Neue", Arial, system-ui, sans-serif; }
 body { font-family: system-ui, -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic UI", Meiryo, sans-serif; }
 .btn.primary, .tag.red, .tabs .badge { color: #111; }
