@@ -287,3 +287,9 @@ dialog.terms h2 { margin: 6px 0 8px; }
 .terms-list p { margin: 2px 0 0; font-size: 13.5px; color: #d7d7dc; }
 .agree { display: flex; gap: 8px; align-items: center; margin: 12px 0; font-weight: 700; }
 .agree input { width: 20px; height: 20px; accent-color: var(--red); }
+.pn { color: var(--text); font-family: var(--display); letter-spacing: .05em; }
+.pn-big { font-family: var(--display); letter-spacing: .06em; font-size: 18px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; margin: 0 0 12px; color: var(--muted); }
+.part-cat .eyebrow { margin-top: 18px; }
+.part-cat h3 .small { font-weight: 400; }
+.part [data-copy] { white-space: nowrap; }

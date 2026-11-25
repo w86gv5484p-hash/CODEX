@@ -1,5 +1,5 @@
 // オフラインでも直近の内容を表示する Service Worker（通信優先、失敗時に保存済みを返す）。
-const CACHE = "pp1-care-v1";
+const CACHE = "pp1-care-v2";
 const CORE = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./icon.svg",
   "./data/vehicle.json", "./data/supply.json", "./img/hero.svg"];
 

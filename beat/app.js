@@ -16,8 +16,8 @@ const $dlgBody = document.getElementById("dlg-body");
 const $terms = document.getElementById("terms");
 
 const STATUS = {
-  supply: { label: "入手可（汎用品など）", cls: "st-ok" },
-  repro: { label: "再販あり（報道）", cls: "st-repro" },
+  supply: { label: "販売中", cls: "st-ok" },
+  repro: { label: "再販あり", cls: "st-repro" },
   discontinued: { label: "廃番", cls: "st-over" },
   check: { label: "要確認", cls: "st-unset" },
 };
@@ -243,8 +243,12 @@ function alerts() {
 
 function partState(p) {
   const mine = parts[p.id] || {};
-  return { status: STATUS[mine.status] ? mine.status : p.status, partNo: mine.partNo || "", memo: mine.memo || "" };
+  return { status: STATUS[mine.status] ? mine.status : p.status, partNo: mine.partNo || "", memo: mine.memo || "", official: p.numbers || [] };
 }
+
+// 品番の表示（出典で確認できた品番だけ。なければ「品番未確認」）
+const pn = no => `<b class="pn">${esc(no)}</b>`;
+const srcLink = p => p.src ? ext(p.src, p.srcLabel || "出典") : "";
 
 function partsView() {
   const q = partQuery.trim().toLowerCase();
@@ -253,12 +257,13 @@ function partsView() {
     const rows = cat.items.map(p => ({ p, s: partState(p) })).filter(({ p, s }) => {
       counts.all++; counts[s.status]++;
       if (partFilter !== "all" && s.status !== partFilter) return false;
-      return !q || (p.name + s.partNo + s.memo + (p.note || "")).toLowerCase().includes(q);
+      return !q || (p.name + s.partNo + s.memo + (p.note || "") + s.official.map(n => n.no).join(" ")).toLowerCase().includes(q);
     });
     if (!rows.length) return "";
-    return `<div class="part-cat"><h3>${esc(cat.category)}</h3><div class="list">${rows.map(({ p, s }) => `
+    const withNo = cat.items.filter(p => p.numbers?.length).length;
+    return `<div class="part-cat"><div class="eyebrow">${esc(cat.en || "")}</div><h3>${esc(cat.category)} <span class="muted small">${cat.items.length}点・品番確認済み ${withNo}点</span></h3><div class="list">${rows.map(({ p, s }) => `
       <div class="part" data-act="part" data-id="${esc(p.id)}" role="button" tabindex="0">
-        <div><div class="name">${esc(p.name)}</div><div class="sub">${s.partNo ? `品番メモ ${esc(s.partNo)}` : "品番なし"}${p.note ? ` ・ ${esc(p.note)}` : ""}${s.memo ? ` ・ ${esc(s.memo)}` : ""}</div></div>
+        <div><div class="name">${esc(p.name)}</div><div class="sub">${s.official.length ? `品番 ${pn(s.official[0].no)}` : s.partNo ? `品番メモ ${pn(s.partNo)}` : `<span class="muted">品番未確認</span>`}${p.price ? ` ・ ${esc(p.price)}（${esc(p.priceAt)}時点）` : ""}${s.memo ? ` ・ ${esc(s.memo)}` : ""}</div></div>
         <span class="pill ${STATUS[s.status].cls}">${STATUS[s.status].label}</span>
       </div>`).join("")}</div></div>`;
   }).join("");
@@ -267,7 +272,8 @@ function partsView() {
   const sources = (supply.sources || []).map(s => `<div class="source">${ext(s.url, s.label)}<br><span class="muted">${esc(s.kind || "")}${s.date ? ` ・ ${esc(s.date)}` : ""}</span></div>`).join("");
   const changes = (supply.changes || []).map(c => `<li><b>${esc(c.date)}</b> ${esc(c.summary)}（${ext(c.url, c.source)}）</li>`).join("");
   return `${banner("Parts", "パーツと再販部品", "主要パーツの一覧と、メーカーによる純正部品の再販（2017年〜）の報道まとめ。", "02")}
-  <p class="lead">タップすると、販売状況・自分用の品番メモ・メモを登録できます（端末内だけに保存）。</p>
+  <p class="lead">カテゴリー別の主要パーツです。<b>品番</b>は出典で確認できたものだけを載せ、<b>販売状況</b>は「販売中／再販あり／廃番／要確認」で示します。タップすると出典と、自分用のメモ（端末内だけに保存）を見られます。</p>
+  <div class="legend small"><span class="pill st-ok">販売中</span> 汎用品など入手できるもの <span class="pill st-repro">再販あり</span> メーカー再販の対象と報道 <span class="pill st-over">廃番</span> 販売終了を確認 <span class="pill st-unset">要確認</span> 情報なし・販売店で確認</div>
   <p class="small muted" style="margin-top:-6px">※ ${esc(data.partsNote)}</p>
   <div class="toolbar"><input type="text" placeholder="部品名・メモで検索" value="${esc(partQuery)}" data-act="search" aria-label="部品を検索"></div>
   <div class="chips">${chips}</div>
@@ -332,13 +338,17 @@ function openPart(id) {
   const s = partState(p);
   $dlgBody.innerHTML = `<h3>${esc(p.name)}</h3>
     <div class="form">
+      ${s.official.length ? `<div class="list">${s.official.map(n => `<div class="part" style="cursor:default"><div><div class="small muted">ホンダ純正品番（出典に掲載）</div><div class="name pn-big">${esc(n.no)}</div><div class="sub">${p.price ? `価格 ${esc(p.price)}（${esc(p.priceAt)}時点・税込表記は出典による）` : "価格は出典に記載なし"}</div></div><button class="btn small" data-copy="${esc(n.no)}">コピー</button></div>`).join("")}</div>` : `<p class="small" style="margin:0">品番は出典で確認できていません。販売店で確認してください。</p>`}
       ${p.note ? `<p class="small" style="margin:0;color:var(--muted)">${esc(p.note)}</p>` : ""}
-      <label class="field">販売状況<select id="f-status">${Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${s.status === k ? "selected" : ""}>${v.label}</option>`).join("")}</select></label>
+      ${p.src ? `<p class="small" style="margin:0">出典：${srcLink(p)}</p>` : ""}
+      <p class="small muted" style="margin:0">記事掲載時点の情報です。現在の在庫・価格・廃番は、ホンダ販売店で確認してください。</p>
+      <label class="field">販売状況（自分で確認した結果に変更できます）<select id="f-status">${Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${s.status === k ? "selected" : ""}>${v.label}</option>`).join("")}</select></label>
       <label class="field">自分用の品番メモ（販売店で確認した品番など）<input type="text" id="f-no" value="${esc(s.partNo)}" autocapitalize="characters" maxlength="40"></label>
       <label class="field">メモ（価格・購入先・交換日など）<textarea id="f-memo" rows="3" maxlength="1000">${esc(s.memo)}</textarea></label>
       <p class="small muted" style="margin:0">入力内容はこの端末の中だけに保存されます。</p>
       <div class="toolbar"><button class="btn primary" id="f-save">保存</button>${parts[id] ? `<button class="btn" id="f-reset">初期値に戻す</button>` : ""}</div>
     </div>`;
+  $dlgBody.querySelectorAll("[data-copy]").forEach(b => { b.onclick = () => navigator.clipboard?.writeText(b.dataset.copy).then(() => { b.textContent = "コピーしました"; }).catch(() => {}); });
   $dlgBody.querySelector("#f-save").onclick = () => {
     parts[id] = { status: $dlgBody.querySelector("#f-status").value, partNo: $dlgBody.querySelector("#f-no").value.trim().toUpperCase(), memo: $dlgBody.querySelector("#f-memo").value.trim() };
     store.set("parts", parts); $dlg.close(); render();
