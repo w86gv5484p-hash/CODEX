@@ -1,0 +1,14 @@
+{
+  "name": "安値世界一",
+  "short_name": "安値世界一",
+  "description": "楽天市場・Amazon・Yahoo!ショッピング・公式ショップの同じ製品を、ポイント・クーポン込みの実質価格で比べます。",
+  "lang": "ja",
+  "start_url": "./#compare",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f5f0",
+  "theme_color": "#f7f5f0",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
