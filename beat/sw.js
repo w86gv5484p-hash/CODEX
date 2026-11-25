@@ -1,5 +1,5 @@
 // オフラインでも直近の内容を表示する Service Worker（通信優先、失敗時に保存済みを返す）。
-const CACHE = "beat-care-v4";
+const CACHE = "beat-care-v5";
 const CORE = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./icon.svg",
   "./data/vehicle.json", "./data/supply.json", "./img/hero.svg",
   "./data/photos.json", "./data/parts-catalog.json", "./img/hero.webp"];
