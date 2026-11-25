@@ -293,3 +293,5 @@ dialog.terms h2 { margin: 6px 0 8px; }
 .part-cat .eyebrow { margin-top: 18px; }
 .part-cat h3 .small { font-weight: 400; }
 .part [data-copy] { white-space: nowrap; }
+.asof { font-size: 13px; padding: 12px 14px; margin: 0 0 12px; border-left: 3px solid var(--soon); }
+.btn.live { text-decoration: none; white-space: nowrap; }

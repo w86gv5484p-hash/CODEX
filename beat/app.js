@@ -7,7 +7,7 @@
 // - 初回起動時に「利用上の注意」への同意を求める。情報は保証せず、整備は利用者の責任で行う旨を明示する。
 // - 公開者の個人情報（名前・連絡先・自分の車の記録）はアプリにもデータにも含めない。
 
-const TERMS_VERSION = "2026-11-25";
+const TERMS_VERSION = "2026-11-25.2"; // 文言を変えたら更新する（再度の同意を求める）
 const KEY = "pp1care."; // 旧名 PP1 CARE 時代の保存データをそのまま使うため、キーは変えない
 
 const $main = document.getElementById("main");
@@ -137,7 +137,7 @@ const TERMS = [
   ["非公式のアプリです", "このアプリ（BEAT CARE）は個人が作成した非公式のものです。アプリ名の「BEAT」は対象の車種を示すためだけに使っており、メーカーの製品・サービスではありません。本田技研工業株式会社、株式会社ホンダアクセス、ホンダ販売店ほか、いかなる企業・団体とも関係がなく、承認も受けていません。「ホンダ」「Honda」「ビート」「BEAT」等は各権利者の商標であり、車種を説明する目的でのみ記載しています。"],
   ["情報の正確性は保証しません", "諸元・歴史・部品の情報は、出典として示した公開資料・報道・百科事典をもとにまとめたもので、誤り・古い情報・個体差を含む可能性があります。「要確認」「報道」「Wikipedia記載」などの表示は、その情報の確かさを示す目安です。"],
   ["整備は自己責任で、専門家に確認してください", "交換時期は一般的な目安で、メーカー指定値ではありません。点検リストは一般的な経年点検の例です。整備・修理・部品の購入や取り付けは、必ずホンダ販売店や整備工場に確認のうえ、利用者ご自身の判断と責任で行ってください。このアプリの利用により生じたいかなる損害についても、作成者は責任を負いません。"],
-  ["記録は端末の中だけに保存されます", "入力した交換日・点検・メモ・写真は、お使いのブラウザー（この端末）の中だけに保存され、作成者を含め誰にも送信されません。アプリは外部のサーバー（解析・広告・外部フォント等）と通信しません。ブラウザーのデータを消去すると記録も消えるため、必要に応じて「データを書き出す」で保存してください。"],
+  ["記録は端末の中だけに保存されます", "入力した交換日・点検・メモ・写真は、お使いのブラウザー（この端末）の中だけに保存され、作成者を含め誰にも送信されません。アプリは外部のサーバー（解析・広告・外部フォント等）と自動で通信しません。「↗」の付いたリンク（出典や「最新の在庫をCMSNLで確認」など）は、タップしたときだけブラウザーで外部のサイトを開きます。ブラウザーのデータを消去すると記録も消えるため、必要に応じて「データを書き出す」で保存してください。"],
   ["サポートはありません", "このアプリへの問い合わせ窓口や更新の約束はありません。予告なく内容の変更や公開の終了をすることがあります。"],
 ];
 const termsHtml = () => `<ol class="terms-list">${TERMS.map(([h, t]) => `<li><b>${esc(h)}</b><p>${esc(t)}</p></li>`).join("")}</ol>
@@ -308,6 +308,15 @@ function fmtNo(s) {
 // ボルト・ナット・ワッシャーなどの汎用締結部品（90・92・93・94・96で始まる品番）。初期状態では隠す。
 const isHw = r => /^9[02346]/.test(r[1]);
 const diagramUrl = d => catalog.source.diagramUrl.replace("{page}", d.page);
+// 保存してある販売状況がどれだけ前のものか（受け取った人が古さに気づけるように）
+function asOf() {
+  if (!catalog?.checkedAt) return "";
+  const days = diffDays(parse(catalog.checkedAt), today());
+  const ago = days < 1 ? "" : days < 60 ? `・${days}日前` : `・約${Math.floor(days / 30)}か月前`;
+  return `${catalog.checkedAt.replace(/^(\d+)-0?(\d+)-0?(\d+)$/, "$1年$2月$3日")}時点${ago}`;
+}
+// 最新の在庫は、利用者がタップしたときだけ CMSNL の該当ページをブラウザーで開いて確認してもらう（アプリからは通信しない）
+const liveLink = (d, label = "最新の在庫をCMSNLで確認") => `<a class="btn small live" href="${esc(diagramUrl(d))}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>`;
 let catQuery = "";
 let catFilter = "all";
 let showHw = store.get("showHw", false);
@@ -341,6 +350,7 @@ function catalogView(path) {
     <label class="chip ${showHw ? "on" : ""}" style="display:flex;align-items:center;gap:6px"><input type="checkbox" data-act="showhw" ${showHw ? "checked" : ""} style="accent-color:var(--red)">ボルト・ナット等も表示</label></div>
     <div id="cresults"></div><div class="chips">${chips}</div>`;
   const note = `<ul class="small muted" style="list-style:none;padding:0;margin:0 0 10px;display:grid;gap:6px">${CST_ORDER.map(k => `<li><span class="pill ${CST[k].cls}">${CST[k].label}</span> ${esc(CST[k].text)}</li>`).join("")}</ul>
+    <div class="card asof"><b>販売状況は ${esc(asOf())} のものです。</b>アプリは自動で更新しません。最新の在庫は、各部品や各図の「最新の在庫をCMSNLで確認 ↗」をタップすると、CMSNLの該当ページがブラウザーで開きます（タップしたときだけ外部のサイトにつながります）。</div>
     <p class="small muted" style="margin-top:-6px">※ ${esc(catalog.note)} 出典：${ext(catalog.source.url, catalog.source.label)}（${esc(catalog.checkedAt)} 確認）</p>`;
   let body;
   if (!cat) {
@@ -357,7 +367,7 @@ function catalogView(path) {
       ${groups.map(({ d, rows }) => {
         const n = statusCounts(rows);
         return `<details class="type-group" ${groups.length <= 2 || catFilter !== "all" || rows.some(r => main.has(r[1])) ? "open" : ""}><summary><span><span class="code">${esc(d.code)}</span>${esc(d.title)}</span><span class="muted small">${rows.length}点・廃番 ${n.D + n.R}</span></summary>
-          <div class="list">${rows.map(r => catItem(r, d, main)).join("")}<div class="part" style="cursor:default"><div class="sub">出典：${ext(diagramUrl(d), `CMSNL 部品図 ${d.code}`)}</div></div></div></details>`;
+          <div class="list"><div class="part" style="cursor:default"><div class="sub">販売状況は${esc(asOf())}の表示です。</div>${liveLink(d, "最新の在庫を確認")}</div>${rows.map(r => catItem(r, d, main)).join("")}</div></details>`;
       }).join("") || `<p class="muted">該当する部品はありません。</p>`}
       ${note}
       <div class="toolbar"><a class="btn small" href="#parts/all">‹ カテゴリー一覧へ</a></div>`;
@@ -389,16 +399,17 @@ function cmsBlock(no, label = "ホンダ純正品番（CMSNLのリストに掲�
   const st = CST[cst(r)];
   return `<div class="part" style="cursor:default"><div><div class="small muted">${esc(label)}</div><div class="name pn-big">${esc(fmtNo(no))}</div>
     <div class="sub">${esc(r[2])}</div>
-    <div class="sub"><span class="pill ${st.cls}">${st.label}</span> ${esc(st.text)}</div>
+    <div class="sub"><span class="pill ${st.cls}">${st.label}</span> ${esc(st.text)}（${esc(asOf())}）</div>
     ${r[4] ? `<div class="sub">後継品番：<b class="pn">${esc(fmtNo(r[4]))}</b></div>` : ""}
-    <div class="sub">掲載図：${hits.map(h => ext(diagramUrl(h.d), `${h.c.name} › ${h.d.title}（${h.d.code}）`)).join("、")}</div></div>
-    <button class="btn small" data-copy="${esc(fmtNo(no))}">コピー</button></div>`;
+    <div class="sub">掲載図：${hits.map(h => `${esc(h.c.name)} › ${esc(h.d.title)}（${esc(h.d.code)}）`).join("、")}</div>
+    <div class="toolbar" style="margin-top:8px">${liveLink(hits[0].d)}<button class="btn small" data-copy="${esc(fmtNo(no))}">品番をコピー</button></div>
+    <div class="sub muted">CMSNLの部品図のページが開きます。ページ内で品番 ${esc(fmtNo(no))} を探してください。</div></div></div>`;
 }
 
 function openCatalogPart(no) {
   if (!catIndex[no]) return;
   $dlgBody.innerHTML = `<h3>${esc(catIndex[no][0].r[2])}</h3><div class="form"><div class="list">${cmsBlock(no)}</div>
-    <p class="small muted" style="margin:0">販売状況は CMSNL（海外の部品販売店）のサイトに ${esc(catalog.checkedAt)} 時点で出ていた表示で、ホンダの公式な供給状況ではありません。部品名は同サイトの表記のままです（機械翻訳を含みます）。注文の前にホンダ販売店で品番・適合・在庫を確認してください。</p></div>`;
+    <p class="small muted" style="margin:0">ここに出ている販売状況は CMSNL（海外の部品販売店）のサイトに ${esc(asOf())} で出ていた表示で、アプリは自動で更新しません。最新の在庫は上のボタンで確認してください（タップしたときだけ外部のサイトを開きます）。表示は、ホンダの公式な供給状況ではありません。部品名は同サイトの表記のままです（機械翻訳を含みます）。注文の前にホンダ販売店で品番・適合・在庫を確認してください。</p></div>`;
   $dlgBody.querySelectorAll("[data-copy]").forEach(b => { b.onclick = () => navigator.clipboard?.writeText(b.dataset.copy).then(() => { b.textContent = "コピーしました"; }).catch(() => {}); });
   $dlg.showModal();
 }
@@ -431,7 +442,7 @@ function partsView(path = []) {
   const changes = (supply.changes || []).map(c => `<li><b>${esc(c.date)}</b> ${esc(c.summary)}（${ext(c.url, c.source)}）</li>`).join("");
   return `${banner("trunk", "Parts", "パーツと品番", "よく交換・修理する主要パーツの品番と販売状況。全部品はカテゴリー別パーツリストへ。", "02")}
   ${partsTabs("main")}
-  <p class="lead">カテゴリー別の主要パーツです。<b>品番</b>と<b>販売状況（在庫あり／取り寄せ可／後継品番あり／廃番）</b>は、海外の部品販売店 CMSNL のパーツリストの表示です。タップすると掲載図・後継品番・出典と、自分用のメモ（端末内だけに保存）を見られます。</p>
+  <p class="lead">カテゴリー別の主要パーツです。<b>品番</b>と<b>販売状況（在庫あり／取り寄せ可／後継品番あり／廃番）</b>は、海外の部品販売店 CMSNL のパーツリストの表示です（${esc(asOf())}）。タップすると掲載図・後継品番、最新の在庫を CMSNL で確認するボタンと、自分用のメモ（端末内だけに保存）を見られます。</p>
   <div class="legend small"><span class="pill st-ok">在庫あり</span> <span class="pill st-repro">取り寄せ可</span> <span class="pill st-soon">後継品番あり</span> 元の品番は販売終了 <span class="pill st-over">廃番</span> <span class="pill st-unset">要確認</span> 表示なし・リストにない</div>
   <p class="small muted" style="margin-top:-6px">※ ${esc(data.partsNote)}</p>
   <div class="toolbar"><input type="text" placeholder="部品名・品番・メモで検索" value="${esc(partQuery)}" data-act="search" aria-label="部品を検索"></div>
@@ -515,7 +526,7 @@ function openPart(id) {
       ${s.official.length ? `<div class="list">${s.official.map(n => `<div class="part" style="cursor:default"><div><div class="small muted">記事に掲載された品番</div><div class="name pn-big">${esc(n.no)}</div><div class="sub">${p.price ? `価格 ${esc(p.price)}（${esc(p.priceAt)}時点・税込表記は出典による）` : "価格は出典に記載なし"}</div></div><button class="btn small" data-copy="${esc(n.no)}">コピー</button></div>`).join("")}</div>` : s.cms.length ? "" : `<p class="small" style="margin:0">品番は確認できていません。販売店で確認してください。</p>`}
       ${p.note ? `<p class="small" style="margin:0;color:var(--muted)">${esc(p.note)}</p>` : ""}
       ${p.src ? `<p class="small" style="margin:0">出典：${srcLink(p)}</p>` : ""}
-      <p class="small muted" style="margin:0">販売状況はCMSNL（海外の部品販売店）のサイト表示（${esc(catalog?.checkedAt || "")}確認）で、ホンダの公式な供給状況ではありません。価格は記事掲載時点のものです。現在の在庫・価格・廃番は、ホンダ販売店で確認してください。</p>
+      <p class="small muted" style="margin:0">販売状況はCMSNL（海外の部品販売店）のサイト表示（${esc(asOf())}）で、ホンダの公式な供給状況ではなく、アプリは自動で更新しません。最新の在庫は「最新の在庫をCMSNLで確認 ↗」で確認できます（タップしたときだけ外部のサイトを開きます）。価格は記事掲載時点のものです。現在の在庫・価格・廃番は、ホンダ販売店で確認してください。</p>
       <label class="field">販売状況（自分で確認した結果に変更できます）<select id="f-status">${Object.entries(STATUS).filter(([k]) => k !== "repro" || s.status === "repro").map(([k, v]) => `<option value="${k}" ${s.status === k ? "selected" : ""}>${v.label}</option>`).join("")}</select></label>
       <label class="field">自分用の品番メモ（販売店で確認した品番など）<input type="text" id="f-no" value="${esc(s.partNo)}" autocapitalize="characters" maxlength="40"></label>
       <label class="field">メモ（価格・購入先・交換日など）<textarea id="f-memo" rows="3" maxlength="1000">${esc(s.memo)}</textarea></label>
