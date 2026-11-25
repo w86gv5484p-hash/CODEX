@@ -1,7 +1,16 @@
 {
-  "checkedAt": "2026-11-25T10:42:50+00:00",
+  "checkedAt": "2026-11-25T22:39:50+00:00",
   "windowDays": 14,
   "items": [
+    {
+      "playerId": "koki-machida",
+      "playerName": "町田 浩樹",
+      "publishedAt": "2026-11-25T09:16:00+00:00",
+      "date": "2026-11-25",
+      "title": "「ごめん…」「機内は地獄のようでした」フライト中の妻に届いた絶望のLINE…サッカー日本代表DF町田浩樹からW杯を奪った大ケガの真相（Number Web）",
+      "publisher": "Yahoo!ニュース",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5zYjlYSER1amdyeGVmTENGelJyRmN3ZFJjeHBBWU1mOFRvamFfeDV4ckF4VEZxV0FCSjRWX3NmSUUyMzc1X1FkNEk1RFdPMzJyeWF1VzJQNVVrMXV1anp1YTF1ZFEwQWxXYTBCMmN6bG9uMVgzSm5oWEdEbXg4b0k?oc=5"
+    },
     {
       "playerId": "kento-shiogai",
       "playerName": "塩貝 健人",
@@ -21,31 +30,13 @@
       "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPb2p2eHBWM2ctU3BQYnhYSnBPS3h3VTBBN2xPZGJyZ3dCSWRBWm1TcWNNMVJFeWMydnVlMTMydnN6dEpXSnYyZTBPLXhfdUtEREdWYkRwWUVCbGZ3M004aDRIeUlMWlhQeXM3am1zTmdPLTQ3bm1ScHlsWHpPVkJQLW1aZUJyVS11TWppZW53?oc=5"
     },
     {
-      "playerId": "ayase-ueda",
-      "playerName": "上田 綺世",
-      "publishedAt": "2026-11-24T04:44:17+00:00",
-      "date": "2026-11-24",
-      "title": "上田綺世、復帰し途中出場 サッカーのフランス１部",
-      "publisher": "山陽新聞",
-      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE04YzNvTERJWUNMbXBnd2N3MzJpbkk4dl80LTBrWF90V3RtbTM4R2RBOXBDd01rX3AzTzR1OURRZ05KWXJMMVJySTNmb0J3TEVhMXVicnYzYmZGRHBYWmVBN01wdFIyU00?oc=5"
-    },
-    {
       "playerId": "kento-shiogai",
       "playerName": "塩貝 健人",
-      "publishedAt": "2026-11-24T02:28:58+00:00",
+      "publishedAt": "2026-11-24T02:29:00+00:00",
       "date": "2026-11-24",
       "title": "ウォルフスブルクFW塩貝健人が重度の筋損傷 クラブが発表、全治不明「当面は出場できない」",
-      "publisher": "日刊スポーツ",
-      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1NVlRReFFtNVN6aTlzeUlMeXdBaUk4MTFUZXZzc09EYllHeVF2Z1VjOTlDZFdyUjZ2WnlqT1VWU0ZsQjFoQ1AwRVp5TzJiSTJERDloRWV3Z0FTeUJMV2dJWnpEM0JfeERQN01WT2c2MnE5TGM4SkHSAX5BVV95cUxNS2ZaSlhIZmdrNTB2YUcwUWJFVzEzSzd2SHY2a2VZanRsSUZpLWpfdDQwbUttN2l5Nk1mSlh2bnpSckV0VU5DU3F3RExSMHZ0Uk1YSEZlUnZHcV8wcFVsYTdpME1CY2Jrb1NjRXhES0hJM2FZV1hjMjZGbnFjMGc?oc=5"
-    },
-    {
-      "playerId": "koki-machida",
-      "playerName": "町田 浩樹",
-      "publishedAt": "2026-11-24T01:45:29+00:00",
-      "date": "2026-11-24",
-      "title": "「ごめん…」「機内は地獄のようでした」フライト中の妻に届いた絶望のLINE…サッカー日本代表DF町田浩樹からW杯を奪った大ケガの真相",
-      "publisher": "Number Web",
-      "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE5XdGdzMWo5TjRqeFprX3ZfWE1oUkh1eVBmd2d2VE1LSU90MDduSFZtSnRMdnRPLW1SN0tKemZNVmtmWmxXemlZckpBRm9iYXE0LWo0dGE4THprNHdKN1dNU0RR?oc=5"
+      "publisher": "ｄメニューニュース",
+      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPcTFGcld4bllhck02OFVVMmVKOFQyZElMOVZrTEZCV1NkTWkyWExhX2I0eURXMmxJWWlkNVN3eFlmaW9fUGZBR3F1UnBlUThfWWFmQW9CYlJQd2QyYWJXMFVwVTBDQThPNnBUTkpJYjc4aEhUZUNUM1FpX0Rkb0dQcHBVVy1rRHZBWUw3a29ma0Naa1R1SmfSAZsBQVVfeXFMT1ctLXJvb0FJaktJdFRwa2tnQTB6U1dOYm9GTlFMd3UzWkQxUmFTRDluNjljdHNzNVNlc1FGQ2Npc1RnSWY0R01nTnN2QTRsQ1ZOLUtaZGVFUkJsOUZsYVFxQjdMdFV0Q0JyTFM4MUpONDk2bzJaZHJhVmNqV0pCWHRmZ1BCMnBBd05qRm9uOHRvbUZ5SWtnbmxLNjQ?oc=5"
     },
     {
       "playerId": "ayase-ueda",
@@ -59,11 +50,20 @@
     {
       "playerId": "ayase-ueda",
       "playerName": "上田 綺世",
-      "publishedAt": "2026-11-22T22:30:00+00:00",
+      "publishedAt": "2026-11-22T20:01:03+00:00",
       "date": "2026-11-23",
-      "title": "【写真・画像】「本当に日本人離れ」上田綺世、復帰戦の切れ味じゃない！“華麗ターン”で敵DFを翻弄した瞬間「やっぱ上手いなー」 2枚目",
-      "publisher": "ABEMA TIMES",
-      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxQckQ4YTliekQ5VEZkRnRmTng4V1NJb21VdTFQUXVHOU1uazBBdHk0cTdVemZkSUhDc0ZOcTdIYjh4TzBHdVdDeFBud0xnX3hMZG5SMVM5aHVibEpFTVFsTGVXeDllWl9Qd2tJSGVTN2s2bnFUa0huNTdTbXVkcldYODZ2SjljcnAxZjltbnVoV0dTWFVCUDd0eVp4TENISlpBYWliejJrSC1nTDU0NXBaZ1JrZEhyVkdRcHlvR0RncTEwb0VnbVFoNEhGY3lnNTVPZjBTb2xmaUdqelNGYUE?oc=5"
+      "title": "上田綺世、39日ぶりに復帰しリヨン戦で後半から出場 中村敬斗との日本代表対決は0-1で敗戦",
+      "publisher": "https://mediadogs.jp/",
+      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1CNEw1NHlvSmc3Q01SVmlJbklLV1M3Q1pEcjJmRkRXR0w3Wm9Gd0t4VnEwakNaQURNMkRVSjJaZFVaLWp0cDFMYzZFRkMxUktoZ3lBdEtJWGh0eHFNSmhuSTUtVGJXdw?oc=5"
+    },
+    {
+      "playerId": "ayase-ueda",
+      "playerName": "上田 綺世",
+      "publishedAt": "2026-11-22T16:36:00+00:00",
+      "date": "2026-11-23",
+      "title": "リール上田綺世39日ぶり復帰！ 上々再スタート チーム最多シュート3本",
+      "publisher": "ｄメニューニュース",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOLTFteGxZS3E0X3U0SVBXZGVuOGxDRTFNNVdQSjBPNjAxdVMzUnVxTXhxaXVkUDRKdk0taVE3RUptdmJPOHZnZDF6dGxHTzVUTzhEcTlYUGRzMkpjdkFHdVlNRFVoRmFXQ0dGMDRyWnQ1RTVIWkdOWXN6aWlTdWJOM1FHVVZUTGVydmZ3bjB30gGTAUFVX3lxTE9wdU96NHRVbm0waHd2UUZxUTFBdzVfT2JFRFB2bUVVUHpCdTJ2VHg4NGh3ZHlpYU8ybldRc0VMQkJYelE4NEcwS3JaaTdjbUEwVDRfWWl4MVNBdUZUMVliRzhteEFaTGxBM1V2NFlPZVlieE8tVTc4WGVFZ2JLWWFJWG1iMTRSOEJ2TG83dXV5V3NmZw?oc=5"
     },
     {
       "playerId": "takehiro-tomiyasu",
@@ -71,17 +71,17 @@
       "publishedAt": "2026-11-21T10:03:21+00:00",
       "date": "2026-11-21",
       "title": "冨安健洋の復帰時期が明らかに！クリスタル・パレスのトーマス・フランク監督が明言",
-      "publisher": "千葉テレビ放送株式会社",
+      "publisher": "千葉テレビ放送",
       "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9YVWU3MTIxVFhCbzB1NF9WUmptWDFqVlNfT29BYnQtTl9jbXRCdThva1ZPZ3VSc2Zhd0IzQ1dGMXdQdkljOGV5MUtVOUVuUV82UXlwdDFQSVJveTY3R3hz?oc=5"
     },
     {
       "playerId": "koki-ogawa",
       "playerName": "小川 航基",
-      "publishedAt": "2026-11-21T07:03:02+00:00",
+      "publishedAt": "2026-11-21T07:02:00+00:00",
       "date": "2026-11-21",
-      "title": "日本代表FW小川航基が前半に負傷交代…町田と長崎はスコアレスドロー (ゲキサカ)",
-      "publisher": "Yahoo!ニュース",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQRkFTZWdDYUJ5bnhjY3BnTl9KSndLczRqZHBLT0RjUC1RVC1fQV84di1HSVhOTVN6MzJKYXctbHdiLUt3V3F6VXI0ZmIwTFc0Y1hMS2ZuOUNHdGRDLXMzZzVVTENvT084LVVRd0psa3BvLWp5Q2d6UFZIazQzQVJ2bzdZZmtqdHZwdk50Y2FR?oc=5"
+      "title": "日本代表FW小川航基が前半に負傷交代…町田と長崎はスコアレスドロー",
+      "publisher": "ゲキサカ",
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBYYzVTbDhzakZsM3V1ci1vb0VtVkh4eHFvMVNFQ0Y0RkdsUllsN3FYYmZkTTVBSFRqUHJzd205Vi1WcVpPNnNvQ0puc19MZTZublRRME96bFpLWDdRcVRlWmxVUThGOGtyVXppQlhB?oc=5"
     },
     {
       "playerId": "takehiro-tomiyasu",
@@ -113,11 +113,11 @@
     {
       "playerId": "daichi-kamada",
       "playerName": "鎌田 大地",
-      "publishedAt": "2026-11-16T11:14:00+00:00",
+      "publishedAt": "2026-11-16T08:00:00+00:00",
       "date": "2026-11-16",
       "title": "鎌田大地が日本代表を早期離脱。最下位パレスで迎える転機。新体制で期待される役割とは？【現地発】",
-      "publisher": "UQライフ",
-      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPN24zZmZuQWJKNTkzamdhSXJWVk03ci1FMzZBdHFJZUdKek9CTXh6dy1LNUhZS1J3Z29TdEswUTdaeXVpWDhnNkl4SFVmZXk0QW5yZXZKTm03T1JGeTUtT3VVSllXZk9WRGZJSF9JbFBOSXUtX2JhUmxJT1RoTTFmY3hmOA?oc=5"
+      "publisher": "Yahoo!ニュース",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFA4U2VUSF9uaUU1RnRNMW1hOXRpOUF4VV9pVXZJVlVveG1iNzFPNDk3eGhMVzBpbG1NRkJ1c2tTNjRPTXZJRmlweEFKcE8xMVRUTmpMYmFKU0h1VE0yX0pheVd0WlJ3SkpVRk90QkZSdWJNdDVNSm5UQ0RCYTFRcHM?oc=5"
     },
     {
       "playerId": "tatsuhiro-sakamoto",
@@ -140,20 +140,20 @@
     {
       "playerId": "daichi-kamada",
       "playerName": "鎌田 大地",
-      "publishedAt": "2026-11-15T08:00:00+00:00",
-      "date": "2026-11-15",
-      "title": "鎌田大地 ブラジル撃破直後に離脱 森保監督への感謝語る (2026年11月15日掲載)",
-      "publisher": "ライブドアニュース",
-      "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE5qeXN6VDVENmhGLUJaSk9lbnRnM19velJnWW1PQWlVZVU1azI3ekhYdlpqMlFKN1NjRVBCZThUY3B0ZWdyZmphU3U2a0NwOW9idFFuQmZ3VEQ2YUxrUnc?oc=5"
-    },
-    {
-      "playerId": "daichi-kamada",
-      "playerName": "鎌田 大地",
       "publishedAt": "2026-11-14T13:06:00+00:00",
       "date": "2026-11-14",
       "title": "鎌田大地がクラブ事情で離脱＝サッカー日本代表",
       "publisher": "時事通信ニュース",
       "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE90ak9NN2hJcWh2T3NfTzVtSFphdzFDWElWLVJsTllXc3ZaSU1UN2dlZVdIeGpfcFJWNTExYzJCXzR1cnBIWUFmOG4tNWp5b3BZR01pTw?oc=5"
+    },
+    {
+      "playerId": "daichi-kamada",
+      "playerName": "鎌田 大地",
+      "publishedAt": "2026-11-14T12:39:11+00:00",
+      "date": "2026-11-14",
+      "title": "サッカー日本代表、鎌田大地がクラブ事情により離脱…森保一監督のラストマッチは不在に (フットボールチャンネル)",
+      "publisher": "Yahoo!ニュース",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQRC1rRDY1WVpLcVd0OUNXUkNreHdaTzhHZGNsbGpTWG9lVGdvR1p2dFJRbVEya2VzUjVxZ3N0WGtvakQ1UlU4SEFuaFVaU2FObmtFM3lUaFNLQmo2YldtcjZOZERyM19GaUFsMjY3S0pLNEVrNGkxUlFMTXQ4Vmgycl9fNUplRHN2dkZ1M1FB?oc=5"
     },
     {
       "playerId": "takumi-minamino",
