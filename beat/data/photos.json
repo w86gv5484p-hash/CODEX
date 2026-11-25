@@ -1,0 +1,154 @@
+{
+ "hero": {
+  "file": "hero.webp",
+  "title": "MG 1108 (51600971356).jpg",
+  "author": "Guyon from Richmond, VA, United States of America",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:MG_1108_(51600971356).jpg",
+  "caption": "イエローのPP1（幌を閉じた状態）"
+ },
+ "open-front": {
+  "file": "open-front.webp",
+  "title": "MG 1178 (51601184153).jpg",
+  "author": "Guyon from Richmond, VA, United States of America",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:MG_1178_(51601184153).jpg",
+  "caption": "幌を開けたフロントビュー"
+ },
+ "open-side": {
+  "file": "open-side.webp",
+  "title": "MG 1192 (51601628334).jpg",
+  "author": "Guyon from Richmond, VA, United States of America",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:MG_1192_(51601628334).jpg",
+  "caption": "オープン時のサイドビュー"
+ },
+ "open-rear": {
+  "file": "open-rear.webp",
+  "title": "MG 1227 (51601859210).jpg",
+  "author": "Guyon from Richmond, VA, United States of America",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:MG_1227_(51601859210).jpg",
+  "caption": "オープン時のリアビュー"
+ },
+ "cockpit": {
+  "file": "cockpit.webp",
+  "title": "MG 1234 (51600969036).jpg",
+  "author": "Guyon from Richmond, VA, United States of America",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:MG_1234_(51600969036).jpg",
+  "caption": "コクピット全景"
+ },
+ "meters": {
+  "file": "meters.webp",
+  "title": "MG 1278 (51601627379).jpg",
+  "author": "Guyon from Richmond, VA, United States of America",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:MG_1278_(51601627379).jpg",
+  "caption": "メーターまわり"
+ },
+ "seats": {
+  "file": "seats.webp",
+  "title": "MG 1300 (51600146722).jpg",
+  "author": "Guyon from Richmond, VA, United States of America",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:MG_1300_(51600146722).jpg",
+  "caption": "シートとドア内側"
+ },
+ "trunk": {
+  "file": "trunk.webp",
+  "title": "MG 1318 (51600146572).jpg",
+  "author": "Guyon from Richmond, VA, United States of America",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:MG_1318_(51600146572).jpg",
+  "caption": "リアトランク"
+ },
+ "front-hood": {
+  "file": "front-hood.webp",
+  "title": "MG 1327 (51601858705).jpg",
+  "author": "Guyon from Richmond, VA, United States of America",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:MG_1327_(51601858705).jpg",
+  "caption": "フロントフード内（スペアタイヤ等）"
+ },
+ "front": {
+  "file": "front.webp",
+  "title": "Honda BEAT front.JPG",
+  "author": "Tokumeigakarinoaoshima",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_BEAT_front.JPG",
+  "caption": "PP1 フロント"
+ },
+ "rear": {
+  "file": "rear.webp",
+  "title": "Honda BEAT rear.JPG",
+  "author": "Tokumeigakarinoaoshima",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_BEAT_rear.JPG",
+  "caption": "PP1 リア"
+ },
+ "side": {
+  "file": "side.webp",
+  "title": "Honda Beat (E-PP1) right.jpg",
+  "author": "Tokumeigakarinoaoshima",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_Beat_(E-PP1)_right.jpg",
+  "caption": "E-PP1 右側面"
+ },
+ "night-front": {
+  "file": "night-front.webp",
+  "title": "Honda Beat (E-PP1) at night front.jpg",
+  "author": "Tokumeigakarinoaoshima",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_Beat_(E-PP1)_at_night_front.jpg",
+  "caption": "夜間のフロント"
+ },
+ "night-rear": {
+  "file": "night-rear.webp",
+  "title": "Honda Beat (E-PP1) at night rear.jpg",
+  "author": "Tokumeigakarinoaoshima",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_Beat_(E-PP1)_at_night_rear.jpg",
+  "caption": "夜間のリア（テールランプ点灯）"
+ },
+ "museum-white": {
+  "file": "museum-white.webp",
+  "title": "1991 Honda Beat front.jpg",
+  "author": "DestinationFearFan",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:1991_Honda_Beat_front.jpg",
+  "caption": "1991年式 BEAT"
+ },
+ "museum-red": {
+  "file": "museum-red.webp",
+  "title": "1991 Honda Beat Lane Motor Museum.jpg",
+  "author": "TaurusEmerald",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:1991_Honda_Beat_Lane_Motor_Museum.jpg",
+  "caption": "1991年式 BEAT（米国 Lane Motor Museum）"
+ },
+ "silver": {
+  "file": "silver.webp",
+  "title": "Honda Beat Retro Classics 2020 IMG 0182.jpg",
+  "author": "Alexander Migl",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_Beat_Retro_Classics_2020_IMG_0182.jpg",
+  "caption": "シルバーの1991年式（独 Retro Classics 2020）"
+ },
+ "version-c": {
+  "file": "version-c.webp",
+  "title": "Honda E-PP1 Beat Version C (22070713174).jpg",
+  "author": "先従隗始",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Honda_E-PP1_Beat_Version_C_(22070713174).jpg",
+  "caption": "限定仕様「Version C」"
+ },
+ "custom": {
+  "file": "custom.webp",
+  "title": "Tuned Honda BEAT (PP1) front.JPG",
+  "author": "Tokumeigakarinoaoshima",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Tuned_Honda_BEAT_(PP1)_front.JPG",
+  "caption": "カスタムされたPP1（参考：社外品装着車）"
+ }
+}

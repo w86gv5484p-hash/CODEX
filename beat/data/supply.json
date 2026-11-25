@@ -1,8 +1,9 @@
 {
   "checkedAt": "2026-11-25",
-  "summary": "メーカーは2017年8月10日、「ビートをより長く楽しんでいただきたい」として一部純正部品の生産再開を発表し、その後も対象を追加してきました（BEATparts）。下の年表は報道にもとづくもので、現在の在庫や価格はこのアプリでは確認できていません。メーカー公式の部品ページはこのアプリから自動取得していないため、最新の情報は公式ページと販売店でご確認ください。",
+  "summary": "メーカーは2017年8月10日、「ビートをより長く楽しんでいただきたい」として一部純正部品の生産再開を発表し、その後も対象を追加してきました（BEATparts）。下の年表は報道にもとづくもので、現在の在庫や価格はこのアプリでは確認できていません。メーカーの BEATparts ページは 2026年11月25日の確認時点で表示されず（404）、後継の「Hondaヘリテージパーツ」（2026年11月時点）には NSX のみが掲載されていました。最新の在庫・廃番はホンダ販売店でご確認ください。",
   "sources": [
-    { "label": "メーカー公式 BEATparts ページ", "url": "https://www.honda.co.jp/BEATparts/", "kind": "公式（このアプリでは内容を自動取得していません）" },
+    { "label": "Hondaヘリテージパーツ（メーカー公式）", "url": "https://www.honda.co.jp/heritage-works/parts/", "kind": "公式（2026-11-25 確認時は NSX のみ掲載・BEAT の掲載なし）", "date": "2026-11-25" },
+    { "label": "メーカー公式 BEATparts ページ", "url": "https://www.honda.co.jp/BEATparts/", "kind": "公式（2026-11-25 確認時、このURLは「ページが見つかりません」（404）でした。ページは終了または移転した可能性があります）" },
     { "label": "Car Watch「ビートの一部純正部品を生産再開」", "url": "https://car.watch.impress.co.jp/docs/news/1075515.html", "kind": "報道", "date": "2017-08-10" },
     { "label": "Car Watch「46部品を追加再販決定」", "url": "https://car.watch.impress.co.jp/docs/news/1103295.html", "kind": "報道", "date": "2018-01-26" },
     { "label": "レスポンス「走りを未来へつなぐBEATparts」", "url": "https://response.jp/article/2019/12/31/330289.html", "kind": "報道", "date": "2019-12-31" }
