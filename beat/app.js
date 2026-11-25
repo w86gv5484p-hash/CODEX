@@ -15,12 +15,24 @@ const $dlg = document.getElementById("dlg");
 const $dlgBody = document.getElementById("dlg-body");
 const $terms = document.getElementById("terms");
 
+// 主要パーツの販売状況。CMSNL の表示から決めるか、利用者が自分で確認した結果に変える。
 const STATUS = {
-  supply: { label: "販売中", cls: "st-ok" },
-  repro: { label: "再販あり", cls: "st-repro" },
+  supply: { label: "在庫あり", cls: "st-ok" },
+  order: { label: "取り寄せ可", cls: "st-repro" },
+  replaced: { label: "後継品番あり", cls: "st-soon" },
   discontinued: { label: "廃番", cls: "st-over" },
   check: { label: "要確認", cls: "st-unset" },
+  repro: { label: "再販あり", cls: "st-repro" }, // 旧版で保存した自分用の状況を読めるように残す
 };
+// パーツリストの販売状況（CMSNL のサイト表示。ホンダ公式の供給状況ではない）
+const CST = {
+  S: { label: "在庫あり", cls: "st-ok", key: "supply", text: "CMSNLに在庫ありと表示" },
+  O: { label: "取り寄せ可", cls: "st-repro", key: "order", text: "CMSNLで注文・取り寄せ可と表示（在庫なし）" },
+  R: { label: "後継品番あり", cls: "st-soon", key: "replaced", text: "この品番は販売終了と表示。後継品番が示されています（後継品の在庫はこのリストでは不明）" },
+  D: { label: "廃番", cls: "st-over", key: "discontinued", text: "CMSNLで販売終了（廃番）と表示" },
+  N: { label: "要確認", cls: "st-unset", key: "check", text: "CMSNLで注文できない表示（廃番の表示はなし）" },
+};
+const CST_ORDER = ["S", "O", "R", "N", "D"];
 const MAINT_STATE = {
   ok: { label: "良好", cls: "st-ok", color: "var(--ok)" },
   soon: { label: "交換時期が近い", cls: "st-soon", color: "var(--soon)" },
@@ -80,6 +92,8 @@ function maintStatus(item) {
 let data = null;
 let photos = {};
 let supply = { sources: [], changes: [] };
+let catalog = null;   // CMSNL のパーツリスト（data/parts-catalog.json）
+let catIndex = {};    // 品番 → [{ r, d, c }]
 let loadedFor = "";
 
 async function loadData() {
@@ -92,6 +106,11 @@ async function loadData() {
   data = await get("vehicle.json");
   try { photos = await get("photos.json"); } catch { photos = {}; }
   try { supply = await get("supply.json"); } catch { /* 供給データがなくても他の画面は使える */ }
+  try {
+    catalog = await get("parts-catalog.json");
+    catIndex = {};
+    catalog.categories.forEach(c => c.diagrams.forEach(d => d.rows.forEach(r => (catIndex[r[1]] ||= []).push({ r, d, c }))));
+  } catch { catalog = null; }
   loadedFor = day;
 }
 
@@ -152,11 +171,13 @@ let partFilter = "all";
 let partQuery = "";
 
 function render() {
-  const [tab, sub] = (location.hash.slice(1) || "home").split("/");
+  const [tab, ...rest] = (location.hash.slice(1) || "home").split("/").map(x => { try { return decodeURIComponent(x); } catch { return x; } });
+  const sub = rest[0];
   const view = views[tab] ? tab : "home";
   if (view === "info" && sub && ["specs", "history", "dev", "credits", "terms"].includes(sub)) infoTab = sub;
   document.querySelectorAll(".tabs a").forEach(a => a.classList.toggle("active", a.dataset.tab === view));
-  $main.innerHTML = views[view]();
+  $main.innerHTML = views[view](rest);
+  if (catQuery && view === "parts") searchCatalog(catQuery);
   updateBadge();
 }
 
@@ -264,43 +285,159 @@ function alerts() {
   <p class="small muted">記録はこの端末のブラウザーの中だけに保存され、どこにも送信されません。機種変更の前に「データを書き出す」で保存してください。</p>`;
 }
 
+// 主要パーツの状況：自分で設定した状況 → CMSNL の表示（複数品番なら最も入手しやすいもの）→ 初期値
 function partState(p) {
   const mine = parts[p.id] || {};
-  return { status: STATUS[mine.status] ? mine.status : p.status, partNo: mine.partNo || "", memo: mine.memo || "", official: p.numbers || [] };
+  const cms = (p.cms || []).map(no => catIndex[no]?.[0]).filter(Boolean);
+  const best = cms.map(x => cst(x.r)).sort((a, b) => CST_ORDER.indexOf(a) - CST_ORDER.indexOf(b))[0];
+  const base = best ? CST[best].key : (p.status === "repro" || p.status === "supply" ? "check" : p.status);
+  return { status: STATUS[mine.status] ? mine.status : base, mine: !!STATUS[mine.status], partNo: mine.partNo || "", memo: mine.memo || "", official: p.numbers || [], cms, repro: p.status === "repro" };
+}
+
+// ---------- パーツリスト（CMSNL） ----------
+const cst = r => (r[3] === "D" && r[4] ? "R" : r[3]);
+// 品番の表示：ホンダの品番は 5桁-3桁-3桁（例 17220-P36-000）が基本。それ以外の形式はそのまま出す。
+function fmtNo(s) {
+  const m = s.match(/^(\d{5})([A-Z0-9]{3})([A-Z0-9]{3})([A-Z0-9]*)$/);
+  if (m && /[A-Z]/.test(m[2])) return `${m[1]}-${m[2]}-${m[3]}${m[4]}`;
+  if (/^\d{11}$/.test(s)) return `${s.slice(0, 5)}-${s.slice(5, 8)}-${s.slice(8)}`;
+  if (/^\d{12}$/.test(s)) return `${s.slice(0, 5)}-${s.slice(5, 10)}-${s.slice(10)}`;
+  if (/^\d{5}[0-9A-Z]{5}$/.test(s)) return `${s.slice(0, 5)}-${s.slice(5)}`;
+  return s;
+}
+// ボルト・ナット・ワッシャーなどの汎用締結部品（90・92・93・94・96で始まる品番）。初期状態では隠す。
+const isHw = r => /^9[02346]/.test(r[1]);
+const diagramUrl = d => catalog.source.diagramUrl.replace("{page}", d.page);
+let catQuery = "";
+let catFilter = "all";
+let showHw = store.get("showHw", false);
+const mainNumbers = () => new Set(data.parts.flatMap(c => c.items.flatMap(i => i.cms || [])));
+const catRows = list => list.filter(r => showHw || !isHw(r));
+const statusCounts = rows => rows.reduce((o, r) => { o[cst(r)]++; return o; }, { S: 0, O: 0, R: 0, D: 0, N: 0 });
+
+function catItem(r, d, main, showDiagram = false) {
+  const st = CST[cst(r)];
+  return `<div class="part" data-act="cpart" data-no="${esc(r[1])}" data-page="${esc(d.page)}" role="button" tabindex="0">
+    <div><div class="name">${esc(r[2])}</div>
+    <div class="sub"><b class="pn">${esc(fmtNo(r[1]))}</b>${r[4] ? ` → 後継 <b class="pn">${esc(fmtNo(r[4]))}</b>` : ""}${showDiagram ? ` ・ ${esc(d.title)}` : r[0] ? ` ・ 図の番号 ${esc(r[0])}` : ""}${main.has(r[1]) ? ` ・ <span style="color:var(--gold)">★主要パーツ</span>` : ""}</div></div>
+    <span class="pill ${st.cls}">${st.label}</span></div>`;
+}
+
+const partsTabs = active => `<div class="subtabs"><a class="chip ${active === "main" ? "on" : ""}" href="#parts">主要パーツ（${data.parts.reduce((n, c) => n + c.items.length, 0)}点）</a>${catalog ? `<a class="chip ${active === "all" ? "on" : ""}" href="#parts/all">カテゴリー別パーツリスト（${catalog.total.toLocaleString()}点）</a>` : ""}</div>`;
+
+function catalogView(path) {
+  const head = `${banner("open-rear", "Parts List", "カテゴリー別パーツリスト", "エンジン・足まわり・ボディなど15カテゴリー、103枚の部品図に載っている品番と販売状況。", "02")}${partsTabs("all")}`;
+  if (!catalog) return head + `<p class="muted">パーツリストを読み込めませんでした。通信できる状態で開き直してください。</p>`;
+  const main = mainNumbers();
+  const [cid] = path;
+  const cat = cid && catalog.categories.find(c => c.id === cid);
+  const scope = cat ? cat.diagrams.flatMap(d => d.rows) : catalog.categories.flatMap(c => c.diagrams.flatMap(d => d.rows));
+  const counts = statusCounts(catRows(scope));
+  const total = catRows(scope).length;
+  const pass = r => catFilter === "all" || cst(r) === catFilter;
+  const chips = [["all", "すべて", total], ...CST_ORDER.map(k => [k, CST[k].label, counts[k]])]
+    .map(([k, l, n]) => `<button class="chip ${catFilter === k ? "on" : ""}" data-act="cfilter" data-k="${k}">${l} ${n.toLocaleString()}</button>`).join("");
+  const tools = `<div class="toolbar"><input type="text" id="csearch" placeholder="品番・部品名で検索（例：19200、PAD、ベアリング）" value="${esc(catQuery)}" aria-label="パーツリストを検索">
+    <label class="chip ${showHw ? "on" : ""}" style="display:flex;align-items:center;gap:6px"><input type="checkbox" data-act="showhw" ${showHw ? "checked" : ""} style="accent-color:var(--red)">ボルト・ナット等も表示</label></div>
+    <div id="cresults"></div><div class="chips">${chips}</div>`;
+  const note = `<ul class="small muted" style="list-style:none;padding:0;margin:0 0 10px;display:grid;gap:6px">${CST_ORDER.map(k => `<li><span class="pill ${CST[k].cls}">${CST[k].label}</span> ${esc(CST[k].text)}</li>`).join("")}</ul>
+    <p class="small muted" style="margin-top:-6px">※ ${esc(catalog.note)} 出典：${ext(catalog.source.url, catalog.source.label)}（${esc(catalog.checkedAt)} 確認）</p>`;
+  let body;
+  if (!cat) {
+    body = `<p class="lead">BEATの部品を、エンジンなどのカテゴリー別に並べたリストです。<b>品番</b>・<b>販売状況（在庫あり・取り寄せ可）</b>・<b>廃番</b>を、海外の部品販売店 CMSNL の表示どおりに載せています。</p>${note}${tools}
+      <div class="cat-grid">${catalog.categories.map(c => {
+        const rows = catRows(c.diagrams.flatMap(d => d.rows)).filter(pass);
+        const n = statusCounts(rows);
+        return `<a class="cat-card" href="#parts/all/${c.id}">${pic(c.img)}<div class="body"><div class="eyebrow">${esc(c.en)}</div><h3>${esc(c.name)}</h3><p>${rows.length.toLocaleString()}点 ・ ${c.diagrams.length}図<br>販売中 ${(n.S + n.O).toLocaleString()} ・ 廃番 ${(n.D + n.R).toLocaleString()}</p></div></a>`;
+      }).join("")}</div>`;
+  } else {
+    const groups = cat.diagrams.map(d => ({ d, rows: catRows(d.rows).filter(pass) })).filter(x => x.rows.length);
+    body = `${tools}<nav class="crumbs"><a href="#parts/all">すべてのカテゴリー</a><span class="sep">›</span><span>${esc(cat.name)}</span></nav>
+      <p class="small muted">${groups.reduce((n, g) => n + g.rows.length, 0).toLocaleString()}点 ・ ${groups.length}図${catFilter !== "all" ? `（${CST[catFilter].label}のみ）` : ""}</p>
+      ${groups.map(({ d, rows }) => {
+        const n = statusCounts(rows);
+        return `<details class="type-group" ${groups.length <= 2 || catFilter !== "all" || rows.some(r => main.has(r[1])) ? "open" : ""}><summary><span><span class="code">${esc(d.code)}</span>${esc(d.title)}</span><span class="muted small">${rows.length}点・廃番 ${n.D + n.R}</span></summary>
+          <div class="list">${rows.map(r => catItem(r, d, main)).join("")}<div class="part" style="cursor:default"><div class="sub">出典：${ext(diagramUrl(d), `CMSNL 部品図 ${d.code}`)}</div></div></div></details>`;
+      }).join("") || `<p class="muted">該当する部品はありません。</p>`}
+      ${note}
+      <div class="toolbar"><a class="btn small" href="#parts/all">‹ カテゴリー一覧へ</a></div>`;
+  }
+  return head + body;
+}
+
+function searchCatalog(q) {
+  const box = $main.querySelector("#cresults"); if (!box || !catalog) return;
+  catQuery = q;
+  const words = q.trim().toUpperCase().split(/\s+/).filter(Boolean);
+  if (!words.length) { box.innerHTML = ""; return; }
+  const main = mainNumbers();
+  const hits = [];
+  catalog.categories.forEach(c => c.diagrams.forEach(d => catRows(d.rows).forEach(r => {
+    if (catFilter !== "all" && cst(r) !== catFilter) return;
+    const hay = `${r[1]} ${r[4]} ${r[2]} ${d.title} ${d.code} ${c.name}`.toUpperCase();
+    if (words.every(w => hay.includes(w) || hay.includes(w.replace(/[-\s]/g, "")))) hits.push([r, d]);
+  })));
+  box.innerHTML = hits.length ? `<p class="small muted">${hits.length.toLocaleString()}件${hits.length > 80 ? "（先頭80件）" : ""}</p><div class="list" style="margin-bottom:18px">${hits.slice(0, 80).map(([r, d]) => catItem(r, d, main, true)).join("")}</div>`
+    : `<p class="small muted">見つかりませんでした。</p>`;
+}
+
+// 品番の詳細（どの図に載っているか・CMSNL の表示・後継品番）
+function cmsBlock(no, label = "ホンダ純正品番（CMSNLのリストに掲載）") {
+  const hits = catIndex[no] || [];
+  if (!hits.length) return "";
+  const { r } = hits[0];
+  const st = CST[cst(r)];
+  return `<div class="part" style="cursor:default"><div><div class="small muted">${esc(label)}</div><div class="name pn-big">${esc(fmtNo(no))}</div>
+    <div class="sub">${esc(r[2])}</div>
+    <div class="sub"><span class="pill ${st.cls}">${st.label}</span> ${esc(st.text)}</div>
+    ${r[4] ? `<div class="sub">後継品番：<b class="pn">${esc(fmtNo(r[4]))}</b></div>` : ""}
+    <div class="sub">掲載図：${hits.map(h => ext(diagramUrl(h.d), `${h.c.name} › ${h.d.title}（${h.d.code}）`)).join("、")}</div></div>
+    <button class="btn small" data-copy="${esc(fmtNo(no))}">コピー</button></div>`;
+}
+
+function openCatalogPart(no) {
+  if (!catIndex[no]) return;
+  $dlgBody.innerHTML = `<h3>${esc(catIndex[no][0].r[2])}</h3><div class="form"><div class="list">${cmsBlock(no)}</div>
+    <p class="small muted" style="margin:0">販売状況は CMSNL（海外の部品販売店）のサイトに ${esc(catalog.checkedAt)} 時点で出ていた表示で、ホンダの公式な供給状況ではありません。部品名は同サイトの表記のままです（機械翻訳を含みます）。注文の前にホンダ販売店で品番・適合・在庫を確認してください。</p></div>`;
+  $dlgBody.querySelectorAll("[data-copy]").forEach(b => { b.onclick = () => navigator.clipboard?.writeText(b.dataset.copy).then(() => { b.textContent = "コピーしました"; }).catch(() => {}); });
+  $dlg.showModal();
 }
 
 // 品番の表示（出典で確認できた品番だけ。なければ「品番未確認」）
 const pn = no => `<b class="pn">${esc(no)}</b>`;
 const srcLink = p => p.src ? ext(p.src, p.srcLabel || "出典") : "";
 
-function partsView() {
+function partsView(path = []) {
+  if (path[0] === "all") return catalogView(path.slice(1));
   const q = partQuery.trim().toLowerCase();
-  const counts = { all: 0, supply: 0, repro: 0, discontinued: 0, check: 0 };
+  const counts = { all: 0, supply: 0, order: 0, replaced: 0, discontinued: 0, check: 0, repro: 0 };
   const cats = data.parts.map(cat => {
     const rows = cat.items.map(p => ({ p, s: partState(p) })).filter(({ p, s }) => {
       counts.all++; counts[s.status]++;
       if (partFilter !== "all" && s.status !== partFilter) return false;
-      return !q || (p.name + s.partNo + s.memo + (p.note || "") + s.official.map(n => n.no).join(" ")).toLowerCase().includes(q);
+      return !q || (p.name + s.partNo + s.memo + (p.note || "") + s.official.map(n => n.no).join(" ") + (p.cms || []).map(n => n + fmtNo(n)).join(" ")).toLowerCase().includes(q);
     });
     if (!rows.length) return "";
-    const withNo = cat.items.filter(p => p.numbers?.length).length;
+    const withNo = cat.items.filter(p => p.numbers?.length || p.cms?.length).length;
     return `<div class="part-cat"><div class="eyebrow">${esc(cat.en || "")}</div><h3>${esc(cat.category)} <span class="muted small">${cat.items.length}点・品番確認済み ${withNo}点</span></h3><div class="list">${rows.map(({ p, s }) => `
       <div class="part" data-act="part" data-id="${esc(p.id)}" role="button" tabindex="0">
-        <div><div class="name">${esc(p.name)}</div><div class="sub">${s.official.length ? `品番 ${pn(s.official[0].no)}` : s.partNo ? `品番メモ ${pn(s.partNo)}` : `<span class="muted">品番未確認</span>`}${p.price ? ` ・ ${esc(p.price)}（${esc(p.priceAt)}時点）` : ""}${s.memo ? ` ・ ${esc(s.memo)}` : ""}</div></div>
+        <div><div class="name">${esc(p.name)}</div><div class="sub">${s.cms.length ? `品番 ${pn(fmtNo(s.cms[0].r[1]))}${s.cms.length > 1 ? ` ほか${s.cms.length - 1}件` : ""}${s.cms[0].r[4] ? ` → 後継 ${pn(fmtNo(s.cms[0].r[4]))}` : ""}` : s.official.length ? `品番 ${pn(s.official[0].no)}` : s.partNo ? `品番メモ ${pn(s.partNo)}` : `<span class="muted">品番未確認</span>`}${s.repro ? ` ・ <span style="color:#8fbfff">2017〜20年に再販と報道</span>` : ""}${s.mine ? " ・ 自分で設定した状況" : ""}${s.memo ? ` ・ ${esc(s.memo)}` : ""}</div></div>
         <span class="pill ${STATUS[s.status].cls}">${STATUS[s.status].label}</span>
       </div>`).join("")}</div></div>`;
   }).join("");
-  const chips = ["all", "repro", "supply", "check", "discontinued"].map(k =>
+  const chips = ["all", "supply", "order", "replaced", "discontinued", "check", ...(counts.repro ? ["repro"] : [])].map(k =>
     `<button class="chip ${partFilter === k ? "on" : ""}" data-act="filter" data-k="${k}">${k === "all" ? "すべて" : STATUS[k].label} ${counts[k]}</button>`).join("");
   const sources = (supply.sources || []).map(s => `<div class="source">${ext(s.url, s.label)}<br><span class="muted">${esc(s.kind || "")}${s.date ? ` ・ ${esc(s.date)}` : ""}</span></div>`).join("");
   const changes = (supply.changes || []).map(c => `<li><b>${esc(c.date)}</b> ${esc(c.summary)}（${ext(c.url, c.source)}）</li>`).join("");
-  return `${banner("trunk", "Parts", "パーツと再販部品", "主要パーツの一覧と、メーカーによる純正部品の再販（2017年〜）の報道まとめ。", "02")}
-  <p class="lead">カテゴリー別の主要パーツです。<b>品番</b>は出典で確認できたものだけを載せ、<b>販売状況</b>は「販売中／再販あり／廃番／要確認」で示します。タップすると出典と、自分用のメモ（端末内だけに保存）を見られます。</p>
-  <div class="legend small"><span class="pill st-ok">販売中</span> 汎用品など入手できるもの <span class="pill st-repro">再販あり</span> メーカー再販の対象と報道 <span class="pill st-over">廃番</span> 販売終了を確認 <span class="pill st-unset">要確認</span> 情報なし・販売店で確認</div>
+  return `${banner("trunk", "Parts", "パーツと品番", "よく交換・修理する主要パーツの品番と販売状況。全部品はカテゴリー別パーツリストへ。", "02")}
+  ${partsTabs("main")}
+  <p class="lead">カテゴリー別の主要パーツです。<b>品番</b>と<b>販売状況（在庫あり／取り寄せ可／後継品番あり／廃番）</b>は、海外の部品販売店 CMSNL のパーツリストの表示です。タップすると掲載図・後継品番・出典と、自分用のメモ（端末内だけに保存）を見られます。</p>
+  <div class="legend small"><span class="pill st-ok">在庫あり</span> <span class="pill st-repro">取り寄せ可</span> <span class="pill st-soon">後継品番あり</span> 元の品番は販売終了 <span class="pill st-over">廃番</span> <span class="pill st-unset">要確認</span> 表示なし・リストにない</div>
   <p class="small muted" style="margin-top:-6px">※ ${esc(data.partsNote)}</p>
-  <div class="toolbar"><input type="text" placeholder="部品名・メモで検索" value="${esc(partQuery)}" data-act="search" aria-label="部品を検索"></div>
+  <div class="toolbar"><input type="text" placeholder="部品名・品番・メモで検索" value="${esc(partQuery)}" data-act="search" aria-label="部品を検索"></div>
   <div class="chips">${chips}</div>
   ${cats || `<p class="muted">該当する部品はありません。</p>`}
+  ${catalog ? `<a class="card" href="#parts/all" style="display:block;text-decoration:none;margin-top:16px"><div class="eyebrow">Parts List</div><h3 style="margin:4px 0">カテゴリー別パーツリスト（${catalog.total.toLocaleString()}点）›</h3><p class="small muted" style="margin:0">エンジン・吸気・冷却・ミッション・ブレーキ・足まわり・電装・ボディ・幌・内装など15カテゴリー、103図の品番と販売状況・廃番。</p></a>` : ""}
   <div class="section"><div class="eyebrow">Official &amp; News</div><h2 class="section-title">純正部品の再販について</h2></div>
   <div class="card">
     <p class="small" style="margin-top:0">${esc(supply.summary || "")}</p>
@@ -373,11 +510,13 @@ function openPart(id) {
   const s = partState(p);
   $dlgBody.innerHTML = `<h3>${esc(p.name)}</h3>
     <div class="form">
-      ${s.official.length ? `<div class="list">${s.official.map(n => `<div class="part" style="cursor:default"><div><div class="small muted">ホンダ純正品番（出典に掲載）</div><div class="name pn-big">${esc(n.no)}</div><div class="sub">${p.price ? `価格 ${esc(p.price)}（${esc(p.priceAt)}時点・税込表記は出典による）` : "価格は出典に記載なし"}</div></div><button class="btn small" data-copy="${esc(n.no)}">コピー</button></div>`).join("")}</div>` : `<p class="small" style="margin:0">品番は出典で確認できていません。販売店で確認してください。</p>`}
+      ${s.cms.length ? `<div class="list">${(p.cms || []).map(no => cmsBlock(no)).join("")}</div>` : ""}
+      ${s.repro ? `<p class="small" style="margin:0;color:#8fbfff">2017〜2020年に、メーカーの純正部品再販の対象と報道された部品です（現在の販売状況とは別の情報です）。</p>` : ""}
+      ${s.official.length ? `<div class="list">${s.official.map(n => `<div class="part" style="cursor:default"><div><div class="small muted">記事に掲載された品番</div><div class="name pn-big">${esc(n.no)}</div><div class="sub">${p.price ? `価格 ${esc(p.price)}（${esc(p.priceAt)}時点・税込表記は出典による）` : "価格は出典に記載なし"}</div></div><button class="btn small" data-copy="${esc(n.no)}">コピー</button></div>`).join("")}</div>` : s.cms.length ? "" : `<p class="small" style="margin:0">品番は確認できていません。販売店で確認してください。</p>`}
       ${p.note ? `<p class="small" style="margin:0;color:var(--muted)">${esc(p.note)}</p>` : ""}
       ${p.src ? `<p class="small" style="margin:0">出典：${srcLink(p)}</p>` : ""}
-      <p class="small muted" style="margin:0">記事掲載時点の情報です。現在の在庫・価格・廃番は、ホンダ販売店で確認してください。</p>
-      <label class="field">販売状況（自分で確認した結果に変更できます）<select id="f-status">${Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${s.status === k ? "selected" : ""}>${v.label}</option>`).join("")}</select></label>
+      <p class="small muted" style="margin:0">販売状況はCMSNL（海外の部品販売店）のサイト表示（${esc(catalog?.checkedAt || "")}確認）で、ホンダの公式な供給状況ではありません。価格は記事掲載時点のものです。現在の在庫・価格・廃番は、ホンダ販売店で確認してください。</p>
+      <label class="field">販売状況（自分で確認した結果に変更できます）<select id="f-status">${Object.entries(STATUS).filter(([k]) => k !== "repro" || s.status === "repro").map(([k, v]) => `<option value="${k}" ${s.status === k ? "selected" : ""}>${v.label}</option>`).join("")}</select></label>
       <label class="field">自分用の品番メモ（販売店で確認した品番など）<input type="text" id="f-no" value="${esc(s.partNo)}" autocapitalize="characters" maxlength="40"></label>
       <label class="field">メモ（価格・購入先・交換日など）<textarea id="f-memo" rows="3" maxlength="1000">${esc(s.memo)}</textarea></label>
       <p class="small muted" style="margin:0">入力内容はこの端末の中だけに保存されます。</p>
@@ -503,17 +642,21 @@ $main.addEventListener("click", e => {
   else if (act === "photo") setPhoto();
   else if (act === "part") openPart(id);
   else if (act === "filter") { partFilter = k; render(); }
+  else if (act === "cfilter") { catFilter = k; render(); }
+  else if (act === "cpart") openCatalogPart(el.dataset.no);
   else if (act === "info") { location.hash = `info/${k}`; }
   else if (act === "reset-checks") { if (confirm("点検チェックをすべて外しますか？")) { checks = {}; store.set("checks", checks); render(); } }
 });
 $main.addEventListener("change", e => {
   const el = e.target;
+  if (el.dataset.act === "showhw") { showHw = el.checked; store.set("showHw", showHw); render(); return; }
   if (el.dataset.act === "check") {
     if (el.checked) checks[el.dataset.key] = iso(today()); else delete checks[el.dataset.key];
     store.set("checks", checks); render();
   }
 });
 $main.addEventListener("input", e => {
+  if (e.target.id === "csearch") { searchCatalog(e.target.value); return; }
   if (e.target.dataset.act !== "search") return;
   partQuery = e.target.value;
   const pos = e.target.selectionStart;
@@ -523,6 +666,7 @@ $main.addEventListener("input", e => {
 });
 $main.addEventListener("keydown", e => {
   if (e.key === "Enter" && e.target.dataset?.act === "part") openPart(e.target.dataset.id);
+  if (e.key === "Enter" && e.target.dataset?.act === "cpart") openCatalogPart(e.target.dataset.no);
 });
 window.addEventListener("hashchange", () => { render(); scrollTo(0, 0); });
 
