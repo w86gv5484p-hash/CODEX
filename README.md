@@ -156,7 +156,7 @@ APIキーは環境変数か、`price.keys.example.json` をコピーした `pric
 
 - 楽天：送料の金額（「送料込み／送料別」だけ）、24時間以内に終わるポイント倍率、クーポン。JANコード検索は無いため、JANもキーワードとして検索します。
 - Yahoo!：「条件付き送料無料」「設定なし」の送料の金額。ポイントは PayPay ポイント（期間限定）のストア付与分（`lyLimitedBonusAmount`）を使います。
-- Amazon：送料（Creators API の OffersV2 は配送情報を返しません）。ポイントは日本のみの `loyaltyPoints` を使います。
+- Amazon：送料（Creators API の OffersV2 は配送情報を返しません）。「還元設定」のプライム会員（初期値オン）で送料 0 円として計算し、出品者が Amazon.co.jp 以外の商品には「送料がかかる場合あり」と表示します。ポイントは日本のみの `loyaltyPoints` を使います。
 - 共通：会員ランク・支払方法・エントリーで変わる還元。これらは「還元設定」に入れてください。
 
 計算は `price/pricing.js`、各社APIの取得と変換は `scripts/price_server.py` にあります。テストは `node --test scripts/test_price_calc.mjs` と `python3 -m unittest scripts/test_price_server.py` で実行します。還元設定と手入力の価格は、その端末のブラウザー（localStorage）だけに保存されます。

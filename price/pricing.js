@@ -19,7 +19,7 @@ export const STORES = {
 // 楽天・Yahoo!は「税抜価格に対してポイントを付与」と案内されてきた（要確認）ため税抜を初期値にしています。
 export const DEFAULT_STORE_SETTINGS = {
   rakuten: { pointYen: 1, basis: "taxExcluded" },
-  amazon: { pointYen: 1, basis: "taxIncluded" },
+  amazon: { pointYen: 1, basis: "taxIncluded", prime: true }, // prime: プライム会員なら Amazon 販売・発送の送料を 0 円とみなす
   yahoo: { pointYen: 1, basis: "taxExcluded" },
   official: { pointYen: 1, basis: "taxIncluded" },
   other: { pointYen: 1, basis: "taxIncluded" },
@@ -69,6 +69,11 @@ export function bestCoupon(offer, coupons = [], now = new Date()) {
   return best;
 }
 
+/** Amazon 自身が販売する商品か（出品者名で判定。API に配送方法の情報は無い） */
+export function isAmazonDirect(offer) {
+  return /^amazon(\.co\.jp)?$/i.test(String(offer.shop || "").trim());
+}
+
 function base(amountTaxIncluded, basis, taxRate) {
   return basis === "taxExcluded" ? floor(amountTaxIncluded / (1 + taxRate / 100)) : amountTaxIncluded;
 }
@@ -86,9 +91,16 @@ export function effectivePrice(offer, settings = DEFAULT_SETTINGS, now = new Dat
   const coupon = bestCoupon({ ...offer, price }, settings.coupons, now);
   const couponDiscount = coupon ? coupon.discount : 0;
 
-  const shippingKnown = num(offer.shippingFee) !== null;
+  let shippingKnown = num(offer.shippingFee) !== null;
+  let shippingAssumed = false;
   const shipping = shippingKnown ? Number(offer.shippingFee) : 0;
-  if (!shippingKnown) warnings.push("送料不明（0円で計算）");
+  if (!shippingKnown && offer.store === "amazon" && st.prime) {
+    // Amazon の API は送料を返さない。プライム会員設定なら 0 円とみなす。
+    // ただしマーケットプレイス出品者（自社発送）の商品は、出品者が決めた送料がかかることがある。
+    shippingKnown = true;
+    shippingAssumed = true;
+    if (!isAmazonDirect(offer)) warnings.push("マーケットプレイス出品者：送料がかかる場合あり");
+  } else if (!shippingKnown) warnings.push("送料不明（0円で計算）");
 
   const goods = price - couponDiscount; // ポイントの対象（送料は含めない）
   const points = [];
@@ -120,7 +132,7 @@ export function effectivePrice(offer, settings = DEFAULT_SETTINGS, now = new Dat
   if (offer.inStock === false) warnings.push("在庫なし");
 
   return {
-    price, couponDiscount, coupon: coupon?.coupon || null, shipping, shippingKnown,
+    price, couponDiscount, coupon: coupon?.coupon || null, shipping, shippingKnown, shippingAssumed,
     pay, points, totalPoints, pointYen: Number(st.pointYen ?? 1), pointValue,
     effective: pay - pointValue, warnings,
   };

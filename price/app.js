@@ -171,7 +171,7 @@ function offerCard({ offer, calc }, i, m) {
       <table>
         <tr><th>表示価格（税込）</th><td>${yen(calc.price)}</td></tr>
         <tr><th>クーポン${calc.coupon ? `（${esc(calc.coupon.label)}）` : ""}</th><td>${calc.couponDiscount ? `−${yen(calc.couponDiscount)}` : "なし"}</td></tr>
-        <tr><th>送料</th><td>${calc.shippingKnown ? (calc.shipping ? `＋${yen(calc.shipping)}` : "無料") : "不明（0円で計算）"}</td></tr>
+        <tr><th>送料</th><td>${calc.shippingAssumed ? "無料（プライム会員設定）" : calc.shippingKnown ? (calc.shipping ? `＋${yen(calc.shipping)}` : "無料") : "不明（0円で計算）"}</td></tr>
         <tr class="sum"><th>支払額</th><td>${yen(calc.pay)}</td></tr>
         <tr><th>ポイント</th><td>${calc.totalPoints.toLocaleString("ja-JP")}pt × ${calc.pointYen}円 ＝ −${yen(calc.pointValue)}</td></tr>
         <tr class="sum"><th>実質価格</th><td>${yen(calc.effective)}</td></tr>
@@ -235,7 +235,9 @@ function settingsView() {
     <p class="muted">あなたが今使えるキャンペーン・ポイントアップ・クーポンを入れると、実質価格に反映します。期間外のものは自動で計算から外れます。</p></section>
   <div class="card"><h2>ポイントの価値と計算の基準</h2>
     <p class="muted small">1ポイント＝1円が基本です。期間限定ポイントを使い切れない場合などは低めにできます。計算の基準は各ストアの案内に合わせて変えてください。</p>
-    <div class="table-wrap"><table class="settings-table"><tr><th>ストア</th><th>1pt＝円</th><th>計算の基準</th></tr>${stores}</table></div></div>
+    <div class="table-wrap"><table class="settings-table"><tr><th>ストア</th><th>1pt＝円</th><th>計算の基準</th></tr>${stores}</table></div>
+    <label class="check mt"><input type="checkbox" data-store="amazon" data-field="prime" ${storeSettings(s, "amazon").prime ? "checked" : ""}> Amazon プライム会員（Amazon の送料を 0 円として計算）</label>
+    <p class="muted small">Amazon の API は送料を返しません。オンにすると送料 0 円で計算します。出品者が Amazon.co.jp 以外（マーケットプレイス）の商品は送料がかかる場合があるため、注意を表示します。</p></div>
   <div class="grid2">
     <div class="card"><h2>キャンペーン・ポイントアップ</h2>
       <p class="muted small">例：楽天のSPU、お買い物マラソン、Yahoo!の日曜日キャンペーンなど。倍率は「上乗せ分の%」で入れます（例：+4倍なら 4）。</p>
@@ -273,6 +275,7 @@ function helpView() {
       <li>楽天は API の「ポイント倍率」（例：5倍＝5%）、Yahoo!は API の PayPay ポイント（期間限定）の付与数、Amazon は API のポイント数を使います。</li>
       <li>SPU・お買い物マラソン・クーポンなど人によって違う還元は API では取れないため、「還元設定」に入れます。</li>
       <li>楽天の API は「24時間以内に終わるポイント倍率」を返しません。Amazon の API は送料を返しません。こうした不明点は「送料不明」などと表示します。</li>
+      <li>Amazon は「還元設定」のプライム会員をオン（初期値）にすると送料 0 円で計算します。出品者が Amazon.co.jp 以外の商品には注意を表示します。</li>
     </ul>
     <h2>実際の価格で使う（ローカルサーバー）</h2>
     <ol>
@@ -329,7 +332,7 @@ document.addEventListener("change", e => {
     (S.toggles[key] ||= {})[t.dataset.toggle] = t.checked;
     save(); render();
   } else if (t.dataset.store) {
-    const v = t.dataset.field === "pointYen" ? Math.max(0, Number(t.value) || 0) : t.value;
+    const v = t.dataset.field === "pointYen" ? Math.max(0, Number(t.value) || 0) : t.type === "checkbox" ? t.checked : t.value;
     S.settings.stores[t.dataset.store] = { ...storeSettings(S.settings, t.dataset.store), [t.dataset.field]: v };
     save(); toast("保存しました");
   } else if (t.dataset.field === "staleMinutes") {

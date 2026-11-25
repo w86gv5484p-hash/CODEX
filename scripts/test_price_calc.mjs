@@ -57,7 +57,7 @@ test("固定ポイント（Yahoo!/Amazon）はそのまま加算し、1pt の価
 });
 
 test("送料不明は 0 円で計算して警告を出す", () => {
-  const c = P.effectivePrice({ store: "amazon", price: 5000, shippingFee: null }, S(), NOW);
+  const c = P.effectivePrice({ store: "yahoo", price: 5000, shippingFee: null }, S(), NOW);
   assert.equal(c.pay, 5000);
   assert.ok(c.warnings.some(w => w.includes("送料不明")));
 });
@@ -102,4 +102,16 @@ test("JAN 指定時：一致は採用、不一致と不明は外す", () => {
   const m = P.matchOffers(offers, "2001234000017");
   assert.deepEqual(m.map(x => x.include), [true, false, false]);
   assert.deepEqual(m.map(x => x.reason), ["JAN一致", "JAN不一致", "JAN不明（要確認）"]);
+});
+
+test("Amazon：プライム会員設定なら送料 0 円。マーケットプレイス出品者には注意を出す", () => {
+  const direct = P.effectivePrice({ store: "amazon", shop: "Amazon.co.jp", price: 5000, shippingFee: null }, S(), NOW);
+  assert.equal(direct.shippingAssumed, true);
+  assert.deepEqual(direct.warnings, []);
+  const mp = P.effectivePrice({ store: "amazon", shop: "サンプル商店", price: 5000, shippingFee: null }, S(), NOW);
+  assert.equal(mp.pay, 5000);
+  assert.ok(mp.warnings.some(w => w.includes("マーケットプレイス")));
+  const off = S({ stores: { ...P.DEFAULT_STORE_SETTINGS, amazon: { ...P.DEFAULT_STORE_SETTINGS.amazon, prime: false } } });
+  const c = P.effectivePrice({ store: "amazon", shop: "Amazon.co.jp", price: 5000, shippingFee: null }, off, NOW);
+  assert.ok(c.warnings.some(w => w.includes("送料不明")));
 });
