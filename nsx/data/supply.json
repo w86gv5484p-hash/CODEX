@@ -1,6 +1,6 @@
 {
   "listVersion": 2,
-  "checkedAt": "2026-11-26T06:20+09:00",
+  "checkedAt": "2026-11-27T06:15+09:00",
   "ok": true,
   "sources": [
     {
@@ -9,7 +9,7 @@
       "url": "https://www.honda.co.jp/heritage-works/parts/nsx/parts-catalog/",
       "hash": "cf4d41f7a62b5a4755cc334a82248be014af541b927e7bda8a36a68882391292",
       "changedAt": "2026-11-24",
-      "lastOk": "2026-11-26T06:20+09:00",
+      "lastOk": "2026-11-27T06:15+09:00",
       "documents": [
         "https://www.honda.co.jp/heritage-works/parts/nsx/parts-catalog/download/nsx_parts-catalog_11SL01J3.pdf",
         "https://www.honda.co.jp/heritage-works/parts/nsx/parts-catalog/download/nsx_parts-catalog_11SW00J3.pdf",
@@ -23,7 +23,7 @@
       "url": "https://www.honda.co.jp/heritage-works/restoration/",
       "hash": "54842b285de84235bec0fa5028ce38eaae76ff436ed1152c5f777a309365c4f6",
       "changedAt": "2026-11-24",
-      "lastOk": "2026-11-26T06:20+09:00",
+      "lastOk": "2026-11-27T06:15+09:00",
       "documents": [],
       "ok": true
     },
@@ -33,7 +33,7 @@
       "url": "https://www.honda.co.jp/sportscar/care/nsx_refresh01/",
       "hash": "451d81fb19ecf74575a342d1da60e72176202f991a51f274b834b2a760c283a1",
       "changedAt": "2026-11-24",
-      "lastOk": "2026-11-26T06:20+09:00",
+      "lastOk": "2026-11-27T06:15+09:00",
       "documents": [],
       "ok": true
     }
@@ -9741,7 +9741,7 @@
     "https://www.honda.co.jp/heritage-works/parts/nsx/parts-catalog/download/nsx_parts-catalog_11SL01J3.pdf": {
       "bytes": 24992959,
       "pages": 750,
-      "textChars": 1583083,
+      "textChars": 1583076,
       "found": 4463,
       "decoded": "",
       "sample": "版 NSXNSXNSXNSX NA1-100 ·110 ·120 ·130 ·140 ·150 ·160 NA2-100 ·110 ·120 管理 No.11SL01J3 発行 平成 14 年 2 月 13131313 © Honda Motor Co., Ltd. 2002 1 2 3 4 5 6 7 8 まえがき 目 次 艤 装 エンジン ミッション 電 装 吸排気系 ヒーター ステアリング ブレーキ サスペンション 車 体 オプション 部品番号索引 部品名索引 このパーツカタログはリサイクルペーパーを使用しております。 NSX NA1-100 1 目 次目 次目 次目 次 2002.02.10 J ページページページページ 1 1 2 3 4 5 6 7 8 パーツカタログのご使用にあたってパーツカタログのご使用にあたってパーツカタログのご使用にあたってパーツカタログのご使用にあたって ●●●●このパーツカタログには下記のモデルを記載しています。このパーツカタログには下記のモデルを記載しています。このパーツカタログには下記のモデルを記載しています。このパーツカタログには下記のモデルを記載しています。 ●●●●このパーツカタログは2002年２月10日現在で編集してあります。このパーツカタログは2002年２月10日現在で編集してあります。このパーツカタログは2002年２月10日現"
@@ -9749,7 +9749,7 @@
     "https://www.honda.co.jp/heritage-works/parts/nsx/parts-catalog/download/nsx_parts-catalog_11SW00J3.pdf": {
       "bytes": 15625245,
       "pages": 420,
-      "textChars": 764936,
+      "textChars": 764930,
       "found": 3387,
       "decoded": "",
       "sample": "版 NSXNSXNSXNSX NA1-170 ·190 NA2-130 ·140 ·150 管理 No.11SW00J3 発行 平成 15 年10 月 3333 © Honda Motor Co., Ltd. 2003 1 2 3 4 5 6 7 8 まえがき 目 次 艤 装 エンジン ミッション 電 装 吸排気系 ヒーター ステアリング ブレーキ サスペンション 車 体 オプション 部品番号索引 部品名索引 このパーツカタログはリサイクルペーパーを使用しております。 NSX-S NA2-130 NSX NA2-130 NSX-R NA2-140 NSX-T NA2-130 1 目 次目 次目 次目 次 2003.10.20 J ページページページページ 1 1 2 3 4 5 6 7 8 パーツカタログのご使用にあたってパーツカタログのご使用にあたってパーツカタログのご使用にあたってパーツカタログのご使用にあたって ●●●●このパーツカタログには下記のモデルを記載しています。このパーツカタログには下記のモデルを記載しています。このパーツカタログには下記のモデルを記載しています。このパーツカタログには下記のモデルを記載しています。 ●●●●このパーツカタログは2003年10月20日現在で編集してあります。このパーツカタログは2003年10月20日現在で編集してあります。このパーツカ"
@@ -9760,7 +9760,7 @@
       "textChars": 286818,
       "found": 4649,
       "decoded": "shift31",
-      "sample": "1 / 177 NSX ܧଓڅڙதͷ෦඼൪߸Ϧετ 2026೥9݄຤ࡏݱ ˞څڙঢ়/گ෦඼൪߸͸༧ࠂͳ͠ʹมߋ͞ΕΔ৔߹͕͋Γ·͢ͷͰɺৄࡉ͸͓ۙ͘ͷൢചళ·Ͱ͓ਘͶ͍ͩ͘͞ɻ ΦϦδφϧ෦඼൪߸ ࡏݱͷ෦඼൪߸ ෦඼໊শ 01004-PR7-000 REPAIR KIT ENGINE 01462-S0K-A01 01462-S0K-A02 CYLINDER SET MASTER 01462-SL0-950 01462-SL0-953 CYLINDER SET MASTER ABS 01462-SL0-951 01462-SL0-953 CYLINDER SET MASTER ABS 01463-SL0-000 01463-SL0-020 CALIPER SET FR. 01463-SL0-J00 01463-SL0-J02 CALIPER SET FR. 01463-SL0-J01 01463-SL0-J02 CALIPER SET FR. 01464-SL0-000 HOSE SET FR. BRAKE 01464-SL0-J00 HOSE SET R. FR. BRAKE 01465-SL0-J00 HOSE SET L. FR. BRAKE 01466-SL0-000 HOSE SET RR. BRAKE 01466-SL0-J00 HOSE SET R. RR. BRAK"
+      "sample": "1 / 177 NSX ܧଓڅڙதͷ෦඼൪߸Ϧετ 2026೥9݄຤ࡏݱ ˞څڙঢ়/گ෦඼൪߸͸༧ࠂͳ͠ʹมߋ͞ΕΔ৔߹͕͋Γ·͢ͷͰɺৄࡉ͸͓ۙ͘ͷൢചళ·Ͱ͓ਘͶ͍ͩ͘͞ɻ ΦϦδφϧ෦඼൪߸ࡏݱ ͷ෦඼൪߸ ෦඼໊শ 01004-PR7-000 REPAIR KIT ENGINE 01462-S0K-A01 01462-S0K-A02 CYLINDER SET MASTER 01462-SL0-950 01462-SL0-953 CYLINDER SET MASTER ABS 01462-SL0-951 01462-SL0-953 CYLINDER SET MASTER ABS 01463-SL0-000 01463-SL0-020 CALIPER SET FR. 01463-SL0-J00 01463-SL0-J02 CALIPER SET FR. 01463-SL0-J01 01463-SL0-J02 CALIPER SET FR. 01464-SL0-000 HOSE SET FR. BRAKE 01464-SL0-J00 HOSE SET R. FR. BRAKE 01465-SL0-J00 HOSE SET L. FR. BRAKE 01466-SL0-000 HOSE SET RR. BRAKE 01466-SL0-J00 HOSE SET R. RR. BRAK"
     }
   }
 }
