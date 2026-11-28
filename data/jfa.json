@@ -1,17 +1,17 @@
 {
-  "checkedAt": "2026-11-27T04:49:53Z",
+  "checkedAt": "2026-11-28T04:45:30Z",
   "feeds": {
     "schedule": {
       "status": "ok",
-      "checkedAt": "2026-11-27T04:49:53Z"
+      "checkedAt": "2026-11-28T04:45:30Z"
     },
     "callups": {
       "status": "ok",
-      "checkedAt": "2026-11-27T04:49:53Z"
+      "checkedAt": "2026-11-28T04:45:30Z"
     },
     "results": {
       "status": "ok",
-      "checkedAt": "2026-11-27T04:49:53Z"
+      "checkedAt": "2026-11-28T04:45:30Z"
     }
   },
   "fixtures": [
